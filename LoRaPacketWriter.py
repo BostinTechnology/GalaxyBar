@@ -1,0 +1,23 @@
+''' LoRa Packet writer
+Started 21.8.16
+Writes a .txt file that contains a LoRa packet
+'''
+
+DestinationAddr = "1234!"
+SenderAddr = "0000!"
+Command = 0x36
+PayloadLength = 30
+PayloadBytes = [0x80,0x00,0x30,0x45,0x12,0x25,0x12,0x15,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x11,0x22,0x33,0x44,0x11,0x22,0x33,0x22,0x45,0x67,0x56,0x78,0x03,0xA4]
+
+
+
+PacketFile = open("F:\\Users\Duncan\Documents\Dropbox\Pace_Bostin\CognIoT\SinglePacket.txt","w")
+PacketFile.write(DestinationAddr+SenderAddr+str(Command)+str(PayloadLength))
+for i in PayloadBytes:
+    PacketFile.write(str(i))
+PacketFile.close()
+
+
+
+
+       
