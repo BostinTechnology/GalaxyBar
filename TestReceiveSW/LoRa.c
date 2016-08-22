@@ -116,7 +116,7 @@ int main ()
 
     struct termios options ;
     int rc;
-    
+
    // Get the current options for the port
     if((rc = tcgetattr(fd, &options)) < 0){
         fprintf(stderr, "failed to get attr: %d, %s\n", fd, strerror(errno));
@@ -174,13 +174,13 @@ do {
 
             //WaitForCTS();
 
-            serialPrintf(fd, "AT!!\n\0"); 
+            serialPrintf(fd, "AT!!\n\0");
 
             delay(100); // ??? Need to wait otherwise the command does not work
 
             GetTextResult();
-            
-            serialPrintf(fd, "sloramode 1\n\0"); 
+
+            serialPrintf(fd, "sloramode 1\n\0");
 
             delay(100); // ??? Need to wait otherwise the command does not work
 
@@ -192,18 +192,18 @@ do {
         case 'm': // Identify the tag type
 
             printf("\nListening for Packets ....\n");
-            while (TRUE)
+            while (1)
             {
-                serialPrintf(fd, "\ngeta\0"); 
+                serialPrintf(fd, "\ngeta\0");
 
                 delay(100); // ??? Need to wait otherwise the command does not work
 
                 GetTextResult();
-                
-                
-                
+
+
+
             }
-            
+
 
 
         case 'e':
