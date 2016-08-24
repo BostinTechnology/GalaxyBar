@@ -1,0 +1,16 @@
+2016-08-24 22:13:25,317:INFO:PI setup complete on channel 4
+2016-08-24 22:13:25,318:INFO:Setting up the LoRA module with the various commands
+2016-08-24 22:13:25,319:DEBUG:LoRa AT command AT!! sent:4
+2016-08-24 22:13:28,423:DEBUG:LoRa module AT!! response: []
+2016-08-24 22:13:28,524:DEBUG:LoRa AT command Version(AT*v) sent:4
+2016-08-24 22:13:31,628:DEBUG:LoRa module Version(AT*v) response: []
+2016-08-24 22:13:31,629:DEBUG:LoRa command glora sent:5
+2016-08-24 22:13:34,734:DEBUG:LoRa module glora response: []
+2016-08-24 22:13:34,735:DEBUG:LoRa AT command sloramode 1 sent:11
+2016-08-24 22:13:37,839:DEBUG:LoRa module sloramode 1 response: []
+2016-08-24 22:13:37,840:DEBUG:Sent length data packet (AT+X) with this length:7
+2016-08-24 22:13:37,942:DEBUG:Sent data packet (Data Sent) with this length:9
+2016-08-24 22:13:38,444:DEBUG:Sent length data packet (AT+X) with this length:7
+2016-08-24 22:13:38,545:DEBUG:Sent data packet (Data Sent) with this length:9
+2016-08-24 22:13:39,047:DEBUG:Sent length data packet (AT+X) with this length:7
+2016-08-24 22:13:39,148:DEBUG:Sent data packet (Data Sent) with this length:9
