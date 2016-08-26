@@ -35,7 +35,7 @@ def SetupUART():
 
     if ser.isOpen():
         # if serial comms are setup and the channel is opened
-        logging.info ("PI setup complete on channel %d as : %s" % (ser.fd, ser.getSettingsDict))
+        logging.info ("PI setup complete on channel %d" %ser.fd)
     else:
         logging.critical("Unable to Setup communications")
         sys.exit()
@@ -67,38 +67,6 @@ def ReadChar(fd):
         response = wiringpi.serialGetchar(fd)
     return response
 
-def WriteData(fd,message):
-    # This routine will take the given data and write it to the serial port
-    # returns the data length or fail
-#TODO: Need to put a try loop around this
-    # add the control characters
-    send = message + '\r\n'
-    ans = fd.write(send.encode('utf-8'))
-    logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
-    return ans
-
-def ReadData(fd, length=-1):
-    # Read the data from the serial port of known length
-    # If length is not known, assume all data
-
-    if length != -1:
-        ans = fd.read(length)
-    else:
-        ans = fd.readall()
-        length = 'unknown'
-#TODO: Strip off returned characters
-    logging.debug("Read data of length %s from the Serial port: %a" % (length, ans))
-    return ans
-
-def SendConfigCommand(fd, command):
-    # This function sends data and gets the reply for the various configuration commands.
-
-    ans = WriteData(fd, command)
-    time.sleep(SRDELAY)
-    ans = ReadData(fd)
-
-    time.sleep(INTERDELAY)
-    return
 
 def SetupLoRa(fd):
     # send the right commands to setup the LoRa module
@@ -114,9 +82,25 @@ def SetupLoRa(fd):
     #fd.flushInput()
     #time.sleep(1)
 
-    SendConfigCommand(fd, "AT*v")
-    SendConfigCommand(fd, "glora")
-    SendConfigCommand(fd, "sloramode 1")
+    ans = fd.write(b"AT*v\n\r")
+    logging.debug("LoRa AT command Version(AT*v) sent:%s" % ans)
+    time.sleep(SRDELAY)
+    ans = fd.readall()
+    logging.debug("LoRa module Version(AT*v) response: %s" % ans)
+
+    time.sleep(INTERDELAY)
+    ans = fd.write(b"glora\n\r")
+    logging.debug("LoRa command glora sent:%s" % ans)
+    time.sleep(SRDELAY)
+    ans = fd.readall()
+    logging.debug("LoRa module glora response: %s" % ans)
+
+    time.sleep(INTERDELAY)
+    ans = fd.write(b"sloramode 1\n\r")
+    logging.debug("LoRa AT command sloramode 1 sent:%s" % ans)
+    time.sleep(SRDELAY)
+    ans = fd.readall()
+    logging.debug("LoRa module sloramode 1 response: %s" % ans)
     return
 
 def Setup():
@@ -127,41 +111,6 @@ def Setup():
     SetupLoRa(sp)
     return sp
 
-def SendRadioData(fd, message):
-    # Takes the given data and sends it over the radio network
-
-    # First determine the size of the data, adding 1 for the control character at the end
-    length = len(message) + 1
-#TODO: If length is greater than 255, abort
-    send = 'AT+X ' + format(length, '02X')
-    reply = WriteData(fd, send)
-    time.sleep(SRDELAY)
-#TODO: Check the response, it should be $ indicating it is ready for the data
-    ReadData(fd)
-
-    time.sleep(SRDELAY)
-    reply = WriteData(fd, message)
-
-#TODO: Need to check the reply to see if it is ok, should be \r\nOK00> - remembering the \r\n is being stripped off
-    ReadData(fd)
-    return
-
-def RadioDataAvailable(fd):
-    # checks to see if there is radio data available to be read.
-    # returns zero if no data
-    data_length = 0
-    # use checkr / AT+r
-
-    return data_length
-
-def GetRadioData(fd, length=-1):
-    # get the data from the radio, if no length, get all
-
-    # use geta / AT+A
-
-    return message
-
-
 def main():
     """
     This is the main entry point for the program when it is being run independently.
@@ -169,11 +118,13 @@ def main():
     """
     sp = SetupUART()
     SetupLoRa(sp)
-
     print("Sending messages")
     while(True):
-        SendRadioData(sp, "Data Sent")
-
+        reply = sp.write(b"AT+X 0A\r\n")
+        logging.debug("Sent length data packet (AT+X) with this length:%s" % reply)
+        time.sleep(SRDELAY)
+        reply = sp.write(b"Data Sent\r\n")
+        logging.debug("Sent data packet (Data Sent) with this length:%s" % reply)
         print(".", end="", flush=True)
         time.sleep(INTERDELAY)
 

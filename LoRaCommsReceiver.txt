@@ -1,16 +1,21 @@
-2016-08-24 22:13:25,317:INFO:PI setup complete on channel 4
-2016-08-24 22:13:25,318:INFO:Setting up the LoRA module with the various commands
-2016-08-24 22:13:25,319:DEBUG:LoRa AT command AT!! sent:4
-2016-08-24 22:13:28,423:DEBUG:LoRa module AT!! response: []
-2016-08-24 22:13:28,524:DEBUG:LoRa AT command Version(AT*v) sent:4
-2016-08-24 22:13:31,628:DEBUG:LoRa module Version(AT*v) response: []
-2016-08-24 22:13:31,629:DEBUG:LoRa command glora sent:5
-2016-08-24 22:13:34,734:DEBUG:LoRa module glora response: []
-2016-08-24 22:13:34,735:DEBUG:LoRa AT command sloramode 1 sent:11
-2016-08-24 22:13:37,839:DEBUG:LoRa module sloramode 1 response: []
-2016-08-24 22:13:37,840:DEBUG:Sent length data packet (AT+X) with this length:7
-2016-08-24 22:13:37,942:DEBUG:Sent data packet (Data Sent) with this length:9
-2016-08-24 22:13:38,444:DEBUG:Sent length data packet (AT+X) with this length:7
-2016-08-24 22:13:38,545:DEBUG:Sent data packet (Data Sent) with this length:9
-2016-08-24 22:13:39,047:DEBUG:Sent length data packet (AT+X) with this length:7
-2016-08-24 22:13:39,148:DEBUG:Sent data packet (Data Sent) with this length:9
+2016-08-26 17:23:10,093:INFO:PI setup complete on channel 4 as : <bound method Serial.getSettingsDict of Serial<id=0x76943d50, open=True>(port='/dev/ttyAMA0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)>
+2016-08-26 17:23:10,094:INFO:Setting up the LoRA module with the various commands
+2016-08-26 17:23:10,095:INFO:Message >AT*v< sent as >'AT*v\r\n'< and got this reply:6
+2016-08-26 17:23:12,199:DEBUG:Read data of length unknown from the Serial port: b'\r\nIDN: AM093 (modem)\r\nEXECUTIVE VER:2.35 BUILD:20160610 172026\r\nRF STACK  VER:2.35 BUILD:20160610 172026\r\n\r\nOK00>'
+2016-08-26 17:23:12,701:INFO:Message >glora< sent as >'glora\r\n'< and got this reply:7
+2016-08-26 17:23:14,806:DEBUG:Read data of length unknown from the Serial port: b'\r\n01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:40\r\n09:00  0A:00  \r\nOK00>'
+2016-08-26 17:23:15,308:INFO:Message >sloramode 1< sent as >'sloramode 1\r\n'< and got this reply:13
+2016-08-26 17:23:17,412:DEBUG:Read data of length unknown from the Serial port: b'\r\nOK00>'
+2016-08-26 17:23:17,914:INFO:Message >AT+X 0A< sent as >'AT+X 0A\r\n'< and got this reply:9
+2016-08-26 17:23:20,017:DEBUG:Read data of length unknown from the Serial port: b'\r\n$'
+2016-08-26 17:23:20,118:INFO:Message >Data Sent< sent as >'Data Sent\r\n'< and got this reply:11
+2016-08-26 17:23:22,238:DEBUG:Read data of length unknown from the Serial port: b'\r\nOK00>'
+2016-08-26 17:23:22,740:INFO:Message >AT+X 0A< sent as >'AT+X 0A\r\n'< and got this reply:9
+2016-08-26 17:23:24,844:DEBUG:Read data of length unknown from the Serial port: b'\r\n$'
+2016-08-26 17:23:24,946:INFO:Message >Data Sent< sent as >'Data Sent\r\n'< and got this reply:11
+2016-08-26 17:23:27,066:DEBUG:Read data of length unknown from the Serial port: b'\r\nOK00>'
+2016-08-26 17:23:27,568:INFO:Message >AT+X 0A< sent as >'AT+X 0A\r\n'< and got this reply:9
+2016-08-26 17:23:29,672:DEBUG:Read data of length unknown from the Serial port: b'\r\n$'
+2016-08-26 17:23:29,774:INFO:Message >Data Sent< sent as >'Data Sent\r\n'< and got this reply:11
+2016-08-26 17:23:31,892:DEBUG:Read data of length unknown from the Serial port: b'\r\nOK00>'
+2016-08-26 17:23:32,395:INFO:Message >AT+X 0A< sent as >'AT+X 0A\r\n'< and got this reply:9
