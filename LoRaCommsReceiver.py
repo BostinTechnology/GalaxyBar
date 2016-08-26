@@ -42,30 +42,6 @@ def SetupUART():
 
     return ser
 
-def ReadData(fd):
-    # read the data back from the serial line and return it as a string to the calling function
-    qtydata = wiringpi.serialDataAvail(fd)
-    logging.info("Amount of data: %d bytes" % qtydata)
-    response = []
-    while qtydata > 0:
-        # while there is data to be read, read it back
-        logging.debug("Reading data back byte:%d" % qtydata)
-        # This used to have hex to convert the data to a hex string
-        response.append(wiringpi.serialGetchar(fd))
-        qtydata = qtydata - 1
-    logging.info("Data Packet received: %s" % response)
-    logging.debug("Size of data packet received %d" % len(response))
-    return response
-
-def ReadChar(fd):
-    # read a single character back from the serial line
-    qtydata = wiringpi.serialDataAvail(fd)
-    logging.info("Amount of data: %s bytes" % qtydata)
-    response = 0
-    if qtydata > 0:
-        logging.debug("Reading data back %d" % qtydata)
-        response = wiringpi.serialGetchar(fd)
-    return response
 
 def WriteData(fd,message):
     # This routine will take the given data and write it to the serial port
@@ -147,19 +123,39 @@ def SendRadioData(fd, message):
     return
 
 def RadioDataAvailable(fd):
-    # checks to see if there is radio data available to be read.
+    # checks to see if there is radio data available to be read using AT+r / checkr.
     # returns zero if no data
     data_length = 0
-    # use checkr / AT+r
-
+    WriteData(fd, 'AT+r')
+    ans = ReadData(fd)
+#TODO: Add in check for invalid / incorrect data, format of data returned is 00\r\nOK00>
+    data_length = int(ans[0:1])
+    logging.info("Check for Radio Data (AT+r) returned %i bytes" % data_length)
     return data_length
 
-def GetRadioData(fd, length=-1):
+def GetRadioData(fd, length):
     # get the data from the radio, if no length, get all
-
     # use geta / AT+A
 
+    WriteData(fd, 'AT+A')
+    message = ReadData(fd, length)
+    logging.info("Radio Data (AT+r) returned >%s<" % message)
+
     return message
+
+def ReadRadioData(fd):
+    # Routine to read and return data from the LoRa unit.
+    # Currently sits in a loop waiting to read data
+#TODO: Modify routine to have a form of exit
+
+    while(True):
+        received_len = RadioDataAvailable(fd)
+        if received_len > 0:
+            received = GetRadioData(fd)
+            print("Data Received:%s" % received)
+        else:
+            print(".", end="", flush=True)
+    return
 
 
 def main():
@@ -176,6 +172,9 @@ def main():
 
         print(".", end="", flush=True)
         time.sleep(INTERDELAY)
+
+        ReadRadioData(sp)
+
 
 
 logging.basicConfig(filename="LoRaCommsReceiver.txt", filemode="w", level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
