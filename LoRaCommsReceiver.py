@@ -10,6 +10,7 @@ import logging
 import time
 import math
 import sys
+import random
 
 # The dealy between send and receive
 SRDELAY = 0.1
@@ -24,6 +25,8 @@ def SetupUART():
     -Opens the serial port
     -Checks all is ok and returns the object
     """
+
+#TODO: Need to cater for Pi 3 as it uses /dev/serial0
 
     ser = serial.Serial('/dev/ttyAMA0', baudrate=57600, parity=serial.PARITY_NONE,
                             stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=1)
@@ -129,11 +132,11 @@ def RadioDataAvailable(fd):
     WriteData(fd, 'AT+r')
     ans = ReadData(fd)
 #TODO: Add in check for invalid / incorrect data, format of data returned is 00\r\nOK00>
-    data_length = int(ans[0:1])
+    data_length = int(ans[0:2], 16)
     logging.info("Check for Radio Data (AT+r) returned %i bytes" % data_length)
     return data_length
 
-def GetRadioData(fd, length):
+def GetRadioData(fd, length=-1):
     # get the data from the radio, if no length, get all
     # use geta / AT+A
 
@@ -146,6 +149,7 @@ def GetRadioData(fd, length):
 def ReadRadioData(fd):
     # Routine to read and return data from the LoRa unit.
     # Currently sits in a loop waiting to read data
+
 #TODO: Modify routine to have a form of exit
 
     while(True):
@@ -163,17 +167,37 @@ def main():
     This is the main entry point for the program when it is being run independently.
 
     """
+
+    print("Bostin Technology\n")
+    print("Please choose functionality")
+    print(" - (S)ending")
+    print(" - (R)eceiving")
+
+    choice = input ("Select Menu Option:")
+
     sp = SetupUART()
     SetupLoRa(sp)
 
-    print("Sending messages")
-    while(True):
-        SendRadioData(sp, "Data Sent")
+    if choice.upper() == "S":
+        print("Sending Messages")
+        while(True):
+            length_to_send = random.randint(5,36)
+            data_to_send = ""
+            data_to_send = ''.join(random.choice('0123456789ABCDEF') for i in range(length_to_send))
+            print("Data To Send:%s" % data_to_send)
+            SendRadioData(sp, data_to_send)
 
-        print(".", end="", flush=True)
-        time.sleep(INTERDELAY)
+            print(".", end="", flush=True)
+            time.sleep(INTERDELAY)
+    elif choice.upper() == "R":
+        print("Receiving Messages")
+        while(True):
+            ReadRadioData(sp)
 
-        ReadRadioData(sp)
+            print(".", end="", flush=True)
+            time.sleep(INTERDELAY)
+    else:
+        print("Unknwon Option")
 
 
 

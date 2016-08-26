@@ -1,16 +1,18 @@
-2016-08-26 20:52:05,212:INFO:PI setup complete on channel 4 as : <bound method Serial.getSettingsDict of Serial<id=0x768e9db0, open=True>(port='/dev/ttyAMA0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)>
-2016-08-26 20:52:05,213:INFO:Setting up the LoRA module with the various commands
-2016-08-26 20:52:05,214:INFO:Message >AT*v< sent as >'AT*v\r\n'< and got this reply:6
-2016-08-26 20:52:07,317:DEBUG:Read data of length unknown from the Serial port: b'\r\nIDN: AM093 (modem)\r\nEXECUTIVE VER:2.35 BUILD:20160610 172026\r\nRF STACK  VER:2.35 BUILD:20160610 172026\r\n\r\nOK00>'
-2016-08-26 20:52:07,819:INFO:Message >glora< sent as >'glora\r\n'< and got this reply:7
-2016-08-26 20:52:09,923:DEBUG:Read data of length unknown from the Serial port: b'\r\n01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:40\r\n09:00  0A:00  \r\nOK00>'
-2016-08-26 20:52:10,425:INFO:Message >sloramode 1< sent as >'sloramode 1\r\n'< and got this reply:13
-2016-08-26 20:52:12,529:DEBUG:Read data of length unknown from the Serial port: b'\r\nOK00>'
-2016-08-26 20:52:13,031:INFO:Message >AT+X 0A< sent as >'AT+X 0A\r\n'< and got this reply:9
-2016-08-26 20:52:15,135:DEBUG:Read data of length unknown from the Serial port: b'\r\n$'
-2016-08-26 20:52:15,237:INFO:Message >Data Sent< sent as >'Data Sent\r\n'< and got this reply:11
-2016-08-26 20:52:17,357:DEBUG:Read data of length unknown from the Serial port: b'\r\nOK00>'
-2016-08-26 20:52:17,859:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-26 20:52:19,865:DEBUG:Read data of length unknown from the Serial port: b'00\r\nOK00>'
-2016-08-26 20:52:19,866:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-26 20:52:19,867:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-26 22:07:55,921:INFO:PI setup complete on channel 5 as : <bound method Serial.getSettingsDict of Serial<id=0x768b8ad0, open=True>(port='/dev/ttyAMA0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)>
+2016-08-26 22:07:55,923:INFO:Setting up the LoRA module with the various commands
+2016-08-26 22:07:55,924:INFO:Message >AT*v< sent as >'AT*v\r\n'< and got this reply:6
+2016-08-26 22:07:58,028:DEBUG:Read data of length unknown from the Serial port: b'\r\nIDN: AM093 (modem)\r\nEXECUTIVE VER:2.35 BUILD:20160610 172026\r\nRF STACK  VER:2.35 BUILD:20160610 172026\r\n\r\nOK00>'
+2016-08-26 22:07:58,530:INFO:Message >glora< sent as >'glora\r\n'< and got this reply:7
+2016-08-26 22:08:00,634:DEBUG:Read data of length unknown from the Serial port: b'\r\n01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:40\r\n09:00  0A:00  \r\nOK00>'
+2016-08-26 22:08:01,136:INFO:Message >sloramode 1< sent as >'sloramode 1\r\n'< and got this reply:13
+2016-08-26 22:08:03,240:DEBUG:Read data of length unknown from the Serial port: b'\r\nOK00>'
+2016-08-26 22:08:03,742:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-26 22:08:05,747:DEBUG:Read data of length unknown from the Serial port: b'00\r\nOK00>'
+2016-08-26 22:08:05,748:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-26 22:08:05,748:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-26 22:08:07,754:DEBUG:Read data of length unknown from the Serial port: b'00\r\nOK00>'
+2016-08-26 22:08:07,755:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-26 22:08:07,756:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-26 22:08:09,763:DEBUG:Read data of length unknown from the Serial port: b'00\r\nOK00>'
+2016-08-26 22:08:09,764:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-26 22:08:09,765:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
