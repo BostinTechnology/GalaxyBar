@@ -16,7 +16,7 @@ import random
 SRDELAY = 0.1
 
 # The delay between receiving one message and sending the next
-INTERDELAY = 0.5
+INTERDELAY = 0.2
 
 def SetupUART():
     """
@@ -89,9 +89,10 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
             logging.warning("Reading of data on the serial port FAILED")
             ans = b''
 
+    logging.debug("Data Read back from the serial port :%s" % ans)
     # Strip out the control codes
-    ans.replace(b'\r\n',b'')
-    ans.replace(b'>',b'')
+    ans = ans.replace(b'\r\n',b'')
+    ans = ans.replace(b'>',b'')
 
     # Check the reply for either the default (OK00 - set above) or given positive response
     # find the last n bytes where n is the length of the expected positive response
@@ -260,7 +261,7 @@ def main():
             print(".", end="", flush=True)
             time.sleep(INTERDELAY)
     else:
-        print("Unknwon Option")
+        print("Unknown Option")
 
 
 
