@@ -12,6 +12,13 @@ import math
 import sys
 import random
 
+#BUG: Even though ReadData failed, the sending program still printed the data string on screen
+#       Also appears the same happens when we get a negative LoRa code, eg EREF
+#BUG: The program is only receiving some of the messages sent.
+#BUG: The data received still has a \r in it, which may be affecting it
+
+#TODO: Need to check for negative LoRa codes, like EREF etc.
+
 # The delay between send and receive
 SRDELAY = 0.1
 

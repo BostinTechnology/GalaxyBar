@@ -1,180 +1,2414 @@
-2016-08-27 23:41:00,612:INFO:PI setup complete on channel 5 as : <bound method Serial.getSettingsDict of Serial<id=0x768c2b10, open=True>(port='/dev/ttyAMA0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)>
-2016-08-27 23:41:00,613:INFO:Setting up the LoRA module with the various commands
-2016-08-27 23:41:00,614:INFO:Message >AT*v< sent as >'AT*v\r\n'< and got this reply:6
-2016-08-27 23:41:02,718:DEBUG:Data Read back from the serial port :b'\r\nERFE>'
-2016-08-27 23:41:02,719:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:02,720:DEBUG:Checking from position 0 to position 4
-2016-08-27 23:41:02,720:WARNING:Negative response received : b'ERFE'
-2016-08-27 23:41:02,721:DEBUG:Data of length unknown read from the Serial port: ''
-2016-08-27 23:41:02,922:INFO:Message >glora< sent as >'glora\r\n'< and got this reply:7
-2016-08-27 23:41:05,025:DEBUG:Data Read back from the serial port :b'\r\n01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:40\r\n09:00  0A:00  \r\nOK00>'
-2016-08-27 23:41:05,027:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:05,027:DEBUG:Checking from position 68 to position 72
-2016-08-27 23:41:05,028:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:05,029:DEBUG:Data of length unknown read from the Serial port: b'01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:4009:00  0A:00  OK00'
-2016-08-27 23:41:05,230:INFO:Message >sloramode 1< sent as >'sloramode 1\r\n'< and got this reply:13
-2016-08-27 23:41:07,334:DEBUG:Data Read back from the serial port :b'\r\nOK00>'
-2016-08-27 23:41:07,335:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:07,336:DEBUG:Checking from position 0 to position 4
-2016-08-27 23:41:07,337:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:07,337:DEBUG:Data of length unknown read from the Serial port: b'OK00'
-2016-08-27 23:41:07,338:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:09,344:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:09,345:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:09,346:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:09,347:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:09,347:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:09,348:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:09,349:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:11,355:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:11,356:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:11,357:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:11,357:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:11,358:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:11,359:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:11,360:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:13,365:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:13,366:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:13,367:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:13,367:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:13,368:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:13,369:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:13,370:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:15,376:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:15,377:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:15,378:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:15,379:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:15,379:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:15,380:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:15,381:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:17,387:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:17,388:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:17,389:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:17,390:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:17,390:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:17,391:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:17,393:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:19,398:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:19,400:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:19,400:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:19,401:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:19,402:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:19,402:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:19,404:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:21,409:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:21,411:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:21,411:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:21,412:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:21,413:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:21,413:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:21,415:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:23,421:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:23,422:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:23,422:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:23,423:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:23,424:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:23,425:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:23,426:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:25,432:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:25,433:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:25,434:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:25,435:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:25,435:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:25,436:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:25,437:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:27,443:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:27,444:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:27,445:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:27,446:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:27,446:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:27,447:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:27,448:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:29,454:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:29,455:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:29,456:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:29,456:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:29,457:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:29,458:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:29,459:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:31,465:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:31,466:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:31,467:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:31,467:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:31,468:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:31,469:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:31,470:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:33,475:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:33,477:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:33,477:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:33,478:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:33,479:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:33,479:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:33,481:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:35,486:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:35,487:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:35,488:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:35,489:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:35,490:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:35,490:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:35,492:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:37,497:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:37,499:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:37,500:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:37,500:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:37,501:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:37,502:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:37,503:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:39,508:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:39,509:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:39,510:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:39,511:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:39,511:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:39,512:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:39,513:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:41,519:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
-2016-08-27 23:41:41,520:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:41,521:DEBUG:Checking from position 2 to position 6
-2016-08-27 23:41:41,522:INFO:Positive response received : b'OK00'
-2016-08-27 23:41:41,522:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
-2016-08-27 23:41:41,523:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:41,525:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:42,000:WARNING:Reading of data on the serial port FAILED
-2016-08-27 23:41:42,001:DEBUG:Data Read back from the serial port :b''
-2016-08-27 23:41:42,002:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:42,002:DEBUG:Checking from position -4 to position 0
-2016-08-27 23:41:42,003:WARNING:Negative response received : b''
-2016-08-27 23:41:42,004:DEBUG:Data of length unknown read from the Serial port: ''
-2016-08-27 23:41:42,005:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:42,006:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:43,751:WARNING:Reading of data on the serial port FAILED
-2016-08-27 23:41:43,752:DEBUG:Data Read back from the serial port :b''
-2016-08-27 23:41:43,753:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:43,754:DEBUG:Checking from position -4 to position 0
-2016-08-27 23:41:43,755:WARNING:Negative response received : b''
-2016-08-27 23:41:43,756:DEBUG:Data of length unknown read from the Serial port: ''
-2016-08-27 23:41:43,756:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:43,757:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:43,911:WARNING:Reading of data on the serial port FAILED
-2016-08-27 23:41:43,912:DEBUG:Data Read back from the serial port :b''
-2016-08-27 23:41:43,913:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:43,914:DEBUG:Checking from position -4 to position 0
-2016-08-27 23:41:43,915:WARNING:Negative response received : b''
-2016-08-27 23:41:43,915:DEBUG:Data of length unknown read from the Serial port: ''
-2016-08-27 23:41:43,916:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:43,917:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:44,055:WARNING:Reading of data on the serial port FAILED
-2016-08-27 23:41:44,056:DEBUG:Data Read back from the serial port :b''
-2016-08-27 23:41:44,057:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:44,058:DEBUG:Checking from position -4 to position 0
-2016-08-27 23:41:44,059:WARNING:Negative response received : b''
-2016-08-27 23:41:44,059:DEBUG:Data of length unknown read from the Serial port: ''
-2016-08-27 23:41:44,060:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:44,061:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
-2016-08-27 23:41:44,215:WARNING:Reading of data on the serial port FAILED
-2016-08-27 23:41:44,216:DEBUG:Data Read back from the serial port :b''
-2016-08-27 23:41:44,217:DEBUG:Checking for positive (b'OK00') reply
-2016-08-27 23:41:44,218:DEBUG:Checking from position -4 to position 0
-2016-08-27 23:41:44,219:WARNING:Negative response received : b''
-2016-08-27 23:41:44,219:DEBUG:Data of length unknown read from the Serial port: ''
-2016-08-27 23:41:44,220:INFO:Check for Radio Data (AT+r) returned 0 bytes
-2016-08-27 23:41:44,221:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:19,527:INFO:PI setup complete on channel 5 as : <bound method Serial.getSettingsDict of Serial<id=0x7695eb10, open=True>(port='/dev/ttyAMA0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)>
+2016-08-27 23:47:19,528:INFO:Setting up the LoRA module with the various commands
+2016-08-27 23:47:19,529:INFO:Message >AT*v< sent as >'AT*v\r\n'< and got this reply:6
+2016-08-27 23:47:21,633:DEBUG:Data Read back from the serial port :b'\r\nIDN: AM093 (modem)\r\nEXECUTIVE VER:2.35 BUILD:20160610 172026\r\nRF STACK  VER:2.35 BUILD:20160610 172026\r\n\r\nOK00>'
+2016-08-27 23:47:21,635:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:21,635:DEBUG:Checking from position 98 to position 102
+2016-08-27 23:47:21,636:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:21,637:DEBUG:Data of length unknown read from the Serial port: b'IDN: AM093 (modem)EXECUTIVE VER:2.35 BUILD:20160610 172026RF STACK  VER:2.35 BUILD:20160610 172026OK00'
+2016-08-27 23:47:21,838:INFO:Message >glora< sent as >'glora\r\n'< and got this reply:7
+2016-08-27 23:47:23,942:DEBUG:Data Read back from the serial port :b'\r\n01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:40\r\n09:00  0A:00  \r\nOK00>'
+2016-08-27 23:47:23,943:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:23,944:DEBUG:Checking from position 68 to position 72
+2016-08-27 23:47:23,945:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:23,945:DEBUG:Data of length unknown read from the Serial port: b'01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:4009:00  0A:00  OK00'
+2016-08-27 23:47:24,146:INFO:Message >sloramode 1< sent as >'sloramode 1\r\n'< and got this reply:13
+2016-08-27 23:47:26,250:DEBUG:Data Read back from the serial port :b'\r\nOK00>'
+2016-08-27 23:47:26,252:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:26,252:DEBUG:Checking from position 0 to position 4
+2016-08-27 23:47:26,253:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:26,254:DEBUG:Data of length unknown read from the Serial port: b'OK00'
+2016-08-27 23:47:26,255:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:28,261:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:28,262:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:28,262:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:28,263:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:28,264:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:28,265:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:28,266:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:30,272:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:30,273:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:30,274:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:30,274:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:30,275:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:30,276:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:30,277:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:32,283:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:32,284:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:32,285:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:32,286:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:32,286:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:32,287:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:32,288:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:34,294:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:34,295:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:34,296:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:34,297:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:34,297:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:34,298:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:34,299:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:36,305:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:36,306:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:36,307:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:36,308:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:36,308:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:36,309:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:36,310:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:38,316:DEBUG:Data Read back from the serial port :b'13\r\nOK00>'
+2016-08-27 23:47:38,317:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:38,318:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:38,319:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:38,319:DEBUG:Data of length unknown read from the Serial port: b'13OK00'
+2016-08-27 23:47:38,320:INFO:Check for Radio Data (AT+r) returned 19 bytes
+2016-08-27 23:47:38,321:INFO:Message >AT+A< sent as >'AT+A\r\n'< and got this reply:6
+2016-08-27 23:47:40,330:DEBUG:Data Read back from the serial port :b'84A1B843A4EEDFF48F\r\r\nOK00>'
+2016-08-27 23:47:40,331:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:40,332:DEBUG:Checking from position 19 to position 23
+2016-08-27 23:47:40,332:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:40,333:DEBUG:Data of length unknown read from the Serial port: b'84A1B843A4EEDFF48F\rOK00'
+2016-08-27 23:47:40,334:INFO:Radio Data (AT+r) returned >b'84A1B843A4EEDFF48F\rOK00'<
+2016-08-27 23:47:40,335:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:42,341:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:42,342:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:42,343:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:42,343:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:42,344:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:42,345:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:42,346:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:44,351:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:44,353:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:44,353:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:44,354:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:44,355:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:44,356:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:44,357:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:46,363:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:46,364:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:46,365:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:46,366:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:46,366:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:46,367:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:46,368:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:48,374:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:48,375:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:48,375:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:48,376:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:48,376:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:48,377:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:48,378:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:50,384:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:50,385:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:50,385:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:50,386:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:50,386:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:50,387:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:50,387:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:52,393:DEBUG:Data Read back from the serial port :b'1B\r\nOK00>'
+2016-08-27 23:47:52,394:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:52,395:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:52,395:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:52,396:DEBUG:Data of length unknown read from the Serial port: b'1BOK00'
+2016-08-27 23:47:52,396:INFO:Check for Radio Data (AT+r) returned 27 bytes
+2016-08-27 23:47:52,396:INFO:Message >AT+A< sent as >'AT+A\r\n'< and got this reply:6
+2016-08-27 23:47:54,407:DEBUG:Data Read back from the serial port :b'5915770CFEE5262136CDB207E5\r\r\nOK00>'
+2016-08-27 23:47:54,408:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:54,409:DEBUG:Checking from position 27 to position 31
+2016-08-27 23:47:54,409:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:54,410:DEBUG:Data of length unknown read from the Serial port: b'5915770CFEE5262136CDB207E5\rOK00'
+2016-08-27 23:47:54,411:INFO:Radio Data (AT+r) returned >b'5915770CFEE5262136CDB207E5\rOK00'<
+2016-08-27 23:47:54,412:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:56,418:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:56,419:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:56,420:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:56,421:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:56,422:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:56,423:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:56,424:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:47:58,430:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:47:58,431:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:47:58,432:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:47:58,432:INFO:Positive response received : b'OK00'
+2016-08-27 23:47:58,433:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:47:58,434:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:47:58,435:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:00,441:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:00,442:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:00,443:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:00,444:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:00,444:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:00,445:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:00,447:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:02,452:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:02,454:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:02,455:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:02,455:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:02,456:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:02,457:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:02,458:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:04,463:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:04,465:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:04,466:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:04,466:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:04,467:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:04,468:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:04,469:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:06,475:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:06,476:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:06,477:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:06,477:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:06,478:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:06,478:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:06,480:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:08,485:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:08,487:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:08,488:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:08,488:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:08,489:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:08,490:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:08,491:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:10,497:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:10,497:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:10,498:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:10,499:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:10,499:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:10,499:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:10,500:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:12,506:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:12,507:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:12,507:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:12,508:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:12,508:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:12,509:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:12,510:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:14,515:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:14,517:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:14,517:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:14,518:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:14,519:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:14,520:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:14,521:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:16,527:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:16,528:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:16,529:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:16,530:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:16,530:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:16,531:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:16,532:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:18,538:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:18,539:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:18,540:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:18,541:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:18,541:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:18,542:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:18,543:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:20,549:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:20,550:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:20,551:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:20,552:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:20,553:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:20,555:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:20,556:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:22,563:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:22,564:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:22,565:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:22,565:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:22,566:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:22,567:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:22,567:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:24,573:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:24,574:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:24,575:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:24,575:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:24,576:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:24,576:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:24,577:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:26,583:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:26,584:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:26,584:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:26,585:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:26,585:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:26,586:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:26,587:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:28,592:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:28,593:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:28,595:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:28,596:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:28,596:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:28,597:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:28,598:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:30,604:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:30,605:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:30,606:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:30,607:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:30,607:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:30,608:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:30,609:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:32,615:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:32,615:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:32,616:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:32,617:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:32,617:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:32,617:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:32,618:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:34,624:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:34,625:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:34,626:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:34,627:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:34,628:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:34,628:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:34,629:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:36,635:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:36,636:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:36,637:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:36,637:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:36,638:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:36,638:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:36,639:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:38,645:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:38,646:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:38,647:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:38,647:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:38,648:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:38,649:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:38,650:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:40,655:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:40,657:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:40,657:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:40,658:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:40,659:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:40,659:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:40,661:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:42,667:DEBUG:Data Read back from the serial port :b'0A\r\nOK00>'
+2016-08-27 23:48:42,669:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:42,670:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:42,670:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:42,671:DEBUG:Data of length unknown read from the Serial port: b'0AOK00'
+2016-08-27 23:48:42,672:INFO:Check for Radio Data (AT+r) returned 10 bytes
+2016-08-27 23:48:42,673:INFO:Message >AT+A< sent as >'AT+A\r\n'< and got this reply:6
+2016-08-27 23:48:43,376:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:43,377:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:43,378:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:43,379:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:43,379:WARNING:Negative response received : b''
+2016-08-27 23:48:43,380:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:43,381:INFO:Radio Data (AT+r) returned ><
+2016-08-27 23:48:43,382:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:43,882:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:43,889:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:43,890:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:43,891:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:43,892:WARNING:Negative response received : b''
+2016-08-27 23:48:43,892:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:43,893:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:43,895:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:43,912:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:43,913:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:43,914:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:43,914:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:43,915:WARNING:Negative response received : b''
+2016-08-27 23:48:43,916:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:43,917:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:43,918:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:43,938:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:43,940:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:43,941:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:43,942:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:43,943:WARNING:Negative response received : b''
+2016-08-27 23:48:43,943:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:43,944:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:43,945:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:43,971:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:43,974:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:43,976:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:43,977:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:43,978:WARNING:Negative response received : b''
+2016-08-27 23:48:43,978:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:43,979:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:43,980:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:43,998:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,002:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,003:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,004:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,005:WARNING:Negative response received : b''
+2016-08-27 23:48:44,006:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,006:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,008:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,029:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,031:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,032:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,033:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,034:WARNING:Negative response received : b''
+2016-08-27 23:48:44,034:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,035:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,036:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,063:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,065:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,066:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,067:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,068:WARNING:Negative response received : b''
+2016-08-27 23:48:44,068:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,069:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,070:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,091:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,094:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,095:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,096:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,096:WARNING:Negative response received : b''
+2016-08-27 23:48:44,097:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,098:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,099:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,121:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,123:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,124:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,125:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,126:WARNING:Negative response received : b''
+2016-08-27 23:48:44,127:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,127:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,128:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,152:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,156:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,157:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,158:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,159:WARNING:Negative response received : b''
+2016-08-27 23:48:44,160:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,161:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,162:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,183:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,185:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,186:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,187:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,188:WARNING:Negative response received : b''
+2016-08-27 23:48:44,189:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,189:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,190:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,214:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,216:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,217:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,218:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,219:WARNING:Negative response received : b''
+2016-08-27 23:48:44,219:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,220:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,221:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,245:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,246:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,247:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,248:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,249:WARNING:Negative response received : b''
+2016-08-27 23:48:44,250:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,250:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,251:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:44,276:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:44,277:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:44,278:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:44,279:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:44,280:WARNING:Negative response received : b''
+2016-08-27 23:48:44,281:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:44,281:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:44,282:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:46,288:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-27 23:48:46,290:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:46,290:DEBUG:Checking from position 2 to position 6
+2016-08-27 23:48:46,291:INFO:Positive response received : b'OK00'
+2016-08-27 23:48:46,292:DEBUG:Data of length unknown read from the Serial port: b'00OK00'
+2016-08-27 23:48:46,292:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:46,294:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:46,753:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:46,754:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:46,755:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:46,756:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:46,757:WARNING:Negative response received : b''
+2016-08-27 23:48:46,757:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:46,758:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:46,759:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,253:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,255:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,256:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,256:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,257:WARNING:Negative response received : b''
+2016-08-27 23:48:47,258:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,258:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,260:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,283:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,284:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,285:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,286:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,286:WARNING:Negative response received : b''
+2016-08-27 23:48:47,287:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,288:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,289:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,315:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,316:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,317:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,318:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,318:WARNING:Negative response received : b''
+2016-08-27 23:48:47,319:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,320:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,321:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,345:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,346:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,347:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,348:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,349:WARNING:Negative response received : b''
+2016-08-27 23:48:47,349:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,350:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,351:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,375:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,376:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,377:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,378:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,379:WARNING:Negative response received : b''
+2016-08-27 23:48:47,380:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,380:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,381:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,406:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,407:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,408:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,409:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,410:WARNING:Negative response received : b''
+2016-08-27 23:48:47,410:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,411:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,412:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,438:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,439:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,440:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,441:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,442:WARNING:Negative response received : b''
+2016-08-27 23:48:47,443:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,443:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,444:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,469:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,470:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,471:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,472:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,473:WARNING:Negative response received : b''
+2016-08-27 23:48:47,473:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,474:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,475:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,499:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,500:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,501:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,501:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,502:WARNING:Negative response received : b''
+2016-08-27 23:48:47,503:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,503:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,504:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,531:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,532:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,534:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,535:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,536:WARNING:Negative response received : b''
+2016-08-27 23:48:47,536:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,537:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,539:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,561:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,562:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,563:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,564:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,565:WARNING:Negative response received : b''
+2016-08-27 23:48:47,566:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,567:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,568:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,590:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,592:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,592:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,593:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,594:WARNING:Negative response received : b''
+2016-08-27 23:48:47,595:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,596:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,597:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,624:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,626:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,627:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,627:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,628:WARNING:Negative response received : b''
+2016-08-27 23:48:47,629:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,630:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,631:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,652:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,654:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,655:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,656:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,656:WARNING:Negative response received : b''
+2016-08-27 23:48:47,657:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,658:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,659:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,683:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,684:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,685:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,686:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,687:WARNING:Negative response received : b''
+2016-08-27 23:48:47,687:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,688:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,689:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,715:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,716:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,717:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,718:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,718:WARNING:Negative response received : b''
+2016-08-27 23:48:47,719:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,720:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,721:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,744:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,745:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,746:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,747:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,747:WARNING:Negative response received : b''
+2016-08-27 23:48:47,748:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,749:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,750:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,774:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,775:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,776:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,777:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,777:WARNING:Negative response received : b''
+2016-08-27 23:48:47,778:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,779:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,780:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,804:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,807:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,809:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,810:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,811:WARNING:Negative response received : b''
+2016-08-27 23:48:47,812:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,812:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,813:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,836:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,837:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,838:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,839:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,840:WARNING:Negative response received : b''
+2016-08-27 23:48:47,840:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,841:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,842:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,867:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,870:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,871:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,873:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,874:WARNING:Negative response received : b''
+2016-08-27 23:48:47,875:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,876:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,877:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,896:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,897:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,898:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,899:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,899:WARNING:Negative response received : b''
+2016-08-27 23:48:47,900:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,901:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,902:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,926:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,928:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,929:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,929:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,930:WARNING:Negative response received : b''
+2016-08-27 23:48:47,931:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,931:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,932:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,958:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,959:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,960:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,961:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,961:WARNING:Negative response received : b''
+2016-08-27 23:48:47,962:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,962:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,963:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:47,989:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:47,990:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:47,991:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:47,992:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:47,992:WARNING:Negative response received : b''
+2016-08-27 23:48:47,993:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:47,993:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:47,995:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,019:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,020:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,021:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,022:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,023:WARNING:Negative response received : b''
+2016-08-27 23:48:48,023:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,024:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,026:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,050:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,051:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,052:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,053:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,054:WARNING:Negative response received : b''
+2016-08-27 23:48:48,055:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,056:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,057:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,080:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,081:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,082:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,083:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,084:WARNING:Negative response received : b''
+2016-08-27 23:48:48,084:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,085:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,086:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,109:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,111:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,114:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,116:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,116:WARNING:Negative response received : b''
+2016-08-27 23:48:48,117:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,118:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,119:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,139:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,141:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,142:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,143:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,144:WARNING:Negative response received : b''
+2016-08-27 23:48:48,144:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,145:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,146:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,169:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,171:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,172:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,173:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,174:WARNING:Negative response received : b''
+2016-08-27 23:48:48,175:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,175:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,176:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,200:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,202:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,204:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,205:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,207:WARNING:Negative response received : b''
+2016-08-27 23:48:48,207:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,208:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,209:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,230:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,231:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,232:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,233:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,234:WARNING:Negative response received : b''
+2016-08-27 23:48:48,235:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,236:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,237:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,261:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,263:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,264:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,265:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,266:WARNING:Negative response received : b''
+2016-08-27 23:48:48,266:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,267:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,268:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,293:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,294:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,295:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,296:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,297:WARNING:Negative response received : b''
+2016-08-27 23:48:48,297:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,298:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,299:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,321:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,323:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,324:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,325:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,326:WARNING:Negative response received : b''
+2016-08-27 23:48:48,326:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,327:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,328:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,352:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,353:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,354:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,355:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,356:WARNING:Negative response received : b''
+2016-08-27 23:48:48,357:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,358:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,359:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,383:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,384:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,385:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,386:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,387:WARNING:Negative response received : b''
+2016-08-27 23:48:48,387:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,388:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,389:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,414:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,420:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,424:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,424:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,425:WARNING:Negative response received : b''
+2016-08-27 23:48:48,426:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,427:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,428:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,443:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,445:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,446:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,447:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,448:WARNING:Negative response received : b''
+2016-08-27 23:48:48,448:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,449:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,450:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,474:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,475:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,477:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,478:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,479:WARNING:Negative response received : b''
+2016-08-27 23:48:48,479:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,480:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,481:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,504:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,505:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,506:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,507:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,508:WARNING:Negative response received : b''
+2016-08-27 23:48:48,509:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,510:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,511:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,535:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,536:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,537:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,537:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,538:WARNING:Negative response received : b''
+2016-08-27 23:48:48,539:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,540:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,541:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,567:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,571:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,572:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,573:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,573:WARNING:Negative response received : b''
+2016-08-27 23:48:48,574:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,575:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,576:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,596:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,597:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,598:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,599:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,600:WARNING:Negative response received : b''
+2016-08-27 23:48:48,601:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,602:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,603:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,627:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,628:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,629:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,630:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,631:WARNING:Negative response received : b''
+2016-08-27 23:48:48,632:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,633:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,634:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,658:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,659:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,660:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,660:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,661:WARNING:Negative response received : b''
+2016-08-27 23:48:48,662:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,663:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,665:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,688:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,690:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,691:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,692:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,693:WARNING:Negative response received : b''
+2016-08-27 23:48:48,698:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,704:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,705:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,718:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,720:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,721:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,722:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,722:WARNING:Negative response received : b''
+2016-08-27 23:48:48,723:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,724:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,726:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,748:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,749:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,750:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,751:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,752:WARNING:Negative response received : b''
+2016-08-27 23:48:48,752:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,753:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,754:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,779:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,780:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,780:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,781:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,781:WARNING:Negative response received : b''
+2016-08-27 23:48:48,782:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,782:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,783:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,809:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,810:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,810:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,811:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,812:WARNING:Negative response received : b''
+2016-08-27 23:48:48,812:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,813:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,815:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,839:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,840:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,840:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,841:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,841:WARNING:Negative response received : b''
+2016-08-27 23:48:48,842:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,842:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,843:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,869:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,871:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,872:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,873:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,873:WARNING:Negative response received : b''
+2016-08-27 23:48:48,874:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,875:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,877:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,899:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,910:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,911:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,912:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,913:WARNING:Negative response received : b''
+2016-08-27 23:48:48,914:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,916:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,917:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,929:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,931:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,931:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,932:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,933:WARNING:Negative response received : b''
+2016-08-27 23:48:48,934:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,935:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,936:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,959:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,960:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,961:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,962:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,963:WARNING:Negative response received : b''
+2016-08-27 23:48:48,963:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,964:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,965:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:48,989:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:48,990:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:48,991:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:48,992:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:48,993:WARNING:Negative response received : b''
+2016-08-27 23:48:48,993:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:48,994:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:48,995:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,019:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,021:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,022:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,022:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,023:WARNING:Negative response received : b''
+2016-08-27 23:48:49,024:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,025:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,026:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,049:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,051:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,051:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,052:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,053:WARNING:Negative response received : b''
+2016-08-27 23:48:49,054:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,055:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,056:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,079:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,081:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,081:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,082:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,083:WARNING:Negative response received : b''
+2016-08-27 23:48:49,083:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,084:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,085:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,109:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,111:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,111:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,112:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,113:WARNING:Negative response received : b''
+2016-08-27 23:48:49,113:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,114:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,115:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,139:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,141:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,141:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,142:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,143:WARNING:Negative response received : b''
+2016-08-27 23:48:49,144:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,144:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,145:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,170:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,171:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,172:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,172:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,173:WARNING:Negative response received : b''
+2016-08-27 23:48:49,174:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,175:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,176:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,200:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,201:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,202:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,203:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,204:WARNING:Negative response received : b''
+2016-08-27 23:48:49,204:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,205:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,206:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,231:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,232:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,233:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,234:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,235:WARNING:Negative response received : b''
+2016-08-27 23:48:49,236:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,237:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,238:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,261:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,263:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,264:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,264:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,265:WARNING:Negative response received : b''
+2016-08-27 23:48:49,266:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,267:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,267:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,291:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,293:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,294:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,295:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,295:WARNING:Negative response received : b''
+2016-08-27 23:48:49,296:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,297:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,298:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,321:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,323:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,324:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,325:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,326:WARNING:Negative response received : b''
+2016-08-27 23:48:49,326:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,327:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,328:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,351:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,352:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,353:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,354:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,355:WARNING:Negative response received : b''
+2016-08-27 23:48:49,356:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,357:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,358:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,382:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,383:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,384:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,385:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,385:WARNING:Negative response received : b''
+2016-08-27 23:48:49,386:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,387:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,388:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,412:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,414:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,415:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,415:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,416:WARNING:Negative response received : b''
+2016-08-27 23:48:49,417:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,417:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,418:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,442:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,444:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,444:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,445:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,446:WARNING:Negative response received : b''
+2016-08-27 23:48:49,447:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,447:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,448:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,473:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,475:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,476:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,476:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,477:WARNING:Negative response received : b''
+2016-08-27 23:48:49,478:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,478:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,479:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,504:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,506:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,506:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,507:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,508:WARNING:Negative response received : b''
+2016-08-27 23:48:49,508:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,509:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,510:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,535:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,536:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,537:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,537:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,538:WARNING:Negative response received : b''
+2016-08-27 23:48:49,539:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,540:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,541:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,565:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,567:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,567:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,568:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,569:WARNING:Negative response received : b''
+2016-08-27 23:48:49,570:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,570:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,571:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,596:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,597:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,598:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,599:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,600:WARNING:Negative response received : b''
+2016-08-27 23:48:49,600:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,601:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,602:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,627:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,628:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,629:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,630:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,631:WARNING:Negative response received : b''
+2016-08-27 23:48:49,631:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,632:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,633:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,658:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,659:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,660:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,661:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,662:WARNING:Negative response received : b''
+2016-08-27 23:48:49,662:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,663:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,664:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,689:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,690:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,691:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,692:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,692:WARNING:Negative response received : b''
+2016-08-27 23:48:49,693:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,694:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,695:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,719:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,720:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,721:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,722:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,723:WARNING:Negative response received : b''
+2016-08-27 23:48:49,723:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,724:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,726:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,749:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,751:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,752:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,752:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,753:WARNING:Negative response received : b''
+2016-08-27 23:48:49,753:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,754:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,756:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,779:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,780:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,781:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,782:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,783:WARNING:Negative response received : b''
+2016-08-27 23:48:49,784:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,784:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,785:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,810:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,811:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,812:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,813:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,814:WARNING:Negative response received : b''
+2016-08-27 23:48:49,814:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,815:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,816:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,840:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,842:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,842:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,843:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,844:WARNING:Negative response received : b''
+2016-08-27 23:48:49,844:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,845:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,846:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,871:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,872:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,873:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,874:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,875:WARNING:Negative response received : b''
+2016-08-27 23:48:49,875:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,876:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,877:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,901:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,903:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,903:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,904:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,905:WARNING:Negative response received : b''
+2016-08-27 23:48:49,906:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,906:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,907:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,932:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,933:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,934:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,935:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,936:WARNING:Negative response received : b''
+2016-08-27 23:48:49,936:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,937:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,938:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,962:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,963:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,965:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,965:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,966:WARNING:Negative response received : b''
+2016-08-27 23:48:49,967:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,967:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,968:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:49,993:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:49,994:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:49,995:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:49,996:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:49,997:WARNING:Negative response received : b''
+2016-08-27 23:48:49,998:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:49,999:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:49,999:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,024:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,025:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,026:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,027:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,028:WARNING:Negative response received : b''
+2016-08-27 23:48:50,029:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,030:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,031:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,055:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,057:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,058:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,058:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,059:WARNING:Negative response received : b''
+2016-08-27 23:48:50,060:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,060:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,061:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,085:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,087:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,088:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,088:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,089:WARNING:Negative response received : b''
+2016-08-27 23:48:50,090:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,090:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,091:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,116:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,117:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,118:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,119:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,119:WARNING:Negative response received : b''
+2016-08-27 23:48:50,120:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,121:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,122:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,146:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,148:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,148:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,149:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,150:WARNING:Negative response received : b''
+2016-08-27 23:48:50,151:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,151:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,152:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,177:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,178:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,179:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,180:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,181:WARNING:Negative response received : b''
+2016-08-27 23:48:50,181:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,182:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,183:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,208:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,209:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,210:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,211:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,211:WARNING:Negative response received : b''
+2016-08-27 23:48:50,212:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,213:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,214:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,238:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,240:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,240:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,241:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,242:WARNING:Negative response received : b''
+2016-08-27 23:48:50,242:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,243:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,244:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,269:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,270:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,271:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,272:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,272:WARNING:Negative response received : b''
+2016-08-27 23:48:50,273:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,274:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,275:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,300:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,301:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,302:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,303:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,303:WARNING:Negative response received : b''
+2016-08-27 23:48:50,304:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,305:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,306:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,330:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,332:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,333:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,334:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,335:WARNING:Negative response received : b''
+2016-08-27 23:48:50,335:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,336:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,337:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,360:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,361:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,362:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,363:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,364:WARNING:Negative response received : b''
+2016-08-27 23:48:50,365:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,365:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,366:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,391:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,392:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,393:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,394:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,395:WARNING:Negative response received : b''
+2016-08-27 23:48:50,395:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,396:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,397:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,422:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,423:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,424:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,425:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,426:WARNING:Negative response received : b''
+2016-08-27 23:48:50,426:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,427:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,428:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,452:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,454:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,455:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,456:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,457:WARNING:Negative response received : b''
+2016-08-27 23:48:50,457:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,458:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,459:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,484:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,485:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,486:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,487:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,488:WARNING:Negative response received : b''
+2016-08-27 23:48:50,488:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,489:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,490:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,514:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,515:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,516:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,517:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,518:WARNING:Negative response received : b''
+2016-08-27 23:48:50,518:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,519:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,520:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,545:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,546:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,547:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,548:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,548:WARNING:Negative response received : b''
+2016-08-27 23:48:50,549:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,550:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,551:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,576:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,577:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,578:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,579:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,580:WARNING:Negative response received : b''
+2016-08-27 23:48:50,580:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,581:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,582:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,606:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,608:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,608:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,609:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,610:WARNING:Negative response received : b''
+2016-08-27 23:48:50,611:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,611:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,612:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,637:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,639:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,640:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,641:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,641:WARNING:Negative response received : b''
+2016-08-27 23:48:50,642:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,642:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,643:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,667:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,668:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,669:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,670:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,671:WARNING:Negative response received : b''
+2016-08-27 23:48:50,672:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,672:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,673:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,698:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,699:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,700:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,701:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,702:WARNING:Negative response received : b''
+2016-08-27 23:48:50,702:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,703:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,704:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,729:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,730:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,731:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,732:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,732:WARNING:Negative response received : b''
+2016-08-27 23:48:50,733:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,734:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,735:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,759:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,761:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,762:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,762:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,763:WARNING:Negative response received : b''
+2016-08-27 23:48:50,764:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,764:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,766:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,789:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,791:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,792:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,792:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,793:WARNING:Negative response received : b''
+2016-08-27 23:48:50,793:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,794:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,796:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,819:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,820:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,821:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,822:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,823:WARNING:Negative response received : b''
+2016-08-27 23:48:50,823:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,824:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,826:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,850:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,851:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,852:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,853:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,853:WARNING:Negative response received : b''
+2016-08-27 23:48:50,854:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,855:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,856:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,880:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,882:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,882:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,883:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,884:WARNING:Negative response received : b''
+2016-08-27 23:48:50,885:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,885:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,886:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,911:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,912:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,913:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,914:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,915:WARNING:Negative response received : b''
+2016-08-27 23:48:50,916:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,917:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,918:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,941:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,943:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,944:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,945:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,945:WARNING:Negative response received : b''
+2016-08-27 23:48:50,946:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,947:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,948:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:50,972:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:50,973:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:50,974:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:50,975:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:50,976:WARNING:Negative response received : b''
+2016-08-27 23:48:50,977:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:50,977:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:50,978:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,002:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,003:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,004:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,005:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,006:WARNING:Negative response received : b''
+2016-08-27 23:48:51,006:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,007:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,008:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,032:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,033:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,034:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,035:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,036:WARNING:Negative response received : b''
+2016-08-27 23:48:51,037:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,038:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,039:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,062:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,064:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,065:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,066:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,067:WARNING:Negative response received : b''
+2016-08-27 23:48:51,068:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,069:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,070:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,092:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,094:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,095:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,096:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,096:WARNING:Negative response received : b''
+2016-08-27 23:48:51,097:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,098:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,099:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,123:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,124:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,125:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,126:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,127:WARNING:Negative response received : b''
+2016-08-27 23:48:51,128:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,128:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,129:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,154:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,156:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,157:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,157:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,158:WARNING:Negative response received : b''
+2016-08-27 23:48:51,159:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,159:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,160:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,184:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,186:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,187:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,187:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,188:WARNING:Negative response received : b''
+2016-08-27 23:48:51,189:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,189:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,190:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,215:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,217:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,218:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,218:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,219:WARNING:Negative response received : b''
+2016-08-27 23:48:51,220:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,220:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,221:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,246:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,247:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,248:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,249:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,250:WARNING:Negative response received : b''
+2016-08-27 23:48:51,250:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,251:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,252:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,276:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,278:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,279:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,279:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,280:WARNING:Negative response received : b''
+2016-08-27 23:48:51,281:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,282:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,283:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,307:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,308:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,309:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,310:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,310:WARNING:Negative response received : b''
+2016-08-27 23:48:51,311:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,311:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,312:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,336:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,337:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,338:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,339:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,340:WARNING:Negative response received : b''
+2016-08-27 23:48:51,341:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,341:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,342:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,367:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,368:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,369:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,370:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,371:WARNING:Negative response received : b''
+2016-08-27 23:48:51,372:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,372:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,374:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,398:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,399:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,400:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,400:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,401:WARNING:Negative response received : b''
+2016-08-27 23:48:51,402:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,402:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,403:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,427:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,429:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,430:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,430:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,431:WARNING:Negative response received : b''
+2016-08-27 23:48:51,432:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,432:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,433:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,458:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,459:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,460:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,461:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,462:WARNING:Negative response received : b''
+2016-08-27 23:48:51,462:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,463:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,464:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,489:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,490:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,491:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,492:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,492:WARNING:Negative response received : b''
+2016-08-27 23:48:51,493:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,494:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,495:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,520:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,521:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,522:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,522:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,523:WARNING:Negative response received : b''
+2016-08-27 23:48:51,524:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,525:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,526:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,550:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,551:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,552:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,553:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,554:WARNING:Negative response received : b''
+2016-08-27 23:48:51,554:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,555:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,556:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,581:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,582:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,583:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,584:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,584:WARNING:Negative response received : b''
+2016-08-27 23:48:51,585:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,586:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,587:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,611:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,612:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,613:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,614:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,614:WARNING:Negative response received : b''
+2016-08-27 23:48:51,615:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,616:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,617:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,641:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,642:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,643:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,644:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,645:WARNING:Negative response received : b''
+2016-08-27 23:48:51,645:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,646:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,647:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,672:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,673:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,674:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,675:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,676:WARNING:Negative response received : b''
+2016-08-27 23:48:51,677:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,678:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,679:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,703:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,705:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,705:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,706:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,707:WARNING:Negative response received : b''
+2016-08-27 23:48:51,707:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,708:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,709:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,734:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,736:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,736:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,737:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,738:WARNING:Negative response received : b''
+2016-08-27 23:48:51,738:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,739:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,740:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,765:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,766:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,767:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,768:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,769:WARNING:Negative response received : b''
+2016-08-27 23:48:51,769:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,770:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,772:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,796:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,797:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,798:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,799:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,800:WARNING:Negative response received : b''
+2016-08-27 23:48:51,801:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,801:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,802:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,827:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,829:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,830:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,830:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,831:WARNING:Negative response received : b''
+2016-08-27 23:48:51,832:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,832:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,833:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,858:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,859:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,860:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,861:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,862:WARNING:Negative response received : b''
+2016-08-27 23:48:51,862:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,863:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,864:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,889:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,890:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,891:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,892:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,893:WARNING:Negative response received : b''
+2016-08-27 23:48:51,893:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,894:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,895:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,920:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,921:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,922:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,922:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,924:WARNING:Negative response received : b''
+2016-08-27 23:48:51,925:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,926:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,927:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,950:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,951:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,952:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,953:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,954:WARNING:Negative response received : b''
+2016-08-27 23:48:51,955:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,956:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,957:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:51,981:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:51,982:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:51,983:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:51,984:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:51,985:WARNING:Negative response received : b''
+2016-08-27 23:48:51,985:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:51,986:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:51,987:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,012:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,014:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,015:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,015:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,016:WARNING:Negative response received : b''
+2016-08-27 23:48:52,017:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,017:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,018:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,043:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,044:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,045:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,046:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,046:WARNING:Negative response received : b''
+2016-08-27 23:48:52,047:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,048:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,049:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,073:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,074:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,076:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,077:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,078:WARNING:Negative response received : b''
+2016-08-27 23:48:52,079:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,080:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,081:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,104:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,105:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,106:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,107:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,108:WARNING:Negative response received : b''
+2016-08-27 23:48:52,108:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,109:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,110:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,135:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,136:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,137:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,138:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,139:WARNING:Negative response received : b''
+2016-08-27 23:48:52,139:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,140:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,141:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,166:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,167:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,168:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,169:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,170:WARNING:Negative response received : b''
+2016-08-27 23:48:52,170:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,171:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,172:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,196:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,198:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,199:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,199:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,200:WARNING:Negative response received : b''
+2016-08-27 23:48:52,201:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,201:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,202:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,227:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,230:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,231:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,231:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,232:WARNING:Negative response received : b''
+2016-08-27 23:48:52,233:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,233:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,234:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,258:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,259:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,260:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,261:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,262:WARNING:Negative response received : b''
+2016-08-27 23:48:52,262:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,263:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,264:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,289:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,290:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,291:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,292:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,292:WARNING:Negative response received : b''
+2016-08-27 23:48:52,293:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,294:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,295:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,319:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,321:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,322:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,322:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,323:WARNING:Negative response received : b''
+2016-08-27 23:48:52,324:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,324:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,326:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,349:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,351:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,352:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,352:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,353:WARNING:Negative response received : b''
+2016-08-27 23:48:52,354:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,355:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,356:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,380:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,382:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,383:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,384:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,385:WARNING:Negative response received : b''
+2016-08-27 23:48:52,385:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,386:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,387:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,410:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,411:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,412:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,413:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,413:WARNING:Negative response received : b''
+2016-08-27 23:48:52,414:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,415:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,416:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,441:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,442:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,443:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,444:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,445:WARNING:Negative response received : b''
+2016-08-27 23:48:52,445:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,446:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,447:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,472:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,473:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,474:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,475:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,476:WARNING:Negative response received : b''
+2016-08-27 23:48:52,477:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,477:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,478:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,503:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,505:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,506:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,506:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,507:WARNING:Negative response received : b''
+2016-08-27 23:48:52,508:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,509:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,510:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,534:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,535:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,536:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,537:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,538:WARNING:Negative response received : b''
+2016-08-27 23:48:52,538:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,539:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,540:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,565:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,567:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,568:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,568:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,569:WARNING:Negative response received : b''
+2016-08-27 23:48:52,570:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,570:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,571:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,596:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,598:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,598:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,599:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,600:WARNING:Negative response received : b''
+2016-08-27 23:48:52,601:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,601:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,602:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,626:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,628:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,629:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,629:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,630:WARNING:Negative response received : b''
+2016-08-27 23:48:52,631:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,631:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,632:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,657:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,658:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,659:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,660:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,662:WARNING:Negative response received : b''
+2016-08-27 23:48:52,663:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,664:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,665:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,688:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,689:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,690:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,691:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,691:WARNING:Negative response received : b''
+2016-08-27 23:48:52,692:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,693:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,694:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,719:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,720:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,721:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,722:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,722:WARNING:Negative response received : b''
+2016-08-27 23:48:52,723:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,723:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,724:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,749:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,751:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,751:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,752:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,753:WARNING:Negative response received : b''
+2016-08-27 23:48:52,754:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,754:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,756:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,779:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,781:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,782:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,782:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,783:WARNING:Negative response received : b''
+2016-08-27 23:48:52,784:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,785:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,786:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,810:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,811:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,812:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,813:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,814:WARNING:Negative response received : b''
+2016-08-27 23:48:52,815:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,816:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,817:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,840:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,841:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,842:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,842:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,843:WARNING:Negative response received : b''
+2016-08-27 23:48:52,844:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,845:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,846:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,870:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,871:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,872:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,873:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,873:WARNING:Negative response received : b''
+2016-08-27 23:48:52,874:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,875:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,876:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,900:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,901:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,902:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,903:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,903:WARNING:Negative response received : b''
+2016-08-27 23:48:52,904:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,905:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,906:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,930:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,932:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,933:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,933:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,934:WARNING:Negative response received : b''
+2016-08-27 23:48:52,935:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,936:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,937:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,961:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,962:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,963:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,964:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,966:WARNING:Negative response received : b''
+2016-08-27 23:48:52,967:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,968:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,969:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:52,992:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:52,993:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:52,994:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:52,995:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:52,995:WARNING:Negative response received : b''
+2016-08-27 23:48:52,996:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:52,997:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:52,998:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,022:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,023:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,024:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,025:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,025:WARNING:Negative response received : b''
+2016-08-27 23:48:53,026:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,027:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,028:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,051:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,052:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,053:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,054:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,055:WARNING:Negative response received : b''
+2016-08-27 23:48:53,056:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,057:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,057:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,082:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,083:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,084:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,085:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,086:WARNING:Negative response received : b''
+2016-08-27 23:48:53,087:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,088:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,089:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,113:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,114:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,115:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,116:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,118:WARNING:Negative response received : b''
+2016-08-27 23:48:53,119:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,120:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,121:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,143:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,144:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,145:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,146:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,147:WARNING:Negative response received : b''
+2016-08-27 23:48:53,147:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,148:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,149:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,173:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,175:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,176:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,177:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,177:WARNING:Negative response received : b''
+2016-08-27 23:48:53,178:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,179:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,179:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,204:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,205:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,206:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,207:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,208:WARNING:Negative response received : b''
+2016-08-27 23:48:53,208:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,209:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,210:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,236:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,237:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,238:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,239:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,240:WARNING:Negative response received : b''
+2016-08-27 23:48:53,240:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,241:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,242:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,267:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,268:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,270:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,271:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,272:WARNING:Negative response received : b''
+2016-08-27 23:48:53,273:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,273:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,274:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,298:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,299:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,300:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,301:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,301:WARNING:Negative response received : b''
+2016-08-27 23:48:53,302:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,303:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,304:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,323:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,325:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,326:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,327:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,329:WARNING:Negative response received : b''
+2016-08-27 23:48:53,329:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,330:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,331:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,353:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,355:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,356:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,357:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,358:WARNING:Negative response received : b''
+2016-08-27 23:48:53,359:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,360:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,361:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,383:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,385:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,386:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,387:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,388:WARNING:Negative response received : b''
+2016-08-27 23:48:53,389:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,389:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,391:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,413:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,414:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,415:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,416:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,417:WARNING:Negative response received : b''
+2016-08-27 23:48:53,418:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,419:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,421:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,443:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,445:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,446:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,446:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,447:WARNING:Negative response received : b''
+2016-08-27 23:48:53,448:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,449:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,450:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,474:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,476:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,477:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,477:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,478:WARNING:Negative response received : b''
+2016-08-27 23:48:53,479:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,480:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,481:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,505:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,506:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,507:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,507:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,508:WARNING:Negative response received : b''
+2016-08-27 23:48:53,509:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,510:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,511:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,535:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,536:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,537:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,538:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,539:WARNING:Negative response received : b''
+2016-08-27 23:48:53,540:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,541:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,542:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,565:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,566:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,567:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,568:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,569:WARNING:Negative response received : b''
+2016-08-27 23:48:53,570:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,571:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,574:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,596:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,597:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,598:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,599:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,599:WARNING:Negative response received : b''
+2016-08-27 23:48:53,600:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,601:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,602:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,626:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,627:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,628:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,629:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,629:WARNING:Negative response received : b''
+2016-08-27 23:48:53,630:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,631:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,632:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,656:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,657:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,658:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,658:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,659:WARNING:Negative response received : b''
+2016-08-27 23:48:53,660:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,660:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,661:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,686:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,687:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,688:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,688:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,689:WARNING:Negative response received : b''
+2016-08-27 23:48:53,690:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,691:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,692:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,719:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,721:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,722:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,723:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,723:WARNING:Negative response received : b''
+2016-08-27 23:48:53,725:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,726:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,727:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,747:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,748:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,749:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,750:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,750:WARNING:Negative response received : b''
+2016-08-27 23:48:53,751:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,752:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,753:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,781:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,782:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,783:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,784:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,786:WARNING:Negative response received : b''
+2016-08-27 23:48:53,787:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,787:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,788:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,808:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,810:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,811:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,812:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,812:WARNING:Negative response received : b''
+2016-08-27 23:48:53,813:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,814:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,815:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,838:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,840:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,841:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,841:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,842:WARNING:Negative response received : b''
+2016-08-27 23:48:53,843:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,844:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,845:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,868:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,870:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,871:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,872:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,872:WARNING:Negative response received : b''
+2016-08-27 23:48:53,873:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,874:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,875:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,899:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,900:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,905:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,906:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,907:WARNING:Negative response received : b''
+2016-08-27 23:48:53,908:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,909:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,910:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,928:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,930:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,931:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,931:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,932:WARNING:Negative response received : b''
+2016-08-27 23:48:53,932:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,933:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,935:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,958:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,960:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,961:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,961:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,962:WARNING:Negative response received : b''
+2016-08-27 23:48:53,963:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,963:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,964:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:53,989:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:53,990:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:53,991:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:53,992:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:53,992:WARNING:Negative response received : b''
+2016-08-27 23:48:53,993:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:53,994:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:53,995:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,020:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,021:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,022:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,023:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,023:WARNING:Negative response received : b''
+2016-08-27 23:48:54,024:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,025:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,027:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,050:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,052:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,053:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,053:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,054:WARNING:Negative response received : b''
+2016-08-27 23:48:54,056:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,057:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,058:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,081:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,082:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,083:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,084:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,085:WARNING:Negative response received : b''
+2016-08-27 23:48:54,086:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,086:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,087:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,111:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,112:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,113:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,114:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,116:WARNING:Negative response received : b''
+2016-08-27 23:48:54,117:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,118:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,120:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,142:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,143:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,144:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,145:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,145:WARNING:Negative response received : b''
+2016-08-27 23:48:54,146:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,147:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,148:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,172:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,173:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,175:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,175:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,176:WARNING:Negative response received : b''
+2016-08-27 23:48:54,177:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,177:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,178:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,203:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,204:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,206:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,207:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,208:WARNING:Negative response received : b''
+2016-08-27 23:48:54,209:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,209:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,210:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,233:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,234:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,235:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,236:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,237:WARNING:Negative response received : b''
+2016-08-27 23:48:54,238:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,239:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,240:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,262:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,264:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,265:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,266:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,266:WARNING:Negative response received : b''
+2016-08-27 23:48:54,267:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,268:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,269:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,292:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,294:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,295:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,295:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,296:WARNING:Negative response received : b''
+2016-08-27 23:48:54,297:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,297:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,298:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,322:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,324:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,325:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,325:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,326:WARNING:Negative response received : b''
+2016-08-27 23:48:54,327:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,327:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,328:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,353:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,354:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,355:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,356:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,357:WARNING:Negative response received : b''
+2016-08-27 23:48:54,357:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,358:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,359:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,386:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,388:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,389:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,390:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,391:WARNING:Negative response received : b''
+2016-08-27 23:48:54,392:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,392:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,393:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,415:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,416:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,418:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,418:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,419:WARNING:Negative response received : b''
+2016-08-27 23:48:54,420:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,421:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,421:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,445:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,447:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,448:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,449:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,449:WARNING:Negative response received : b''
+2016-08-27 23:48:54,450:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,451:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,452:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,479:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,480:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,481:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,482:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,483:WARNING:Negative response received : b''
+2016-08-27 23:48:54,484:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,486:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,488:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,506:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,508:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,508:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,509:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,510:WARNING:Negative response received : b''
+2016-08-27 23:48:54,511:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,512:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,513:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,540:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,541:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,542:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,543:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,544:WARNING:Negative response received : b''
+2016-08-27 23:48:54,545:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,546:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,548:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,568:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,569:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,570:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,571:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,572:WARNING:Negative response received : b''
+2016-08-27 23:48:54,572:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,573:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,574:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,599:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,600:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,601:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,602:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,602:WARNING:Negative response received : b''
+2016-08-27 23:48:54,603:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,604:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,605:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,629:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,630:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,631:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,632:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,632:WARNING:Negative response received : b''
+2016-08-27 23:48:54,633:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,634:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,635:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,659:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,660:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,661:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,662:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,662:WARNING:Negative response received : b''
+2016-08-27 23:48:54,663:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,663:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,665:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,690:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,691:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,692:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,693:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,693:WARNING:Negative response received : b''
+2016-08-27 23:48:54,694:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,695:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,696:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,720:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,721:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,722:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,723:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,723:WARNING:Negative response received : b''
+2016-08-27 23:48:54,724:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,725:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,726:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,751:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,752:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,753:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,753:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,754:WARNING:Negative response received : b''
+2016-08-27 23:48:54,755:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,756:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,757:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,781:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,782:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,783:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,784:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,784:WARNING:Negative response received : b''
+2016-08-27 23:48:54,785:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,786:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,787:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-27 23:48:54,812:WARNING:Reading of data on the serial port FAILED
+2016-08-27 23:48:54,813:DEBUG:Data Read back from the serial port :b''
+2016-08-27 23:48:54,814:DEBUG:Checking for positive (b'OK00') reply
+2016-08-27 23:48:54,815:DEBUG:Checking from position -4 to position 0
+2016-08-27 23:48:54,815:WARNING:Negative response received : b''
+2016-08-27 23:48:54,816:DEBUG:Data of length unknown read from the Serial port: ''
+2016-08-27 23:48:54,817:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-27 23:48:54,818:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
