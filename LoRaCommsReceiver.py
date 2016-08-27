@@ -63,26 +63,51 @@ def WriteData(fd,message):
         ans = 0
     return ans
 
-def ReadData(fd, length=-1):
+def ReadData(fd, length=-1, pos_reply='OK00'):
     # Read the data from the serial port of known length
     # If length is not known, assume all data
-    # returns the string back or an empty string if no response
+    # returns a list containing
+    #   The success / failure
+    #   The string back or an empty string if no response
+    # An additonal optional parameter to determine the expected response, default OK00.
 
-#TODO: add an additonal optional parameter to determine the expected response, default OK00.
-
-#TODO: Add Try loop in case of failure
+    success = False
     if length != -1:
-        ans = fd.read(length)
+        try:
+            ans = fd.read(length)
+            time.sleep(SRDELAY)
+            # Clear out any remaining characters
+            ser.flushInput()
+        except:
+            logging.warning("Reading of data on the serial port FAILED")
+            ans = b''
     else:
-        ans = fd.readall()
-        length = 'unknown'
+        try:
+            length = 'unknown'
+            ans = fd.readall()
+        except:
+            logging.warning("Reading of data on the serial port FAILED")
+            ans = b''
+
     # Strip out the control codes
     ans.replace(b'\r\n',b'')
-#TODO: Validate the response as having OK00 at the end
-#TODO: Need to check the reply to see if it is ok, should be \r\nOK00> - remembering the \r\n is being stripped off
+    ans.replace(b'>',b'')
+
+    # Check the reply for either the default (OK00 - set above) or given positive response
+    # find the last n bytes where n is the length of the expected positive response
+    pos_length = len(pos_reply)
+    ans_length = len(ans)
+    logging.debug("Checking for positive (%s) reply" % pos_reply.encode('utf-8'))
+    logging.debug("Checking from position %d to position %d" % (ans_length - pos_length,ans_length))
+    if ans[ans_length - pos_length : ans_length] == pos_reply.encode('utf-8'):
+        logging.info("Positive response received : %s" % ans[ans_length - pos_length : ans_length])
+        success = True
+    else:
+        logging.warning("Negative response received : %s" % ans[ans_length - pos_length : ans_length])
+        ans=""
 
     logging.debug("Data of length %s read from the Serial port: %a" % (length, ans))
-    return ans
+    return (success, ans)
 
 def SendConfigCommand(fd, command):
     # This function sends data and gets the reply for the various configuration commands.
@@ -90,10 +115,8 @@ def SendConfigCommand(fd, command):
     ans = WriteData(fd, command)
     if ans >0:
         time.sleep(SRDELAY)
-#TODO: Handle a zero length response
-        ans = ReadData(fd)
-
-        time.sleep(INTERDELAY)
+        # No need to check the reply as it has already been validated
+        ReadData(fd)
     else:
         logging.warning("Failed to Send Config Command %s" % command)
 
@@ -107,7 +130,9 @@ def SetupLoRa(fd):
     #SendConfigComamnd(fd, "AT!!")
 
     SendConfigCommand(fd, "AT*v")
+    time.sleep(INTERDELAY)
     SendConfigCommand(fd, "glora")
+    time.sleep(INTERDELAY)
     SendConfigCommand(fd, "sloramode 1")
     return
 
@@ -134,43 +159,45 @@ def SendRadioData(fd, message):
     if reply >0:
         # reply is not empty, so successful
         time.sleep(SRDELAY)
-#TODO: Handle a zero length response
-        ReadData(fd)
-#TODO: Check the response, it should be $ indicating it is ready for the data e.g. b'\r\n$'
-#       Note, ReadData will need to know it is expecting a $, as it will look for OK00!!
+        # Only need to check for a positive response, which is $, not the standard OK00
+        ReadData(fd,pos_reply="$")
 
         time.sleep(SRDELAY)
-#TODO: CHeck if reply is zero and act accordingly
+
         reply = WriteData(fd, message)
+        if reply > 0:
+            # No need to check response, only looking for positive reply
+            ReadData(fd)
+        else:
+            logging.warning("Sending of the Radio data message >%s< FAILED" % reply)
+
     else:
         logging.warning("Sending of the Radio data length message >%s< FAILED" % send)
-#TODO: Handle a zero length response
-    ReadData(fd)
+    logging.info("Radio Message >%s< successfully sent" % message)
     return
 
 def RadioDataAvailable(fd):
     # checks to see if there is radio data available to be read using AT+r / checkr.
     # returns zero if no data
     data_length = 0
-#TODO: CHeck if WriteData returns a zero and act accordingly
-    WriteData(fd, 'AT+r')
-#TODO: Handle a zero length response
-    ans = ReadData(fd)
-#TODO: Add in check for invalid / incorrect data, format of data returned is 00\r\nOK00>
-    data_length = int(ans[0:2], 16)
-    logging.info("Check for Radio Data (AT+r) returned %i bytes" % data_length)
+    reply = WriteData(fd, 'AT+r')
+    if reply > 0:
+        # Request for data length written successfully
+        ans = ReadData(fd)
+        if ans[0] == True:
+            data_length = int(ans[1][0:2], 16)
+        logging.info("Check for Radio Data (AT+r) returned %d bytes" % data_length)
     return data_length
 
 def GetRadioData(fd, length=-1):
     # get the data from the radio, if no length, get all
     # use geta / AT+A
-#TODO: CHeck if WriteData returns zero and act accordingly
-    WriteData(fd, 'AT+A')
-#TODO: Handle a zero length response
-    message = ReadData(fd, length)
-    logging.info("Radio Data (AT+r) returned >%s<" % message)
+    reply = WriteData(fd, 'AT+A')
+    if reply > 0:
+        message = ReadData(fd, length)
+        logging.info("Radio Data (AT+r) returned >%s<" % message[1])
 
-    return message
+    return message[1]
 
 def ReadRadioData(fd):
     # Routine to read and return data from the LoRa unit.
@@ -187,6 +214,16 @@ def ReadRadioData(fd):
             print(".", end="", flush=True)
     return
 
+def ReturnRadioData(fd):
+    # This function returns the radio data that has been received as a list
+    # It is to be called by the external program.
+    received_len = RadioDataAvailable(fd)
+    if received_len > 0:
+        received = GetRadioData(fd)
+        print("Data Received:%s" % received)
+        data = [ord(i) for i in received]
+        logging.debug("Data being passed back to the main program: %s" % data)
+    return
 
 def main():
     """
