@@ -12,7 +12,7 @@ import math
 import sys
 import random
 
-# The dealy between send and receive
+# The delay between send and receive
 SRDELAY = 0.1
 
 # The delay between receiving one message and sending the next
@@ -45,53 +45,66 @@ def SetupUART():
 
     return ser
 
+def ExitProgram(sport):
+    # Close stuff and exit
+    sport.close()
+    sys.exit()
 
 def WriteData(fd,message):
     # This routine will take the given data and write it to the serial port
-    # returns the data length or fail
-#TODO: Need to put a try loop around this
+    # returns the data length or 0 indicating fail
     # add the control characters
     send = message + '\r\n'
-    ans = fd.write(send.encode('utf-8'))
-    logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
+    try:
+        ans = fd.write(send.encode('utf-8'))
+        logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
+    except:
+        logging.warning("Message >%s< sent as >%a< FAILED" % (message, send))
+        ans = 0
     return ans
 
 def ReadData(fd, length=-1):
     # Read the data from the serial port of known length
     # If length is not known, assume all data
+    # returns the string back or an empty string if no response
 
+#TODO: add an additonal optional parameter to determine the expected response, default OK00.
+
+#TODO: Add Try loop in case of failure
     if length != -1:
         ans = fd.read(length)
     else:
         ans = fd.readall()
         length = 'unknown'
-#TODO: Strip off returned characters
-    logging.debug("Read data of length %s from the Serial port: %a" % (length, ans))
+    # Strip out the control codes
+    ans.replace(b'\r\n',b'')
+#TODO: Validate the response as having OK00 at the end
+#TODO: Need to check the reply to see if it is ok, should be \r\nOK00> - remembering the \r\n is being stripped off
+
+    logging.debug("Data of length %s read from the Serial port: %a" % (length, ans))
     return ans
 
 def SendConfigCommand(fd, command):
     # This function sends data and gets the reply for the various configuration commands.
 
     ans = WriteData(fd, command)
-    time.sleep(SRDELAY)
-    ans = ReadData(fd)
+    if ans >0:
+        time.sleep(SRDELAY)
+#TODO: Handle a zero length response
+        ans = ReadData(fd)
 
-    time.sleep(INTERDELAY)
+        time.sleep(INTERDELAY)
+    else:
+        logging.warning("Failed to Send Config Command %s" % command)
+
     return
 
 def SetupLoRa(fd):
     # send the right commands to setup the LoRa module
     logging.info("Setting up the LoRA module with the various commands")
-    # The commands are not yet confirmed, so this is to be added
-    #ans = fd.write(b"AT!!\r\n")
-    #logging.debug("LoRa AT command AT!! sent:%s" % ans)
-    #time.sleep(1)
-    #ans = fd.readall()
-    #logging.debug("LoRa module AT!! response: %s" % ans)
-    #time.sleep(1)
 
-    #fd.flushInput()
-    #time.sleep(1)
+    # This one is removed as it keeps failing and I'm not sure we need it
+    #SendConfigComamnd(fd, "AT!!")
 
     SendConfigCommand(fd, "AT*v")
     SendConfigCommand(fd, "glora")
@@ -111,17 +124,27 @@ def SendRadioData(fd, message):
 
     # First determine the size of the data, adding 1 for the control character at the end
     length = len(message) + 1
-#TODO: If length is greater than 255, abort
+    if length > 255:
+        # Length is greater than 255, abort.
+        logging.critical("Radio Message length is greater than 255 limit, aborting: %s" % message)
+        ExitProgram()
+
     send = 'AT+X ' + format(length, '02X')
     reply = WriteData(fd, send)
-    time.sleep(SRDELAY)
-#TODO: Check the response, it should be $ indicating it is ready for the data
-    ReadData(fd)
+    if reply >0:
+        # reply is not empty, so successful
+        time.sleep(SRDELAY)
+#TODO: Handle a zero length response
+        ReadData(fd)
+#TODO: Check the response, it should be $ indicating it is ready for the data e.g. b'\r\n$'
+#       Note, ReadData will need to know it is expecting a $, as it will look for OK00!!
 
-    time.sleep(SRDELAY)
-    reply = WriteData(fd, message)
-
-#TODO: Need to check the reply to see if it is ok, should be \r\nOK00> - remembering the \r\n is being stripped off
+        time.sleep(SRDELAY)
+#TODO: CHeck if reply is zero and act accordingly
+        reply = WriteData(fd, message)
+    else:
+        logging.warning("Sending of the Radio data length message >%s< FAILED" % send)
+#TODO: Handle a zero length response
     ReadData(fd)
     return
 
@@ -129,7 +152,9 @@ def RadioDataAvailable(fd):
     # checks to see if there is radio data available to be read using AT+r / checkr.
     # returns zero if no data
     data_length = 0
+#TODO: CHeck if WriteData returns a zero and act accordingly
     WriteData(fd, 'AT+r')
+#TODO: Handle a zero length response
     ans = ReadData(fd)
 #TODO: Add in check for invalid / incorrect data, format of data returned is 00\r\nOK00>
     data_length = int(ans[0:2], 16)
@@ -139,8 +164,9 @@ def RadioDataAvailable(fd):
 def GetRadioData(fd, length=-1):
     # get the data from the radio, if no length, get all
     # use geta / AT+A
-
+#TODO: CHeck if WriteData returns zero and act accordingly
     WriteData(fd, 'AT+A')
+#TODO: Handle a zero length response
     message = ReadData(fd, length)
     logging.info("Radio Data (AT+r) returned >%s<" % message)
 
