@@ -18,6 +18,8 @@ import random
 #       Also appears the same happens when we get a negative LoRa code, eg EREF
 #BUG: The data received still has a \r in it, which may be affecting it
 
+#BUG: When I strip off the characters, I can't strip them off from the middle, only the start and end.
+
 #TODO: Need to check for negative LoRa codes, like EREF etc.
 
 # The delay between send and receive
@@ -98,43 +100,25 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
             ans = b''
 
     logging.debug("Data Read back from the serial port :%s" % ans)
-    # Strip out the control codes, changed by using split instead
-    #ans = ans.replace(b'\r\n',b'')
+    # Strip out the control codes
+    ans = ans.replace(b'\r\n',b'')
+    ans = ans.replace(b'>',b'')
 
-    # The command below removes the characters from within the message, and I only need to remove the one at the end
-    #ans = ans.replace(b'>',b'')
-    ans = ans.rstrip(b'>')
-
-    # Split the reply by the control codes
-    ans = ans.split(b'\r\n')
-
-    #This bit has been removed to try a new solution below, now that ans is a lists
-    ## Check the reply for either the default (OK00 - set above) or given positive response
-    ## find the last n bytes where n is the length of the expected positive response
-    #pos_length = len(pos_reply)
-    #ans_length = len(ans)
-    #logging.debug("Checking for positive (%s) reply" % pos_reply.encode('utf-8'))
-    #logging.debug("Checking from position %d to position %d" % (ans_length - pos_length,ans_length))
-    #if ans[ans_length - pos_length : ans_length] == pos_reply.encode('utf-8'):
-        #logging.info("Positive response received : %s" % ans[ans_length - pos_length : ans_length])
-        #success = True
-    #else:
-        #logging.warning("Negative response received : %s" % ans[ans_length - pos_length : ans_length])
-        #ans=""
-
-    ans_pos = len(ans) - 1
+    # Check the reply for either the default (OK00 - set above) or given positive response
+    # find the last n bytes where n is the length of the expected positive response
+    pos_length = len(pos_reply)
+    ans_length = len(ans)
     logging.debug("Checking for positive (%s) reply" % pos_reply.encode('utf-8'))
-    logging.debug("Checking in reply packet %d" % ans_pos)
-    if ans[ans_pos] == pos_reply.encode('utf-8'):
-        logging.info("Positive response received : %s" % ans[ans_pos])
+    logging.debug("Checking from position %d to position %d" % (ans_length - pos_length,ans_length))
+    if ans[ans_length - pos_length : ans_length] == pos_reply.encode('utf-8'):
+        logging.info("Positive response received : %s" % ans[ans_length - pos_length : ans_length])
         success = True
     else:
-        logging.warning("Negative response received : %s" % ans[ans_pos])
-        ans=[]
-        success = False
+        logging.warning("Negative response received : %s" % ans[ans_length - pos_length : ans_length])
+        ans=""
 
     logging.debug("Data of length %s read from the Serial port: %a" % (length, ans))
-    return {'success':success, 'reply':ans}
+    return (success, ans)
 
 def SendConfigCommand(fd, command):
     # This function sends data and gets the reply for the various configuration commands.
@@ -211,8 +195,8 @@ def RadioDataAvailable(fd):
     if reply > 0:
         # Request for data length written successfully
         ans = ReadData(fd)
-        if ans['success'] == True:
-            data_length = int(ans['reply'][0], 16)
+        if ans[0] == True:
+            data_length = int(ans[1][0:2], 16)
         logging.info("Check for Radio Data (AT+r) returned %d bytes" % data_length)
     return data_length
 
@@ -222,9 +206,9 @@ def GetRadioData(fd, length=-1):
     reply = WriteData(fd, 'AT+A')
     if reply > 0:
         message = ReadData(fd, length)
-        # Don't need to check for a successful reply as it will just pass empty data back
-        logging.info("Radio Data (AT+r) returned >%s<" % message['reply'][0])
-    return message['reply'][0]
+        logging.info("Radio Data (AT+r) returned >%s<" % message[1])
+
+    return message[1]
 
 def ReadRadioData(fd):
     # Routine to read and return data from the LoRa unit.
