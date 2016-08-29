@@ -37,6 +37,7 @@ ComsIdle = True     # set to false when an initial RequestToSendData has been re
 CurrentELB = "0000" # when coms has started this variable holds the ELB addr that we are talking to
                     # all others will be ignored.
 PacketReceived = False  # set true when a packet has been received - trigger write operation.
+ExecByte = "!"      # The executive byte to use
 
 # Response Codes
 Resp_ACK = 0x22
@@ -155,7 +156,7 @@ def Main():
             print ("ComsIdle = False")
             if Command == [Ping]:
                 print ("ping")
-                RespondToPing(SerialPort)     # respond to a ping command
+                RespondToPing(SerialPort, Packet)     # respond to a ping command
             elif Command == [DataToSendRequest]:
                 print ("DataToSendRequest")
                 RespondDataToSend(Packet)

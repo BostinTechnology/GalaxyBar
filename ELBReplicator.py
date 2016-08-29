@@ -258,7 +258,7 @@ def SendPing(sp):
     logging.debug("Ping Response from the HUB :%s" % reply)
 
 #TODO: Check Ping response is positive
-    print("Ping response received: %s" % reply)
+    print("Ping response received >%s< (blank = no response)" % reply)
     return
 
 def UnrecognisedCommand():
