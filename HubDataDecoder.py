@@ -36,6 +36,9 @@ Command = 0         # default value fo rcommand
 ComsIdle = True     # set to false when an initial RequestToSendData has been received.
 CurrentELB = "0000" # when coms has started this variable holds the ELB addr that we are talking to
                     # all others will be ignored.
+CurrentHub = "0000" # when comms has started this variable holds the Hub addr that we are talking to
+                    # all others will be ignored.
+
 PacketReceived = False  # set true when a packet has been received - trigger write operation.
 ExecByte = "!"      # The executive byte to use
 
@@ -102,7 +105,7 @@ def RespondToPing(fd, Packet):
     # global variables contain the addresses
     logging.info("Responding to a PING message to the ELB")
     message = GeneratePingResponseMessage()
-    LoRaCommsReceiver.RadioDataTransmission(sp, message)
+    LoRaCommsReceiver.RadioDataTransmission(fd, message)
     # Now need to wait for the answer or timeout.
     print ("in respond to ping")
     return
