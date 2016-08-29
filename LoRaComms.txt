@@ -1,0 +1,317 @@
+2016-08-28 21:39:48,027:INFO:Starting main program with parsed arguments simulate:False & eld:False
+2016-08-28 21:39:48,229:INFO:PI setup complete on channel 5 as : <bound method Serial.getSettingsDict of Serial<id=0x768a1c50, open=True>(port='/dev/ttyAMA0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=0.1, xonxoff=False, rtscts=False, dsrdtr=False)>
+2016-08-28 21:39:48,230:INFO:Setting up the LoRA module with the various commands
+2016-08-28 21:39:48,231:INFO:Message >AT*v< sent as >'AT*v\r\n'< and got this reply:6
+2016-08-28 21:39:48,532:DEBUG:Data Read back from the serial port :b'\r\nIDN: AM093 (modem)\r\nEXECUTIVE VER:2.35 BUILD:20160610 172026\r\nRF STACK  VER:2.35 BUILD:20160610 172026\r\n\r\nOK00>'
+2016-08-28 21:39:48,533:DEBUG:Read the data and got data:b'' and reply:b'OK00'
+2016-08-28 21:39:48,534:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:48,534:DEBUG:Data of length -1 read from the Serial port: [b'', b'OK00', b'EXECUTIVE VER:2.35 BUILD:20160610 172026', b'RF STACK  VER:2.35 BUILD:20160610 172026', b'', b'OK00']
+2016-08-28 21:39:48,735:INFO:Message >glora< sent as >'glora\r\n'< and got this reply:7
+2016-08-28 21:39:49,037:DEBUG:Data Read back from the serial port :b'\r\n01:01  02:06  03:01  04:09  05:07  06:01  07:D9  08:40\r\n09:00  0A:00  \r\nOK00>'
+2016-08-28 21:39:49,037:DEBUG:Read the data and got data:b'' and reply:b'OK00'
+2016-08-28 21:39:49,038:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:49,038:DEBUG:Data of length -1 read from the Serial port: [b'', b'OK00', b'09:00  0A:00  ', b'OK00']
+2016-08-28 21:39:49,239:INFO:Message >sloramode 1< sent as >'sloramode 1\r\n'< and got this reply:13
+2016-08-28 21:39:49,541:DEBUG:Data Read back from the serial port :b'\r\nOK00>'
+2016-08-28 21:39:49,542:DEBUG:Read the data and got data:b'' and reply:b'OK00'
+2016-08-28 21:39:49,542:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:49,543:DEBUG:Data of length -1 read from the Serial port: [b'', b'OK00']
+2016-08-28 21:39:49,544:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:49,748:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:49,749:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:49,749:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:49,750:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:49,750:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:49,751:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:49,955:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:49,955:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:49,956:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:49,957:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:49,957:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:49,957:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:50,161:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:50,162:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:50,163:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:50,163:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:50,164:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:50,164:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:50,369:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:50,370:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:50,371:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:50,371:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:50,372:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:50,372:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:50,576:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:50,577:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:50,578:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:50,578:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:50,579:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:50,580:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:50,783:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:50,785:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:50,785:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:50,786:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:50,787:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:50,787:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:50,991:DEBUG:Data Read back from the serial port :b'21\r\nOK00>'
+2016-08-28 21:39:50,992:DEBUG:Read the data and got data:b'21' and reply:b'OK00'
+2016-08-28 21:39:50,992:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:50,993:DEBUG:Data of length -1 read from the Serial port: [b'21', b'OK00']
+2016-08-28 21:39:50,993:INFO:Check for Radio Data (AT+r) returned 33 bytes
+2016-08-28 21:39:50,994:INFO:Message >AT+A< sent as >'AT+A\r\n'< and got this reply:6
+2016-08-28 21:39:51,203:DEBUG:Data Read back from the serial port :b'384F2853739AF4D251FD948BA132A728\r\r\nOK00>'
+2016-08-28 21:39:51,204:DEBUG:Read the data and got data:b'384F2853739AF4D251FD948BA132A728\r' and reply:b'OK00'
+2016-08-28 21:39:51,205:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:51,205:DEBUG:Data of length -1 read from the Serial port: [b'384F2853739AF4D251FD948BA132A728\r', b'OK00']
+2016-08-28 21:39:51,206:INFO:Radio Data (AT+r) returned >b'384F2853739AF4D251FD948BA132A728\r'<
+2016-08-28 21:39:51,207:DEBUG:Data being passed back to the main program: [51, 56, 52, 70, 50, 56, 53, 51, 55, 51, 57, 65, 70, 52, 68, 50, 53, 49, 70, 68, 57, 52, 56, 66, 65, 49, 51, 50, 65, 55, 50, 56, 13]
+2016-08-28 21:39:51,209:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:51,413:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:51,414:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:51,415:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:51,416:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:51,416:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:51,417:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:51,621:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:51,623:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:51,707:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:51,708:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:51,709:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:51,710:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:51,914:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:51,914:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:51,915:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:51,915:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:51,916:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:51,916:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:52,120:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:52,121:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:52,122:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:52,122:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:52,123:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:52,123:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:52,327:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:52,328:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:52,328:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:52,329:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:52,330:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:52,330:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:52,534:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:52,535:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:52,535:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:52,536:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:52,536:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:52,537:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:52,741:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:52,742:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:52,742:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:52,743:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:52,743:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:52,744:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:52,947:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:52,948:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:52,949:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:52,950:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:52,950:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:52,951:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:53,155:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:53,156:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:53,156:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:53,157:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:53,157:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:53,158:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:53,362:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:53,363:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:53,363:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:53,364:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:53,364:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:53,365:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:53,569:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:53,569:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:53,570:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:53,570:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:53,571:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:53,571:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:53,775:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:53,776:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:53,777:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:53,777:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:53,777:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:53,778:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:53,982:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:53,983:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:53,983:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:53,984:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:53,984:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:53,985:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:54,189:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:54,192:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:54,194:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:54,196:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:54,196:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:54,197:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:54,401:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:54,402:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:54,402:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:54,403:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:54,403:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:54,404:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:54,608:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:54,608:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:54,609:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:54,609:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:54,610:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:54,610:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:54,814:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:54,815:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:54,816:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:54,816:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:54,817:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:54,817:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:55,021:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:55,022:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:55,022:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:55,023:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:55,023:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:55,025:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:55,229:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:55,230:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:55,230:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:55,231:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:55,231:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:55,232:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:55,436:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:55,436:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:55,437:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:55,438:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:55,438:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:55,438:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:55,642:DEBUG:Data Read back from the serial port :b'1B\r\nOK00>'
+2016-08-28 21:39:55,643:DEBUG:Read the data and got data:b'1B' and reply:b'OK00'
+2016-08-28 21:39:55,644:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:55,644:DEBUG:Data of length -1 read from the Serial port: [b'1B', b'OK00']
+2016-08-28 21:39:55,645:INFO:Check for Radio Data (AT+r) returned 27 bytes
+2016-08-28 21:39:55,645:INFO:Message >AT+A< sent as >'AT+A\r\n'< and got this reply:6
+2016-08-28 21:39:55,853:DEBUG:Data Read back from the serial port :b'8C9265F640D19AF456B42A8660\r\r\nOK00>'
+2016-08-28 21:39:55,854:DEBUG:Read the data and got data:b'8C9265F640D19AF456B42A8660\r' and reply:b'OK00'
+2016-08-28 21:39:55,855:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:55,855:DEBUG:Data of length -1 read from the Serial port: [b'8C9265F640D19AF456B42A8660\r', b'OK00']
+2016-08-28 21:39:55,856:INFO:Radio Data (AT+r) returned >b'8C9265F640D19AF456B42A8660\r'<
+2016-08-28 21:39:55,857:DEBUG:Data being passed back to the main program: [56, 67, 57, 50, 54, 53, 70, 54, 52, 48, 68, 49, 57, 65, 70, 52, 53, 54, 66, 52, 50, 65, 56, 54, 54, 48, 13]
+2016-08-28 21:39:55,858:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:56,062:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:56,063:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:56,063:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:56,064:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:56,064:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:56,065:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:56,269:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:56,270:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:56,271:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:56,271:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:56,272:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:56,273:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:56,477:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:56,478:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:56,479:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:56,479:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:56,480:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:56,481:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:56,685:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:56,686:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:56,694:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:56,695:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:56,696:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:56,697:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:56,901:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:56,902:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:56,903:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:56,903:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:56,904:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:56,905:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:57,109:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:57,110:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:57,111:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:57,111:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:57,112:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:57,113:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:57,317:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:57,318:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:57,319:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:57,320:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:57,320:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:57,321:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:57,525:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:57,526:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:57,527:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:57,528:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:57,528:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:57,529:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:57,733:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:57,734:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:57,735:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:57,736:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:57,737:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:57,737:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:57,941:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:57,942:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:57,943:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:57,944:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:57,945:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:57,945:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:58,149:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:58,150:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:58,151:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:58,152:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:58,153:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:58,154:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:58,359:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:58,361:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:58,362:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:58,362:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:58,363:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:58,364:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:58,568:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:58,570:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:58,570:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:58,571:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:58,572:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:58,573:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:58,776:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:58,778:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:58,778:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:58,779:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:58,780:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:58,781:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:58,985:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:58,986:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:58,987:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:58,987:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:58,988:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:58,989:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:59,193:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:59,194:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:59,194:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:59,195:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:59,196:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:59,197:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:59,401:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:59,402:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:59,403:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:59,404:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:59,404:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:59,405:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:59,609:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:59,610:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:59,611:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:59,612:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:59,612:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:59,613:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:59,817:DEBUG:Data Read back from the serial port :b'00\r\nOK00>'
+2016-08-28 21:39:59,818:DEBUG:Read the data and got data:b'00' and reply:b'OK00'
+2016-08-28 21:39:59,819:INFO:Positive response received : b'OK00'
+2016-08-28 21:39:59,820:DEBUG:Data of length -1 read from the Serial port: [b'00', b'OK00']
+2016-08-28 21:39:59,820:INFO:Check for Radio Data (AT+r) returned 0 bytes
+2016-08-28 21:39:59,821:INFO:Message >AT+r< sent as >'AT+r\r\n'< and got this reply:6
+2016-08-28 21:39:59,851:WARNING:Reading of data on the serial port FAILED
+2016-08-28 21:39:59,852:DEBUG:Data Read back from the serial port :b''

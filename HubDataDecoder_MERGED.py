@@ -7,6 +7,10 @@ logging.level(message)
 where level is either debug, info, warning, error, critical
 message is the text to log - can add variables into these messages
 
+e.g.
+logging.debug("Recevied this packet to decode:%s" % reply)
+replaces the %s with the value in reply as a string
+
 '''
 
 import argparse
@@ -15,7 +19,7 @@ import logging
 
 # constants that will not change in program
 # command bytes that are used by LoRa module
-DataToSendRequest = 0x34
+DataToSendReq = 0x34
 ClearToSendData = 0x35
 DataPacketandReq = 0x36
 DataPacketFinal = 0x37
@@ -38,38 +42,57 @@ CurrentELB = "0000" # when coms has started this variable holds the ELB addr tha
                     # all others will be ignored.
 PacketReceived = False  # set true when a packet has been received - trigger write operation.
 
-# Response Codes
-Resp_ACK = 0x22
-#TODO: More to be added.
+
 
 def GetModuleData(sp):
-    # function to get data from LoRa module
-    # need to wait here until we have data
-    # optional
-    '''
-    HubAddr = "00000"
-    ELBAddr = "1234!"
-    Command = Ping
-    PayloadLength = 30
-    PayloadBytes = [0x80,0x00,0x30,0x45,0x12,0x25,0x12,0x15,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x11,0x22,0x33,0x44,0x11,0x22,0x33,0x22,0x45,0x67,0x56,0x78,0x03,0xA4]
-    '''
+    # this module supplies a packet every time it is called
+    # the packet depends on the value of i passed.
+
+
 
     if WorkingMode.simulate:
+        i = 1
         # this is a data packet - Packet = ['0','0','0','0','1','2','3','4','!',Command,PayloadLength,0x80,0x00,0x30,0x45,0x12,0x25,0x12,0x15,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x11,0x22,0x33,0x44,0x11,0x22,0x33,0x22,0x45,0x67,0x56,0x78,0x03,0xA4]   # build packet
-        # ping packet
-        reply = ['0','0','0','0','!','1','2','3','4','!',Ping]
+        if i == 1:
+            # ping packet
+            reply = ['0','0','0','0','!','1','2','3','4','!',Ping]
+        elif i == 2:
+            # Data to send request
+            reply = ['0','0','0','0','!','1','2','3','4','!',DataToSendReq]
+        elif i == 3:
+            # data packet and request
+            PayloadLength = 30
+            reply = ['0','0','0','0','!','1','2','3','4','!',DataPacketandReq,PayloadLength,0x80,0x00,0x30,0x45,0x12,0x25,0x12,0x15,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x11,0x22,0x33,0x44,0x11,0x22,0x33,0x22,0x45,0x67,0x56,0x78,0x03,0xA4]
+        elif i == 4:
+            # data packet and final
+            PayloadLength = 30
+            reply = ['0','0','0','0','!','1','2','3','4','!',DataPacketFinal,PayloadLength,0x80,0x00,0x30,0x45,0x12,0x25,0x12,0x15,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x11,0x22,0x33,0x44,0x11,0x22,0x33,0x22,0x45,0x67,0x56,0x78,0x03,0xA4]
+        else:
+            # make the rest pings
+            reply = ['0','0','0','0','!','1','2','3','4','!',Ping]
 
-        # need to put data validation here
+        #TODO need to put data validation here
+        i = i + 1
+        if i > 10:
+            i = 1
+
 
     else:
         # Running in normal mode
         # This function returns a packet of data as a string, only returns when data captured
-        Packet = []
+        #Packet = []
         reply = LoRaCommsReceiver.ReturnRadioData(sp)
-        logging.info("Received this data to process :%s" % reply)
+        print ("Got this: %s" % reply)
 
-    # return the data from the get data function
+    '''
+    with open("F:\\Users\Duncan\Documents\Dropbox\Pace_Bostin\CognIoT\SinglePacket.txt", "rb") as f:
+    byte = f.read(1)
+    while byte != b"":
+        # Do stuff with byte.
+        byte = f.read(1)
+    '''
     return reply
+    # return the data from the get data function
 
 def WriteLogFile(LogFileName, PayloadBytes):
     # write log file
@@ -78,35 +101,12 @@ def WriteLogFile(LogFileName, PayloadBytes):
         LogFile.write(str(i))
     LoogFile.close()
 
-def GeneratePingResponseMessage():
-    """
-    Function generates an Ping Message and puts it into a list for use.
-    """
-    packet_to_send = []
-    # Receiver address
-    packet_to_send = packet_to_send + list(CurrentELB)
-    # Executive Byte
-    packet_to_send.append(ExecByte)
-    # Sender address
-    packet_to_send = packet_to_send + list(CurrentHub)
-    # Executive Byte
-    packet_to_send.append(ExecByte)
-    # Acknowledge
-    packet_to_send.append(chr(Resp_ACK))
-    logging.info("Ping Response Message :%s" % packet_to_send)
-    return packet_to_send
-
-def RespondToPing(fd, Packet):
+def RespondToPing(Packet):
     # responds to the ping command.
-    # global variables contain the addresses
-    logging.info("Responding to a PING message to the ELB")
-    message = GeneratePingResponseMessage()
-    LoRaCommsReceiver.RadioDataTransmission(sp, message)
-    # Now need to wait for the answer or timeout.
+    # global variables cotain the addresses
     print ("in respond to ping")
-    return
 
-def RespondDataToSend(Packet):
+def RespondDataToSendReq(Packet):
     # responds to the Data to Send Request
     print ("in respond to data to send")
 
@@ -121,6 +121,8 @@ def RespondDataPacketFinal(Packet):
 def UnrecognisedCommand():
     # send relevant Nack.
     print ("in respond to unrecognised")
+
+
 
 
 
@@ -140,22 +142,19 @@ def Main():
             who we are talking to - the ELB address that has started a conversation
         '''
         print ("in main loop")
-
-        # waits in GetModuleData until we have now received a packet from the radio module and it has been checked for validity
         Packet = GetModuleData(SerialPort)
-
+             # waits in Get data until we have now received a packet from the radio module and it has been checked for validity
+        #print ("S"+str(Packet[StartCommand:StartCommand+1])+"E")
         print ("Packet of Data %s" % Packet)
-        print ("Command Byte Location %s" % StartCommand)
+        print ("Commadn Byte Location %s" % StartCommand)
         Command = Packet[StartCommand:StartCommand+1]   # extract command byte
-
-
-#TODO: Need to decode the full message received so I know the ELB address and if the message is for me!
-
+        # Test = int(Packet[StartCommand:StartCommand+1])
+        #BUG command is a list element and not a number
         if ComsIdle:     # not yet in communication with an ELB
             print ("ComsIdle = False")
             if Command == [Ping]:
                 print ("ping")
-                RespondToPing(SerialPort)     # respond to a ping command
+            #    RespondToPing()     # respond to a ping command
             elif Command == [DataToSendRequest]:
                 print ("DataToSendRequest")
                 RespondDataToSend(Packet)
@@ -168,8 +167,6 @@ def Main():
             RespondDataPacketandReq(Packet)
         elif Command == [DataPacketFinal]: # coms has started and received final data packet
             RespondDataPacketFinal(Packet)
-        else:
-            UnrecognisedCommand()
 
 
 

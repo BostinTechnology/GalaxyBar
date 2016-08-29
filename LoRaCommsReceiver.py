@@ -66,70 +66,59 @@ def WriteData(fd,message):
     try:
         ans = fd.write(send.encode('utf-8'))
         logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
-    except:
+    except Exception as e:
         logging.warning("Message >%s< sent as >%a< FAILED" % (message, send))
+        logging.error("Failed Response: %s" % e)
         ans = 0
     return ans
 
 def ReadData(fd, length=-1, pos_reply='OK00'):
     # Read the data from the serial port of known length
     # If length is not known, assume all data
-    # returns a list containing
+    # returns a list containing 2 entries
     #   The success / failure
     #   The string back or an empty string if no response
     # An additonal optional parameter to determine the expected response, default OK00.
 
     success = False
-    if length != -1:
-        try:
-            ans = fd.read(length)
-            time.sleep(SRDELAY)
-            # Clear out any remaining characters
-            ser.flushInput()
-        except:
-            logging.warning("Reading of data on the serial port FAILED")
-            ans = b''
-    else:
-        try:
-            length = 'unknown'
-            ans = fd.readall()
-        except:
-            logging.warning("Reading of data on the serial port FAILED")
-            ans = b''
+    try:
+        reply = fd.readall()
+    except:
+        logging.warning("Reading of data on the serial port FAILED")
+        reply = b''
+#BUG: If nothing received, the program may fail after this point
 
-    logging.debug("Data Read back from the serial port :%s" % ans)
-    # Strip out the control codes, changed by using split instead
-    #ans = ans.replace(b'\r\n',b'')
+    logging.debug("Data Read back from the serial port :%s" % reply)
 
     # The command below removes the characters from within the message, and I only need to remove the one at the end
-    #ans = ans.replace(b'>',b'')
-    ans = ans.rstrip(b'>')
+    reply = reply.rstrip(b'>')
 
-    # Split the reply by the control codes
-    ans = ans.split(b'\r\n')
+#BUG: this could easily happen in the main payload. I should consider splitting based on length.
+#       What is not clear is if the length from the module is the message length>
 
-    #This bit has been removed to try a new solution below, now that ans is a lists
-    ## Check the reply for either the default (OK00 - set above) or given positive response
-    ## find the last n bytes where n is the length of the expected positive response
-    #pos_length = len(pos_reply)
-    #ans_length = len(ans)
+    # Populate the first part of the data (ans) with the data
+    # Using the given length, strip out the reply. If no length is given, take all except 5 bytes
+    if length < 0:
+        # Not given a length, so split on the control codes
+        ans = reply.split(b'\r\n')
+    else:
+        # Spit on the length variable (Use -1 as it is positions 0 to ...)
+        ans[0] = reply[0:length-1]
+
+    logging.debug("The reply is now split into >%s< and >%s<" % (ans[0], ans[1]))
+
+    # Populate the second part of the data (ans) with the reply, the length is determined by the length of pos_reply
+    ans[1] = reply[len(reply) - len(pos_reply):]
+
+    #ans_pos = len(ans) - 1
     #logging.debug("Checking for positive (%s) reply" % pos_reply.encode('utf-8'))
-    #logging.debug("Checking from position %d to position %d" % (ans_length - pos_length,ans_length))
-    #if ans[ans_length - pos_length : ans_length] == pos_reply.encode('utf-8'):
-        #logging.info("Positive response received : %s" % ans[ans_length - pos_length : ans_length])
-        #success = True
-    #else:
-        #logging.warning("Negative response received : %s" % ans[ans_length - pos_length : ans_length])
-        #ans=""
-
-    ans_pos = len(ans) - 1
-    logging.debug("Checking for positive (%s) reply" % pos_reply.encode('utf-8'))
-    logging.debug("Checking in reply packet %d" % ans_pos)
-    if ans[ans_pos] == pos_reply.encode('utf-8'):
-        logging.info("Positive response received : %s" % ans[ans_pos])
+    #logging.debug("Checking in reply packet %d" % ans_pos)
+    logging.debug("Read the data and got data:%s and reply:%s" % (ans[0], ans[1]))
+    if ans[1] == pos_reply.encode('utf-8'):
+        logging.info("Positive response received : %s" % ans[1])
         success = True
     else:
-        logging.warning("Negative response received : %s" % ans[ans_pos])
+        logging.warning("Negative response received : %s" % ans[1])
         ans=[]
         success = False
 
@@ -181,6 +170,8 @@ def SendRadioData(fd, message):
         logging.critical("Radio Message length is greater than 255 limit, aborting: %s" % message)
         ExitProgram()
 
+#TODO: May need to add in a success response so I can determine if the data has been sent.
+
     send = 'AT+X ' + format(length, '02X')
     reply = WriteData(fd, send)
     if reply >0:
@@ -194,6 +185,7 @@ def SendRadioData(fd, message):
         reply = WriteData(fd, message)
         if reply > 0:
             # No need to check response, only looking for positive reply
+            time.sleep(SRDELAY)
             ReadData(fd)
         else:
             logging.warning("Sending of the Radio data message >%s< FAILED" % reply)
@@ -244,19 +236,59 @@ def ReadRadioData(fd):
 def ReturnRadioData(fd):
     # This function returns the radio data that has been received as a list
     # It is to be called by the external program.
-    received_len = RadioDataAvailable(fd)
-    if received_len > 0:
-        received = GetRadioData(fd)
-        print("Data Received:%s" % received)
-        data = [ord(i) for i in received]
-        logging.debug("Data being passed back to the main program: %s" % data)
+    received_len = 0
+    while received_len < 1:
+        received_len = RadioDataAvailable(fd)
+        if received_len > 0:
+            received = GetRadioData(fd)
+            print("Data Received:%s" % received)
+
+            data = [i for i in received]
+            logging.debug("Data being passed back to the main program: %s" % data)
+#        else:
+#            data = []
+    return data
+
+def RadioDataTransmission(fd, dataaslist):
+    # This function takes the given data and changes the format to match required
+    # Then gets it sent and returns the response
+    # Only called by an external program
+    message = ""
+    message = message.join(dataaslist)
+    logging.debug("Data being passed into SendRadioData is:%s" % message)
+    SendRadioData(fd, message)
     return
+
+def ReturnRadioDataTimed(fd, waittime):
+    # This function returns the radio data that has been received as a list
+    # It is to be called by the external program.
+    # It will wait for data packet for the supplied time, then return empty if there is nothing
+    # Waittime is to be provided in seconds
+
+# TODO: Add a check around the waittime
+
+    timeout = time.time() + waittime
+    received_len = 0
+    while received_len < 1:
+        received_len = RadioDataAvailable(fd)
+        if received_len > 0:
+            received = GetRadioData(fd)
+            print("Data Received:%s" % received)
+
+            data = [i for i in received]
+            logging.debug("Data being passed back to the main program: %s" % data)
+        if time.time() > timeout:
+            data = ''
+            logging.debug("No data received within %s seconds, returning empty string" % waittime)
+            break
+    return data
 
 def main():
     """
     This is the main entry point for the program when it is being run independently.
 
     """
+    logging.basicConfig(filename="LoRaCommsReceiver.txt", filemode="w", level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
     print("Bostin Technology\n")
     print("Please choose functionality")
@@ -291,7 +323,6 @@ def main():
 
 
 
-logging.basicConfig(filename="LoRaCommsReceiver.txt", filemode="w", level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
 
 # Only call the independent routine if the module is being called directly, else it is handled by the calling program
