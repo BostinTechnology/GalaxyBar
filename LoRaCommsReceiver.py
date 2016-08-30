@@ -90,8 +90,9 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
 
     logging.debug("Data Read back from the serial port :%s" % reply)
 
-    # The command below removes the characters from within the message, and I only need to remove the one at the end
+    # The command below removes the characters from around the message, and I only need to remove the one at each end
     reply = reply.rstrip(b'>')
+    reply = reply.strip(b'\n')
 
 #BUG: this could easily happen in the main payload. I should consider splitting based on length.
 #       What is not clear is if the length from the module is the message length>
