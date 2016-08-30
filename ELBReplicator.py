@@ -31,6 +31,7 @@ ClearToSendData = 0x35
 DataPacketandReq = 0x36
 DataPacketFinal = 0x37
 
+
 # initialise global variables for data packet. Defined here so that they are global
 Packet = []         # start with empty packet
 # pointers in packet
