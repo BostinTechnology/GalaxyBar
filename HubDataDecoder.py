@@ -91,11 +91,11 @@ def GetModuleData(sp, Simulate):
 
 def WriteLogFile(Packet):
     # write log file
-    return
-    #LogFile = open("Log" + (Packet[StartELBAddr:StartELBAddr+4]) + "yymmddhhmmss.txt", "w")
-    #PayloadLength = Packet[StartPayloadLength]
-    #LogFile.write(Packet[StartPayload:StartPayload+PayloadLength])
-    #LogFile.close()
+    LogFileName = "Log" + Packet[StartELBAddr:StartELBAddr+4])
+    LogFile = open("Log" + chr(Packet[StartELBAddr]) + "yymmddhhmmss", "w")
+    PayloadLength = Packet[StartPayloadLength]
+    LogFile.write(Packet[StartPayload:StartPayload+PayloadLength])
+    LogFile.close()
 
 def GenerateAck(Packet):
     # Function generates an Ack for response to anumber of messages
