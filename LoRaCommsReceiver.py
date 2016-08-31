@@ -246,18 +246,25 @@ def ReturnRadioData(fd):
             received = GetRadioData(fd)
             print("Data Received:%s" % received)
 
-            data = [i for i in received]
+#           NOTE1: Removed as data passed out is to be a string, not a list
+#            data = [i for i in received]
+#            received = recieved.decode('utf-8')
+            data = [chr(i) for i in received]
+            data = ''.join(data)
             logging.debug("Data being passed back to the main program: %s" % data)
 #        else:
 #            data = []
     return data
 
-def RadioDataTransmission(fd, dataaslist):
+def RadioDataTransmission(fd, message):
     # This function takes the given data and changes the format to match required
     # Then gets it sent and returns the response
     # Only called by an external program
-    message = ""
-    message = message.join(dataaslist)
+    #message = ""
+
+#   NOTE1: Removed as data passed in is to be a string, not a list
+#    message = message.join(dataaslist)
+
     logging.debug("Data being passed into SendRadioData is:%s" % message)
     SendRadioData(fd, message)
     return
@@ -278,7 +285,11 @@ def ReturnRadioDataTimed(fd, waittime):
             received = GetRadioData(fd)
             print("Data Received:%s" % received)
 
-            data = [i for i in received]
+            #data = [i for i in received]
+            #data = received.decode('utf-8')
+            data = [chr(i) for i in received]
+            data = ''.join(data)
+
             logging.debug("Data being passed back to the main program: %s" % data)
         if time.time() > timeout:
             data = ''
