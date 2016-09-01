@@ -48,97 +48,111 @@ StartPayload = 12  # poition of start of payload
 # TODO - check these pointers are true of ping, request to send and data packets
 ExecByte = "!".encode('utf-8')      # The executive by
 
-# Initialise files
-
-
 def GetModuleData(sp, Simulate):
     # this module supplies a packet every time it is called
-    # if simulating then packets are created and returned. The returned packet depends on teh value of sp passed.
+    # the packet depends on the value of sp passed.
 
+    Payload = chr(0x7F) + chr(0x00) + chr(0x30) + \
+                chr(0x45) + chr(0x12) + chr(0x25) + chr(0x12) + chr(0x15) + chr(0x01) + chr(0x02) + chr(0x03) + \
+                chr(0x04) + chr(0x05) + chr(0x06) + chr(0x07) + chr(0x08) + chr(0x11) + chr(0x22) + chr(0x33) + \
+                chr(0x44) + chr(0x11) + chr(0x22) + chr(0x33) + chr(0x22) + chr(0x45) + chr(0x67) + chr(0x56) + \
+                chr(0x78) + chr(0x03) + chr(0xA4)
+    '''
+    ComsIdle = True
+        Valid Commands =
+                    Ping and SendDataReq
+        Invalid Commnds =
+                    ClearToSendData, DataPacketandReq, DataPacketFinal, Unrecognised
+    ComsIdle = False
+        Valid Commands =
+                    DataPacketandReq and DataPacketFinal
+        Invalid commands =
+                    Ping, DataToSendReq, ClearToSendData, Unrecognised
+                    DataPacketandReq from another ELB
+                    DataPacketFinal from another ELB
+    '''
     if Simulate:
-        # Simulation Packets
-        HubAddr = b'0000!'
-        Hub2Addr= b'2222!'
-        ELB1Addr = b'1234!'
-        ELB2Addr = b'5678!'
-        ELB3Addr = b'9876!'
+        if sp == 1:
+            # ping packet
+            reply = '0000!1234!' + Ping
+        elif sp == 2:
+            # Data to send request
+            reply = '0000!1234!' + DataToSendReq
+        elif sp == 3:
+            # data packet and request
+            PayloadLength = 30
+            reply = '0000!1234!' + DataPacketandReq + chr(PayloadLength) + Payload
+        elif sp == 4:
+            # data packet and final
+            PayloadLength = 30
+            reply = '0000!1234!' + DataPacketFinal + chr(PayloadLength) + Payload
+        elif sp == 5:
+            # ping packet
+            reply = '0000!1234!' + Ping
+        elif sp == 6:
+            # DataPacketandReq before DataToSendReq
+            PayloadLength = 30
+            reply = '0000!1234!' + DataPacketandReq + chr(PayloadLength) + Payload
+        elif sp == 7:
+            # DataPacketFinal before DataToSendReq
+            PayloadLength = 30
+            reply = '0000!1234!' + DataPacketFinal + chr(PayloadLength) + Payload
+        elif sp == 8:
+            # ClearToSendData from another hub
+            reply = '0000!4321!' + ClearToSendData
+        elif sp == 9:
+            # unrecognised
+            reply = '0000!1234!' + 't'
+        elif sp == 10:
+            # ping
+            reply = '0000!1234!' + Ping
+        elif sp == 11:
+            # DataToSendReq
+            reply = '0000!1234!' + DataToSendReq
+        elif sp == 12:
+            # ComsIdle now false so send invalid commands from another ELB
+            # Ping from another ELB
+            reply = '0000!4321!' + Ping
+        elif sp == 13:
+            # ComsIdle now false so send invalid commands from another ELB
+            # DataToSendReq from another ELB
+            PayloadLength = 30
+            reply = '0000!4321!' + DataPacketandReq + chr(PayloadLength) + Payload
+        elif sp == 14:
+            # ComsIdle now false so send invalid commands from another ELB
+            # ClearToSendData from another Hub
+            reply = '0000!4321!' + ClearToSendData
+        elif sp == 15:
+            # unrecognised
+            reply = '0000!1234!' + ','
+        elif sp == 16:
+            # ping packet after
+            reply = '0000!1234!' + Ping
+        elif sp == 17:
+            # Data to send request
+            reply = '0000!1234!' + DataToSendReq
+        elif sp == 18:
+            # pping from another elb during coms
+            reply = '0000!4321!' + Ping
+        elif sp == 19:
+            # data packet and request
+            PayloadLength = 30
+            reply = '0000!1234!' + DataPacketandReq + chr(PayloadLength) + Payload
+        elif sp == 20:
+            # DataToSendReq from another elb during coms
+            reply = '0000!4321!' + DataToSendReq
+        elif sp == 21:
+            # data packet and final
+            PayloadLength = 30
+            reply = '0000!1234!' + DataPacketFinal + chr(PayloadLength) + Payload
+        elif sp == 22:
+            # ping packet
+            reply = '0000!1234!' + Ping
+        else:
+            # make the rest pings
+            reply = '0000!1234!' + Ping
 
-        ELB1_Ping = HubAddr +ELB1Addr + Ping
-        ELB2_Ping = HubAddr +ELB2Addr + Ping
-        ELB1_DataToSendReq = HubAddr + ELB1Addr + DataToSendReq
-        ELB2_DataToSendReq = HubAddr + ELB2Addr + DataToSendReq
-        HUB_to_ELB1_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
-        HUB2_to_ELB3_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
-        ELB1_DataPacketandReq = HubAddr + ELB1Addr + DataPacketandReq + chr(36) + 'Data from ELB 1. More data to follow'
-        ELB1_DataPacketandReq = ELB1_DataPacketandReq.encode('utf-8')
-        ELB2_DataPacketandReq = HubAddr + ELB2Addr + DataPacketandReq + chr(36) + 'Data from ELB 2. More data to follow'
-        ELB2_DataPacketandReq = ELB2_DataPacketandReq.encode('utf-8')
-        ELB1_DataPacketFinal = HubAddr + ELB1Addr + DataPacketFinal + chr(29) + 'Data from ELB 1. Final Packet'
-        ELB1_DataPacketFinal = ELB1_DataPacketFinal.encode('utf-8')
-        ELB2_DataPacketFinal = HubAddr + ELB2Addr + DataPacketFinal + chr(29) + 'Data from ELB 2. Final Packet'
-        ELB2_DataPacketFinal = ELB2_DataPacketFinal.encode('utf-8')
-        Hub_Ack_ELB1 = ELB1Addr + HubAddr + ACK
-        Hub_Ack_ELB2 = ELB2Addr + HubAddr + ACK
-        ELB_Unrecognised = HubAddr + ELB1Addr + 'u'
-        Hub_to_ELB1_Nack_NotReady = HubAddr + ELB1Addr + NackNotReadyforData
-        Hub_to_ELB2_Nack_NotReady = HubAddr + ELB2Addr + NackNotReadyforData
-        Hub_to_ELB1_Nack_Unrecog = HubAddr + ELB1Addr + NackCmdRecog
-        Hub_to_ELB2_Nack_Unrecog = HubAddr + ELB2Addr + NackCmdRecog
-
-        Payload = chr(0x7F) + chr(0x00) + chr(0x30) + \
-                  chr(0x45) + chr(0x12) + chr(0x25) + chr(0x12) + chr(0x15) + chr(0x01) + chr(0x02) + chr(0x03) + \
-                  chr(0x04) + chr(0x05) + chr(0x06) + chr(0x07) + chr(0x08) + chr(0x11) + chr(0x22) + chr(0x33) + \
-                  chr(0x44) + chr(0x11) + chr(0x22) + chr(0x33) + chr(0x22) + chr(0x45) + chr(0x67) + chr(0x56) + \
-                  chr(0x78) + chr(0x03) + chr(0xA4)
-        Payload = Payload.encode('utf-8')
-        '''
-        ComsIdle = True
-            Valid Commands =
-                        Ping and SendDataReq
-            Invalid Commnds =
-                        ClearToSendData, DataPacketandReq, DataPacketFinal, Unrecognised
-        ComsIdle = False
-            Valid Commands =
-                        DataPacketandReq and DataPacketFinal
-            Invalid commands =
-                        Ping, DataToSendReq, ClearToSendData, Unrecognised
-                        DataPacketandReq from another ELB
-                        DataPacketFinal from another ELB
-        '''
-        Simulation_Packets = [
-            ELB1_Ping,                      # 0: ELB1 ping
-            ELB1_DataToSendReq,             # 1: ELB1 requesting to send data
-            ELB1_DataPacketandReq,          # 2: Data from ELB. More to follow
-            ELB1_DataPacketFinal,           # 3: final data from ELB1
-            ELB1_Ping,                      # 3: ELB1 ping
-                # ComsIdle now True
-            ELB1_DataPacketandReq,          # 5: Data from ELB with no ClearToSendData
-            ELB1_DataPacketFinal,           # 6: Final data from ELB1 with no ClearToSend
-            HUB2_to_ELB3_ClearToSendData,   # 7: Clear to send from another hub
-            ELB_Unrecognised,               # 8: Unrecognised command
-            ELB1_Ping,                      # 9: ELB1 ping
-            ELB1_DataToSendReq,             # 10: ELB1 requesting to send data.
-                # ComsIdle now False
-            ELB2_Ping,                      # 11: ping from ELB2 after data to send req
-            ELB2_DataPacketandReq,          # 12: data packet from another ELB
-            HUB2_to_ELB3_ClearToSendData,   # 13: Cler to Send from another hub
-            ELB_Unrecognised,               # 14: Unrecognised command
-            ELB1_DataPacketFinal,           # 15: Final data packet from ELB1
-                #ComsIdle now true
-            ELB1_Ping,                      #16: ELB1 ping
-            ELB2_Ping,                      # 17: ELB 2 ping
-            ELB2_DataToSendReq,             # 18: Start coms with ELB 2
-            ELB1_DataToSendReq,             # 19: ELB 1 tries to send data at teh same time
-            ELB1_Ping,                      # 20: ELB 1 pings hub
-            ELB2_DataPacketandReq,          # 21: ELB2 send data
-            ELB1_DataToSendReq,             # 22: ELB1 tries again
-            ELB1_DataPacketFinal,           # 23: ELB1 sends data
-            ELB2_DataPacketFinal            # 24: final data from ELB2
-        ]
-
-        reply = Simulation_Packets[sp]
-
-        # TODO need to put data validation here
+            # TODO need to put data validation here
 
     else:
         # Running in normal mode
@@ -157,18 +171,11 @@ def GetModuleData(sp, Simulate):
 def WriteLogFile(Packet):
     # write log file.
     # takes a packet and appends it to a log file. This is the output from the Hub Decoder
-
-    # print (time.asctime())
-    print (datetime.time())
-    print (datetime.date())
-    #print (time.localtime(time.time()))
-    #print (time.struct_time)
-    #print (time.strptime("30 Nov 00","%d %b %y"))
-    # FileTime = time.strftime("%Y %M %d %H %M %S",localtime())
-    LogFile = open("ELB" + Packet[StartELBAddr:StartELBAddr+4] + FileTime + ".txt", "w")
+    LogFileName = "Log" + Packet[StartELBAddr:StartELBAddr+4]
+    LogFile = open("Log" + Packet[StartELBAddr] + "yymmddhhmmss", "w")
     PayloadLength = ord(Packet[StartPayloadLength])     # get payload length and convert to int
-    LogFile.write(Packet[StartPayload:StartPayload+PayloadLength])
-    LogFile.close()
+    # LogFile.write(Packet[StartPayload:StartPayload+PayloadLength])
+    # LogFile.close()
 
 def GenerateAck(Packet):
     # Function generates an Ack for response to a number of messages
@@ -263,15 +270,13 @@ def Main():
 
     if Simulate != True:
         # Open the serial port and configure the Radio Module
-        LoRaCommsReceiver.SetupGPIO()
         SerialPort = LoRaCommsReceiver.SetupUART()
         LoRaCommsReceiver.SetupLoRa(SerialPort)
     else:
         SerialPort = 0
 
-    while True:
-        i=0
-    #for i in range(25):
+    # while True:
+    for i in range(25):
         '''
         The struture of the main loop is to loop forever getting data and then processing it.
         3 variables indicate if
@@ -285,7 +290,7 @@ def Main():
             Packet = GetModuleData(SerialPort,Simulate)
             # waits in Get data until we have now received a packet from the radio module and it has been checked for validity
 
-        Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte
+        Command = Packet[StartCommand]          # extract command byte
         # TODO: Need to decode the full message received so I know the ELB address and if the message is for me!
 
 

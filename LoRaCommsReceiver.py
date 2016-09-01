@@ -13,6 +13,7 @@ import time
 import math
 import sys
 import random
+import RPi.GPIO as GPIO
 
 #BUG: Even though ReadData failed, the sending program still printed the data string on screen
 #       Also appears the same happens when we get a negative LoRa code, eg EREF
@@ -25,6 +26,8 @@ SRDELAY = 0.1
 
 # The delay between receiving one message and sending the next
 INTERDELAY = 0.2
+
+INPUT_PIN = 17
 
 def SetupUART():
     """
@@ -53,8 +56,17 @@ def SetupUART():
 
     return ser
 
+def SetupGPIO():
+    # Setup the GPIO for the reading of the incoming data
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(INPUT_PIN, GPIO.IN)
+    logging.debug("GPIO Setup Complete")
+    return
+
+
 def ExitProgram(sport):
     # Close stuff and exit
+    GPIO.cleanup()
     sport.close()
     sys.exit()
 
@@ -65,6 +77,20 @@ def WriteData(fd,message):
     send = message + '\r\n'
     try:
         ans = fd.write(send.encode('utf-8'))
+        logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
+    except Exception as e:
+        logging.warning("Message >%s< sent as >%a< FAILED" % (message, send))
+        logging.error("Failed Response: %s" % e)
+        ans = 0
+    return ans
+
+def WriteDataBinary(fd,message):
+    # This routine will take the given data and write it to the serial port
+    # returns the data length or 0 indicating fail
+    # add the control characters
+    send = message + b'\r\n'
+    try:
+        ans = fd.write(send)
         logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
     except Exception as e:
         logging.warning("Message >%s< sent as >%a< FAILED" % (message, send))
@@ -86,16 +112,18 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     except:
         logging.warning("Reading of data on the serial port FAILED")
         reply = b''
-#BUG: If nothing received, the program may fail after this point
 
     logging.debug("Data Read back from the serial port :%s" % reply)
+    logging.debug("Length being extracted :%s" % length)
 
     # The command below removes the characters from around the message, and I only need to remove the one at each end
     reply = reply.rstrip(b'>')
     reply = reply.strip(b'\n')
 
-#BUG: this could easily happen in the main payload. I should consider splitting based on length.
-#       What is not clear is if the length from the module is the message length>
+    if len(reply) <1:
+        # Data received from the LoRa module is empty, return failure
+        logging.warning("No reply from the LoRa module")
+        return {'success':success, 'reply':""}
 
     # Populate the first part of the data (ans) with the data
     # Using the given length, strip out the reply. If no length is given, take all except 5 bytes
@@ -104,12 +132,15 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
         ans = reply.split(b'\r\n')
     else:
         # Spit on the length variable (Use -1 as it is positions 0 to ...)
-        ans[0] = reply[0:length-1]
+        ans = []
+        ans.append(reply[0:length])
+        #ans.append(reply[length:])
+        ans.append(reply[len(reply) - len(pos_reply):])
 
     logging.debug("The reply is now split into >%s< and >%s<" % (ans[0], ans[1]))
 
     # Populate the second part of the data (ans) with the reply, the length is determined by the length of pos_reply
-    ans[1] = reply[len(reply) - len(pos_reply):]
+    #ans[1] = reply[len(reply) - len(pos_reply):]
 
     #ans_pos = len(ans) - 1
     #logging.debug("Checking for positive (%s) reply" % pos_reply.encode('utf-8'))
@@ -129,7 +160,7 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
 def SendConfigCommand(fd, command):
     # This function sends data and gets the reply for the various configuration commands.
 
-    ans = WriteData(fd, command)
+    ans = WriteDataBinary(fd, command)
     if ans >0:
         time.sleep(SRDELAY)
         # No need to check the reply as it has already been validated
@@ -146,17 +177,18 @@ def SetupLoRa(fd):
     # This one is removed as it keeps failing and I'm not sure we need it
     #SendConfigComamnd(fd, "AT!!")
 
-    SendConfigCommand(fd, "AT*v")
+    SendConfigCommand(fd, b"AT*v")
     time.sleep(INTERDELAY)
-    SendConfigCommand(fd, "glora")
+    SendConfigCommand(fd, b"glora")
     time.sleep(INTERDELAY)
-    SendConfigCommand(fd, "sloramode 1")
+    SendConfigCommand(fd, b"sloramode 1")
     return
 
 def Setup():
     """
     Sets up the comms and returns the object that is the connection.
     """
+    SetupGPIO()
     sp = SetupUART()
     SetupLoRa(sp)
     return sp
@@ -174,7 +206,8 @@ def SendRadioData(fd, message):
 #TODO: May need to add in a success response so I can determine if the data has been sent.
 
     send = 'AT+X ' + format(length, '02X')
-    reply = WriteData(fd, send)
+    send = send.encode('utf-8')
+    reply = WriteDataBinary(fd, send)
     if reply >0:
         # reply is not empty, so successful
         time.sleep(SRDELAY)
@@ -183,7 +216,7 @@ def SendRadioData(fd, message):
 
         time.sleep(SRDELAY)
 
-        reply = WriteData(fd, message)
+        reply = WriteDataBinary(fd, message)
         if reply > 0:
             # No need to check response, only looking for positive reply
             time.sleep(SRDELAY)
@@ -198,11 +231,23 @@ def SendRadioData(fd, message):
     logging.info("Radio Message >%s< successfully sent" % message)
     return
 
+def WaitForDataAlertviaGPIO():
+    # Routine monitors the GPIO pin and waits for the line to go high indicating a packet.
+    GPIO.setup(INPUT_PIN, GPIO.IN)
+    status = 0
+    while(status!=1):
+        status = GPIO.input(INPUT_PIN)
+
+    return
+
 def RadioDataAvailable(fd):
     # checks to see if there is radio data available to be read using AT+r / checkr.
     # returns zero if no data
+    logging.debug("Waiting for data pin to go high")
+    WaitForDataAlertviaGPIO()
+    logging.debug("Data Pin gone high")
     data_length = 0
-    reply = WriteData(fd, 'AT+r')
+    reply = WriteDataBinary(fd, b'AT+r')
     if reply > 0:
         # Request for data length written successfully
         ans = ReadData(fd)
@@ -218,7 +263,7 @@ def GetRadioData(fd, length=-1):
     if reply > 0:
         message = ReadData(fd, length)
         # Don't need to check for a successful reply as it will just pass empty data back
-        logging.info("Radio Data (AT+r) returned >%s<" % message['reply'][0])
+        logging.info("Radio Data (AT+A) returned >%s<" % message['reply'][0])
     return message['reply'][0]
 
 def ReadRadioData(fd):
@@ -230,7 +275,7 @@ def ReadRadioData(fd):
     while(True):
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
-            received = GetRadioData(fd)
+            received = GetRadioData(fd, received_len)
             print("Data Received:%s" % received)
         else:
             print(".", end="", flush=True)
@@ -243,14 +288,15 @@ def ReturnRadioData(fd):
     while received_len < 1:
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
-            received = GetRadioData(fd)
+            received = GetRadioData(fd, received_len)
             print("Data Received:%s" % received)
 
 #           NOTE1: Removed as data passed out is to be a string, not a list
 #            data = [i for i in received]
 #            received = recieved.decode('utf-8')
-            data = [chr(i) for i in received]
-            data = ''.join(data)
+#            data = [chr(i) for i in received]
+#            data = ''.join(data)
+            data = received
             logging.debug("Data being passed back to the main program: %s" % data)
 #        else:
 #            data = []
@@ -282,14 +328,14 @@ def ReturnRadioDataTimed(fd, waittime):
     while received_len < 1:
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
-            received = GetRadioData(fd)
+            received = GetRadioDataBinary(fd, received_len)
             print("Data Received:%s" % received)
 
             #data = [i for i in received]
             #data = received.decode('utf-8')
-            data = [chr(i) for i in received]
-            data = ''.join(data)
-
+            #data = [chr(i) for i in received]
+            #data = ''.join(data)
+            #data is now returned as a binary string
             logging.debug("Data being passed back to the main program: %s" % data)
         if time.time() > timeout:
             data = ''
@@ -311,6 +357,7 @@ def main():
 
     choice = input ("Select Menu Option:")
 
+    SetupGPIO()
     sp = SetupUART()
     SetupLoRa(sp)
 
