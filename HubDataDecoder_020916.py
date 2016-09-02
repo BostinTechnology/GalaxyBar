@@ -13,7 +13,6 @@ logging.debug("Recevied this packet to decode:%s" % reply) replaces the %s with 
 Simulate = False  # set this to false if using the radio module
 import argparse
 import logging
-import time
 
 if Simulate != True:
     import LoRaCommsReceiver
@@ -64,23 +63,23 @@ def GetModuleData(sp, Simulate):
         ELB2Addr = b'5678!'
         ELB3Addr = b'9876!'
 
-        ELB1_Ping = HubAddr +ELB1Addr + Ping +b'\x00'
-        ELB2_Ping = HubAddr +ELB2Addr + Ping +b'\x00'
+        ELB1_Ping = HubAddr +ELB1Addr + Ping
+        ELB2_Ping = HubAddr +ELB2Addr + Ping
         ELB1_DataToSendReq = HubAddr + ELB1Addr + DataToSendReq
         ELB2_DataToSendReq = HubAddr + ELB2Addr + DataToSendReq
         HUB_to_ELB1_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
         HUB2_to_ELB3_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
-        ELB1_DataPacketandReq = HubAddr + ELB1Addr + DataPacketandReq + \
-                                chr(36).encode('utf-8')+ b'Data from ELB 1. More data to follow'
-        ELB2_DataPacketandReq = HubAddr + ELB2Addr + DataPacketandReq + \
-                                chr(36).encode('utf-8') + b'Data from ELB 2. More data to follow'
-        ELB1_DataPacketFinal = HubAddr + ELB1Addr + DataPacketFinal + \
-                               chr(29).encode('utf-8') + b'Data from ELB 1. Final Packet'
-        ELB2_DataPacketFinal = HubAddr + ELB2Addr + DataPacketFinal + \
-                               chr(29).encode('utf-8') + b'Data from ELB 2. Final Packet'
+        ELB1_DataPacketandReq = HubAddr + ELB1Addr + DataPacketandReq + chr(36) + 'Data from ELB 1. More data to follow'
+        ELB1_DataPacketandReq = ELB1_DataPacketandReq.encode('utf-8')
+        ELB2_DataPacketandReq = HubAddr + ELB2Addr + DataPacketandReq + chr(36) + 'Data from ELB 2. More data to follow'
+        ELB2_DataPacketandReq = ELB2_DataPacketandReq.encode('utf-8')
+        ELB1_DataPacketFinal = HubAddr + ELB1Addr + DataPacketFinal + chr(29) + 'Data from ELB 1. Final Packet'
+        ELB1_DataPacketFinal = ELB1_DataPacketFinal.encode('utf-8')
+        ELB2_DataPacketFinal = HubAddr + ELB2Addr + DataPacketFinal + chr(29) + 'Data from ELB 2. Final Packet'
+        ELB2_DataPacketFinal = ELB2_DataPacketFinal.encode('utf-8')
         Hub_Ack_ELB1 = ELB1Addr + HubAddr + ACK
         Hub_Ack_ELB2 = ELB2Addr + HubAddr + ACK
-        ELB_Unrecognised = HubAddr + ELB1Addr + b'u'
+        ELB_Unrecognised = HubAddr + ELB1Addr + 'u'
         Hub_to_ELB1_Nack_NotReady = HubAddr + ELB1Addr + NackNotReadyforData
         Hub_to_ELB2_Nack_NotReady = HubAddr + ELB2Addr + NackNotReadyforData
         Hub_to_ELB1_Nack_Unrecog = HubAddr + ELB1Addr + NackCmdRecog
@@ -107,7 +106,6 @@ def GetModuleData(sp, Simulate):
                         DataPacketFinal from another ELB
         '''
         Simulation_Packets = [
-            b'0000!\x00\x11$\xb4U2\x00',    # string from ELB
             ELB1_Ping,                      # 0: ELB1 ping
             ELB1_DataToSendReq,             # 1: ELB1 requesting to send data
             ELB1_DataPacketandReq,          # 2: Data from ELB. More to follow
@@ -160,14 +158,16 @@ def WriteLogFile(Packet):
     # write log file.
     # takes a packet and appends it to a log file. This is the output from the Hub Decoder
 
-    FileTime = time.strftime("%y%m%d%H%M%S",time.localtime())
-    ELBName = ''.join([hex(i) for i in Packet[StartELBAddr:StartELBAddr+4]])
-        # takes 4 bytes of ELB addr and converts to a hex string, eg. 0x000x110x240xb4
-    LogFile = open("ELB" + ELBName + FileTime + ".txt", "w")
-    PayloadLength = Packet[StartPayloadLength]     # get payload length as int
-    DataToWrite = ''.join([hex(i) for i in Packet[StartPayload:StartPayload+PayloadLength]])
-    LogFile.write(DataToWrite)
-    logging.debug("Write to Log File:%s this many bytes:%s" % (LogFile,PayloadLength))
+    # print (time.asctime())
+    print (datetime.time())
+    print (datetime.date())
+    #print (time.localtime(time.time()))
+    #print (time.struct_time)
+    #print (time.strptime("30 Nov 00","%d %b %y"))
+    # FileTime = time.strftime("%Y %M %d %H %M %S",localtime())
+    LogFile = open("ELB" + Packet[StartELBAddr:StartELBAddr+4] + FileTime + ".txt", "w")
+    PayloadLength = ord(Packet[StartPayloadLength])     # get payload length and convert to int
+    LogFile.write(Packet[StartPayload:StartPayload+PayloadLength])
     LogFile.close()
 
 def GenerateAck(Packet):
@@ -285,7 +285,7 @@ def Main():
             Packet = GetModuleData(SerialPort,Simulate)
             # waits in Get data until we have now received a packet from the radio module and it has been checked for validity
 
-        Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte as byte String
+        Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte
         # TODO: Need to decode the full message received so I know the ELB address and if the message is for me!
 
 
@@ -312,10 +312,6 @@ def Main():
                 CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
                 RespondDataToSendReq(SerialPort,Packet,Simulate)
                 # this will send CleartoSendData.
-            elif Command == DataPacketFinal and Packet[StartELBAddr:StartELBAddr+4] == b'\x00\x11$\xb4':
-                # fudge to receive data from trial ELB S/W
-                RespondDataPacketFinal (SerialPort, Packet, Simulate)
-                WriteLogFile(Packet)                            # write this packet to a log file
             elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
                 # commands invalid at this point
                 logging.info("ClearToSendData, DataPacketandReq or DataPacketFinal at wrong time :%s" % Packet)
@@ -341,7 +337,7 @@ def Main():
                 SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
             else:                               # handle invalid command
                 if Command == Ping:                               # received ping from another ELB while receiving data
-                    RespondToPing(SerialPort,Packet,Simulate)      # send Pi busy Nack
+                    SendPiBusyNack(SerialPort,Packet,Simulate)      # send Pi busy Nack
                     # should be ack
                 elif Command == DataToSendReq or Command == ClearToSendData:
                     logging.info("DataToSendReq or ClearToSendData when already in coms :%s" % Packet)

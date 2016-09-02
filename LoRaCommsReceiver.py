@@ -59,6 +59,7 @@ def SetupUART():
 def SetupGPIO():
     # Setup the GPIO for the reading of the incoming data
     GPIO.setmode(GPIO.BCM)
+    time.sleep(0.2)
     GPIO.setup(INPUT_PIN, GPIO.IN)
     logging.debug("GPIO Setup Complete")
     return
