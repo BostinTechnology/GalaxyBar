@@ -108,11 +108,14 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     # An additonal optional parameter to determine the expected response, default OK00.
 
     success = False
+    ans = [b'', b'']
     try:
         reply = fd.readall()
     except:
         logging.warning("Reading of data on the serial port FAILED")
         reply = b''
+
+    #reply =b''
 
     logging.debug("Data Read back from the serial port :%s" % reply)
     logging.debug("Length being extracted :%s" % length)
@@ -124,28 +127,32 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     if len(reply) <1:
         # Data received from the LoRa module is empty, return failure
         logging.warning("No reply from the LoRa module")
+        time.sleep(INTERDELAY)
+        return {'success':success, 'reply':""}
+
+    if len(reply) < length:
+        # The data returned is shorter than expected, return failed
+        logging.warning("Reply shorter than expected from the LoRa module")
         return {'success':success, 'reply':""}
 
     # Populate the first part of the data (ans) with the data
     # Using the given length, strip out the reply. If no length is given, take all except 5 bytes
     if length < 0:
         # Not given a length, so split on the control codes
-        ans = reply.split(b'\r\n')
+        if reply.find(b'\r\n') > 0:
+            ans = reply.split(b'\r\n')
+            logging.debug("Reply Split using .split(b'\\r\\n') into :%s" % ans)
+        else:
+            ans[0] = b''
+            ans[1] = reply
+            logging.debug("Reply Split manually into :%s" % ans)
     else:
         # Spit on the length variable (Use -1 as it is positions 0 to ...)
-        ans = []
-        ans.append(reply[0:length])
-        #ans.append(reply[length:])
-        ans.append(reply[len(reply) - len(pos_reply):])
+        ans = [b'',b'']
+        ans[0] = reply[0:length]
+        ans[1] = reply[len(reply) - len(pos_reply):]
+        logging.debug("Reply Split using length into :%s" % ans)
 
-    logging.debug("The reply is now split into >%s< and >%s<" % (ans[0], ans[1]))
-
-    # Populate the second part of the data (ans) with the reply, the length is determined by the length of pos_reply
-    #ans[1] = reply[len(reply) - len(pos_reply):]
-
-    #ans_pos = len(ans) - 1
-    #logging.debug("Checking for positive (%s) reply" % pos_reply.encode('utf-8'))
-    #logging.debug("Checking in reply packet %d" % ans_pos)
     logging.debug("Read the data and got data:%s and reply:%s" % (ans[0], ans[1]))
     if ans[1] == pos_reply.encode('utf-8'):
         logging.info("Positive response received : %s" % ans[1])
@@ -234,7 +241,7 @@ def SendRadioData(fd, message):
 
 def WaitForDataAlertviaGPIO():
     # Routine monitors the GPIO pin and waits for the line to go high indicating a packet.
-    GPIO.setup(INPUT_PIN, GPIO.IN)
+
     status = 0
     while(status!=1):
         status = GPIO.input(INPUT_PIN)
@@ -260,7 +267,7 @@ def RadioDataAvailable(fd):
 def GetRadioData(fd, length=-1):
     # get the data from the radio, if no length, get all
     # use geta / AT+A
-    reply = WriteData(fd, 'AT+A')
+    reply = WriteDataBinary(fd, b'AT+A')
     if reply > 0:
         message = ReadData(fd, length)
         # Don't need to check for a successful reply as it will just pass empty data back
@@ -290,13 +297,8 @@ def ReturnRadioData(fd):
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
             received = GetRadioData(fd, received_len)
-            print("Data Received:%s" % received)
+            print("Data Received:%s" % received, flush=True)
 
-#           NOTE1: Removed as data passed out is to be a string, not a list
-#            data = [i for i in received]
-#            received = recieved.decode('utf-8')
-#            data = [chr(i) for i in received]
-#            data = ''.join(data)
             data = received
             logging.debug("Data being passed back to the main program: %s" % data)
 #        else:
