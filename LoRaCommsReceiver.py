@@ -27,7 +27,11 @@ SRDELAY = 0.1
 # The delay between receiving one message and sending the next
 INTERDELAY = 0.2
 
+# The connected GPIO pin
 INPUT_PIN = 17
+
+# The minimum length of a valid packet
+MIN_LENGTH = 11
 
 def SetupUART():
     """
@@ -115,6 +119,74 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
         logging.warning("Reading of data on the serial port FAILED")
         reply = b''
 
+    # Debug testing
+    #reply =b''                 #Empty response
+    #reply = b'1000!0000!'      #Short response
+
+
+    logging.debug("Data Read back from the serial port :%s" % reply)
+    logging.debug("Length being extracted :%s" % length)
+
+    # The command below removes the characters from around the message, and I only need to remove the one at each end
+    reply = reply.rstrip(b'>')
+    reply = reply.strip(b'\n')
+
+    if len(reply) < 1:
+        # Data received from the LoRa module is empty, return failure
+        logging.warning("No reply from the LoRa module, waiting before retrying")
+        time.sleep(INTERDELAY)
+        return {'success':success, 'reply':ans}
+    elif len(reply) < length:
+        # The data returned is shorter than expected, return failed
+        logging.warning("Reply shorter than expected from the LoRa module")
+        return {'success':success, 'reply':ans}
+    elif len(reply) < min(MIN_LENGTH, length):
+        # The data returned is shorter than the minimum length or the length required (whichever is the shorter, return failed
+        logging.warning("Reply shorter than minimum allowed from the LoRa module")
+        return {'success':success, 'reply':ans}
+
+
+    # Populate the first part of the data (ans) with the data
+    # Using the given length, strip out the reply. If no length is given, take all except 5 bytes
+    if length < 0:
+        # No length given, assume overall length less 4
+        length = len(reply) - 4
+        logging.debug("No length given, splitting on last 4 being status")
+
+    ans[0] = reply[0:length]
+    ans[1] = reply[len(reply) - len(pos_reply):]
+    logging.debug("Reply Split using length into :%s" % ans)
+
+    logging.debug("Read the data and got data:%s and reply:%s" % (ans[0], ans[1]))
+    if ans[1] == pos_reply.encode('utf-8'):
+        logging.info("Positive response received  from the LoRa module: %s" % ans[1])
+        success = True
+    else:
+        logging.warning("Negative response received from the LoRa module: %s" % ans[1])
+        ans=[]
+        success = False
+
+    logging.debug("Data of length %s read from the Serial port: %a" % (length, ans))
+    return {'success':success, 'reply':ans}
+
+
+
+def ReadDataOLD(fd, length=-1, pos_reply='OK00'):
+    # Read the data from the serial port of known length
+    # If length is not known, assume all data
+    # returns a list containing 2 entries
+    #   The success / failure
+    #   The string back or an empty string if no response
+    # An additonal optional parameter to determine the expected response, default OK00.
+
+    success = False
+    ans = [b'', b'']
+    try:
+        reply = fd.readall()
+    except:
+        logging.warning("Reading of data on the serial port FAILED")
+        reply = b''
+
     #reply =b''
 
     logging.debug("Data Read back from the serial port :%s" % reply)
@@ -124,16 +196,20 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     reply = reply.rstrip(b'>')
     reply = reply.strip(b'\n')
 
-    if len(reply) <1:
+    if len(reply) < 1:
         # Data received from the LoRa module is empty, return failure
         logging.warning("No reply from the LoRa module")
         time.sleep(INTERDELAY)
         return {'success':success, 'reply':""}
-
-    if len(reply) < length:
+    elif len(reply) < length:
         # The data returned is shorter than expected, return failed
         logging.warning("Reply shorter than expected from the LoRa module")
         return {'success':success, 'reply':""}
+    elif len(reply) < MIN_LENGTH:
+        # The data returned is shorter than expected, return failed
+        logging.warning("Reply shorter than minimum allowed from the LoRa module")
+        return {'success':success, 'reply':""}
+
 
     # Populate the first part of the data (ans) with the data
     # Using the given length, strip out the reply. If no length is given, take all except 5 bytes
@@ -155,15 +231,20 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
 
     logging.debug("Read the data and got data:%s and reply:%s" % (ans[0], ans[1]))
     if ans[1] == pos_reply.encode('utf-8'):
-        logging.info("Positive response received : %s" % ans[1])
+        logging.info("Positive response received  from the LoRa module: %s" % ans[1])
         success = True
     else:
-        logging.warning("Negative response received : %s" % ans[1])
+        logging.warning("Negative response received from the LoRa module: %s" % ans[1])
         ans=[]
         success = False
 
     logging.debug("Data of length %s read from the Serial port: %a" % (length, ans))
     return {'success':success, 'reply':ans}
+
+
+
+
+
 
 def SendConfigCommand(fd, command):
     # This function sends data and gets the reply for the various configuration commands.
@@ -183,7 +264,9 @@ def SetupLoRa(fd):
     logging.info("Setting up the LoRA module with the various commands")
 
     # This one is removed as it keeps failing and I'm not sure we need it
-    #SendConfigComamnd(fd, "AT!!")
+    SendConfigCommand(fd, b"AT!!")
+    time.sleep(INTERDELAY)
+    time.sleep(INTERDELAY)
 
     SendConfigCommand(fd, b"AT*v")
     time.sleep(INTERDELAY)
@@ -258,7 +341,7 @@ def RadioDataAvailable(fd):
     reply = WriteDataBinary(fd, b'AT+r')
     if reply > 0:
         # Request for data length written successfully
-        ans = ReadData(fd)
+        ans = ReadData(fd, 2)
         if ans['success'] == True:
             data_length = int(ans['reply'][0], 16)
         logging.info("Check for Radio Data (AT+r) returned %d bytes" % data_length)
@@ -334,11 +417,6 @@ def ReturnRadioDataTimed(fd, waittime):
             received = GetRadioDataBinary(fd, received_len)
             print("Data Received:%s" % received)
 
-            #data = [i for i in received]
-            #data = received.decode('utf-8')
-            #data = [chr(i) for i in received]
-            #data = ''.join(data)
-            #data is now returned as a binary string
             logging.debug("Data being passed back to the main program: %s" % data)
         if time.time() > timeout:
             data = ''
