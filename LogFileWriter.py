@@ -157,7 +157,7 @@ def CheckPacket(data_packet):
         logging.WARNING("data packet too short, logging aborted with packet: %s" % data_packet)
 
     logging.debug("Data Packet ok to Use")
-    return success
+    return True
 
 def WriteLogFile(ELB, data_to_write):
     # write log file.
@@ -173,13 +173,22 @@ def WriteLogFile(ELB, data_to_write):
 
     return
 
+def ConvertToString(payload):
+    # Function that converts the list to a string
+    response = str(payload)
+    response = response.lstrip('(')
+    response = response.rstrip(')')
+
+    return response
+
 def ConvertToCSV(payload):
     # Convert the payload to a string for the CSV file
     output_data = ""
     for i in payload:
         output_data = output_data + str(i) + ","
     #output_data.rstrip(',')
-    output_data.strip(',')
+    output_data = output_data.strip(',')
+    logging.debug("String version of the payload: %s" % output_data)
     return output_data
 
 def GenerateSampleData():
@@ -199,7 +208,11 @@ def GenerateSampleELBName():
 def LogFileCreation(elb, payload):
     # this function is called from the main program to write data to the log file
 
-    print("Not Yet implented, be patient")
+    if CheckPacket(payload):
+        logdata = GenerateLogData(payload)
+        logdata = ConvertToString(logdata)
+        WriteLogFile(elb, logdata)
+
     return
 
 def main():
@@ -213,13 +226,14 @@ def main():
 
     sample = GenerateSampleData()
     elbname = GenerateSampleELBName()
-    CheckPacket(sample)
-    logdata = GenerateLogData(sample)
-    if logdata['success']:
-        logdatacsv = ConvertToCSV(logdata['data'])
-        WriteLogFile(elbname, logdatacsv)
+    if CheckPacket(sample):
+        logdata = GenerateLogData(sample)
+        if logdata['success']:
+            #logdatacsv = ConvertToCSV(logdata['data'])
+            data = ConvertToString(logdata['data'])
+            WriteLogFile(elbname, data)
 
-    return 0
+    return
 
 
 if __name__ == '__main__':
