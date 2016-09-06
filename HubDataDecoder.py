@@ -311,6 +311,7 @@ def Main():
     # initialise variables
     ComsIdle = True  # set to false when an initial RequestToSendData has been received.
     CurrentELB = b''  # when coms has started this variable holds the ELB addr that we are talking to
+    TimeLastValidPacket = time.time()       # reset time of last valid packet
 
     if Simulate != True:
         # Open the serial port and configure the Radio Module
@@ -355,7 +356,7 @@ def Main():
                         DataPacketandReq from another ELB
                         DataPacketFinal from another ELB
             '''
-            if (TimePacketReceived - LastValidPacket) > COMMS_TIMEOUT:
+            if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
                 # this data packet was received outside the comms window
                 ComsIdle = True
             
@@ -366,7 +367,7 @@ def Main():
                     ComsIdle = False                            # coms has started so no longer idle
                     CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
                     RespondDataToSendReq(SerialPort,Packet,Simulate)
-                    LastValidPacket = time.time()
+                    TimeLastValidPacket = time.time()
                     # this will send CleartoSendData.
                 elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
                     # commands invalid at this point
@@ -378,7 +379,7 @@ def Main():
                 if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
                     RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
-                    LastValidPacket = time.time()
+                    TimeLastValidPacket = time.time()
                     WriteLogFile(Packet)            # write this packet to a log file
                 elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received final data packet
