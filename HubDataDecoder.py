@@ -50,6 +50,8 @@ StartPayload = 12  # poition of start of payload
 # TODO - check these pointers are true of ping, request to send and data packets
 ExecByte = "!".encode('utf-8')      # The executive by
 
+ZeroPayload = b'\x00'           # used to indicate there is zero payload
+
 # Initialise files
 
 def ValidatePayload (Packet):
@@ -76,7 +78,7 @@ def ValidatePacket (Packet):
             # packet has valid 1st address descripters so continue
         if chr(Packet[StartELBAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartELBAddr+4]).encode('utf-8') == b'>':
             # 2nd addr descripter valid so continue
-            if len(Packet) >= 11:                       # packet is long enough so continue
+            if len(Packet) >= 12:                       # packet is long enough so continue
                 if chr(Packet[StartCommand]).encode('utf-8') == DataPacketandReq or \
                         chr(Packet[StartCommand]).encode('utf-8') == DataPacketFinal:
                             # now check payload
@@ -100,12 +102,13 @@ def GetModuleData(sp, Simulate):
         ELB2Addr = b'5678!'
         ELB3Addr = b'9876!'
 
-        ELB1_Ping = HubAddr +ELB1Addr + Ping + b'\x00'  # zero payload on end
-        ELB2_Ping = HubAddr +ELB2Addr + Ping + b'\x00'
-        ELB1_DataToSendReq = HubAddr + ELB1Addr + DataToSendReq
-        ELB2_DataToSendReq = HubAddr + ELB2Addr + DataToSendReq
-        HUB_to_ELB1_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
-        HUB2_to_ELB3_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
+
+        ELB1_Ping = HubAddr +ELB1Addr + Ping + ZeroPayload  # zero payload on end
+        ELB2_Ping = HubAddr +ELB2Addr + Ping + ZeroPayload
+        ELB1_DataToSendReq = HubAddr + ELB1Addr + DataToSendReq + ZeroPayload
+        ELB2_DataToSendReq = HubAddr + ELB2Addr + DataToSendReq + ZeroPayload
+        HUB_to_ELB1_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData + ZeroPayload
+        HUB2_to_ELB3_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData + ZeroPayload
         ELB1_DataPacketandReq = HubAddr + ELB1Addr + DataPacketandReq + \
                             chr(37).encode('utf-8')+ b'Data from ELB 1. More data to follow' + b'\x7d'
         ELB2_DataPacketandReq = HubAddr + ELB2Addr + DataPacketandReq + \
@@ -116,11 +119,11 @@ def GetModuleData(sp, Simulate):
                             chr(29).encode('utf-8') + b'Data from ELB 2. Final Packet' + b'\00'
         Hub_Ack_ELB1 = ELB1Addr + HubAddr + ACK + b'\x00'   # add zero payload on end
         Hub_Ack_ELB2 = ELB2Addr + HubAddr + ACK + b'\x00'
-        ELB_Unrecognised = HubAddr + ELB1Addr + b'u'
-        Hub_to_ELB1_Nack_NotReady = HubAddr + ELB1Addr + NackNotReadyforData + b'\x00'
-        Hub_to_ELB2_Nack_NotReady = HubAddr + ELB2Addr + NackNotReadyforData + b'\x00'
-        Hub_to_ELB1_Nack_Unrecog = HubAddr + ELB1Addr + NackCmdRecog + b'\x00'
-        Hub_to_ELB2_Nack_Unrecog = HubAddr + ELB2Addr + NackCmdRecog + b'\x00'
+        ELB_Unrecognised = HubAddr + ELB1Addr + b'u' + ZeroPayload
+        Hub_to_ELB1_Nack_NotReady = HubAddr + ELB1Addr + NackNotReadyforData + ZeroPayload
+        Hub_to_ELB2_Nack_NotReady = HubAddr + ELB2Addr + NackNotReadyforData + ZeroPayload
+        Hub_to_ELB1_Nack_Unrecog = HubAddr + ELB1Addr + NackCmdRecog + ZeroPayload
+        Hub_to_ELB2_Nack_Unrecog = HubAddr + ELB2Addr + NackCmdRecog + ZeroPayload
 
         Payload = chr(0x7F) + chr(0x00) + chr(0x30) + \
                   chr(0x45) + chr(0x12) + chr(0x25) + chr(0x12) + chr(0x15) + chr(0x01) + chr(0x02) + chr(0x03) + \
@@ -221,6 +224,7 @@ def RespondToPing(fd, Packet, Simulate):
 
     message = GenerateAck(Packet)
     logging.info("Responding to a PING - Ack Message :%s" % message)
+    print("Send ACK :%s" % message)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
     # Now need to wait for the answer or timeout.
@@ -237,8 +241,10 @@ def RespondDataToSendReq(fd, Packet,Simulate):
     packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr+4]   # Sender address
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + ClearToSendData                       # Clear to Send data command
+    packet_to_send = packet_to_send + b'\x00'                               # add zero payload length
 
     logging.info("ClearToSendData :%s" % packet_to_send)
+    print("Clear to Send :%s" % packet_to_send)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -248,6 +254,7 @@ def RespondDataPacketandReq(fd, Packet, Simulate):
 
     message = GenerateAck(Packet)
     logging.info("DataPacketandReq :%s" % message)
+    print("Data. More to follow :%s" % message)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
 
@@ -257,6 +264,7 @@ def RespondDataPacketFinal(fd, Packet, Simulate):
 
     message = GenerateAck(Packet)
     logging.info("Received Final Packet :%s" % message)
+    print("Final data :%s" % message)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
 
@@ -272,7 +280,9 @@ def UnrecognisedCommand(fd,Packet,Simulate):
     packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr + 4] # Sender address
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + NackCmdRecog                          # Nack with command unrecognised
+    packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
     logging.info("Nack Cmd not Recognised Message :%s" % packet_to_send)
+    print("Unrecognised Command :%s" % packet_to_send)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -286,7 +296,9 @@ def SendPiBusyNack(fd,Packet,Simulate):
     packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr + 4] # Sender address
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + NackNotReadyforData                   # Nack with command unrecognised
+    packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
     logging.info("Nack Not Ready for Data :%s" % packet_to_send)
+    print('Pi busy Nack :%s' % packet_to_send)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -320,7 +332,6 @@ def Main():
             Packet = GetModuleData(SerialPort,Simulate)
             # waits in Get data until we have now received a packet from the radio module and it has been checked for validity
 
-        print ("This data received :%s" % Packet)
         if ValidatePacket(Packet):       # is this a valid packet
             logging.info("This data is valid :%s" % Packet)
             print ("This data is valid :%s" % Packet)   # print packet to window
