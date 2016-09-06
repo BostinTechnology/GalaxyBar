@@ -52,45 +52,10 @@ ExecByte = "!".encode('utf-8')      # The executive by
 
 # Initialise files
 
-def ValidatePayload (Packet):
-    # checks payload of the packet and looks for CRC
-    # assumesthat only a packet with daat is sent to this routine
-
-    PayloadValid = False                                # assume payload is not valid
-    PayloadLength = int(Packet[StartPayloadLength])     # get payload length
-    Payload = Packet[StartPayload:StartPayload + PayloadLength]        # extract payload
-    Checksum = 0                                  # zero checksum
-    for i in range(PayloadLength):                  # check each byte in the payload
-        Checksum = Checksum ^ int(Packet[StartPayload + i])
-
-    return Checksum == 0        # checsum vald if equal to 0
-
-def ValidatePacket (Packet):
-    # routine to validate a packet that has been received
-    # checks for 5th and 10th bytes to be '!' or '>'
-    # checks length to ba ta least 12 bytes
-    # for if command is DataPacketandReq or DataPacketFinal then it can perform a CRC on the payload
-
-    ValidPacket = False         # assume packet is invalid
-    if chr(Packet[StartHubAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartHubAddr+4]).encode('utf-8') == b'>':
-            # packet has valid 1st address descripters so continue
-        if chr(Packet[StartELBAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartELBAddr+4]).encode('utf-8') == b'>':
-            # 2nd addr descripter valid so continue
-            if len(Packet) >= 11:                       # packet is long enough so continue
-                if chr(Packet[StartCommand]).encode('utf-8') == DataPacketandReq or \
-                        chr(Packet[StartCommand]).encode('utf-8') == DataPacketFinal:
-                            # now check payload
-                   ValidPacket = ValidatePayload(Packet)
-                elif chr(Packet[StartCommand]).encode('utf-8') == Ping or \
-                            chr(Packet[StartCommand]).encode('utf-8') == DataToSendReq:
-                    # no payload so only addr descripters and messag elength can be used
-                    ValidPacket = True
-
-    return ValidPacket
 
 def GetModuleData(sp, Simulate):
     # this module supplies a packet every time it is called
-    # if simulating then packets are created and returned. The returned packet depends on the value of sp passed.
+    # if simulating then packets are created and returned. The returned packet depends on teh value of sp passed.
 
     if Simulate:
         # Simulation Packets
@@ -100,27 +65,27 @@ def GetModuleData(sp, Simulate):
         ELB2Addr = b'5678!'
         ELB3Addr = b'9876!'
 
-        ELB1_Ping = HubAddr +ELB1Addr + Ping + b'\x00'  # zero payload on end
-        ELB2_Ping = HubAddr +ELB2Addr + Ping + b'\x00'
+        ELB1_Ping = HubAddr +ELB1Addr + Ping +b'\x00'
+        ELB2_Ping = HubAddr +ELB2Addr + Ping +b'\x00'
         ELB1_DataToSendReq = HubAddr + ELB1Addr + DataToSendReq
         ELB2_DataToSendReq = HubAddr + ELB2Addr + DataToSendReq
         HUB_to_ELB1_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
         HUB2_to_ELB3_ClearToSendData = ELB1Addr + HubAddr + ClearToSendData
         ELB1_DataPacketandReq = HubAddr + ELB1Addr + DataPacketandReq + \
-                            chr(37).encode('utf-8')+ b'Data from ELB 1. More data to follow' + b'\x7d'
+                                chr(36).encode('utf-8')+ b'Data from ELB 1. More data to follow'
         ELB2_DataPacketandReq = HubAddr + ELB2Addr + DataPacketandReq + \
-                            chr(37).encode('utf-8') + b'Data from ELB 2. More data to follow' + b'\x7e'
+                                chr(36).encode('utf-8') + b'Data from ELB 2. More data to follow'
         ELB1_DataPacketFinal = HubAddr + ELB1Addr + DataPacketFinal + \
-                            chr(30).encode('utf-8') + b'Data from ELB 1. Final Packet' + b'\x36'
+                               chr(29).encode('utf-8') + b'Data from ELB 1. Final Packet'
         ELB2_DataPacketFinal = HubAddr + ELB2Addr + DataPacketFinal + \
-                            chr(29).encode('utf-8') + b'Data from ELB 2. Final Packet' + b'\00'
-        Hub_Ack_ELB1 = ELB1Addr + HubAddr + ACK + b'\x00'   # add zero payload on end
-        Hub_Ack_ELB2 = ELB2Addr + HubAddr + ACK + b'\x00'
+                               chr(29).encode('utf-8') + b'Data from ELB 2. Final Packet'
+        Hub_Ack_ELB1 = ELB1Addr + HubAddr + ACK
+        Hub_Ack_ELB2 = ELB2Addr + HubAddr + ACK
         ELB_Unrecognised = HubAddr + ELB1Addr + b'u'
-        Hub_to_ELB1_Nack_NotReady = HubAddr + ELB1Addr + NackNotReadyforData + b'\x00'
-        Hub_to_ELB2_Nack_NotReady = HubAddr + ELB2Addr + NackNotReadyforData + b'\x00'
-        Hub_to_ELB1_Nack_Unrecog = HubAddr + ELB1Addr + NackCmdRecog + b'\x00'
-        Hub_to_ELB2_Nack_Unrecog = HubAddr + ELB2Addr + NackCmdRecog + b'\x00'
+        Hub_to_ELB1_Nack_NotReady = HubAddr + ELB1Addr + NackNotReadyforData
+        Hub_to_ELB2_Nack_NotReady = HubAddr + ELB2Addr + NackNotReadyforData
+        Hub_to_ELB1_Nack_Unrecog = HubAddr + ELB1Addr + NackCmdRecog
+        Hub_to_ELB2_Nack_Unrecog = HubAddr + ELB2Addr + NackCmdRecog
 
         Payload = chr(0x7F) + chr(0x00) + chr(0x30) + \
                   chr(0x45) + chr(0x12) + chr(0x25) + chr(0x12) + chr(0x15) + chr(0x01) + chr(0x02) + chr(0x03) + \
@@ -129,52 +94,54 @@ def GetModuleData(sp, Simulate):
                   chr(0x78) + chr(0x03) + chr(0xA4)
         Payload = Payload.encode('utf-8')
         '''
-            ComsIdle = True
-                Valid Commands =
+        ComsIdle = True
+            Valid Commands =
                         Ping and SendDataReq
-                Invalid Commnds =
+            Invalid Commnds =
                         ClearToSendData, DataPacketandReq, DataPacketFinal, Unrecognised
-            ComsIdle = False
-                Valid Commands =
+        ComsIdle = False
+            Valid Commands =
                         DataPacketandReq and DataPacketFinal
-                Invalid commands =
+            Invalid commands =
                         Ping, DataToSendReq, ClearToSendData, Unrecognised
                         DataPacketandReq from another ELB
                         DataPacketFinal from another ELB
         '''
         Simulation_Packets = [
-                b'0000!\x00\x11$\xb4U2\x00',    # string from ELB
-                ELB1_Ping,                      # 0: ELB1 ping
-                ELB1_DataToSendReq,             # 1: ELB1 requesting to send data
-                ELB1_DataPacketandReq,          # 2: Data from ELB. More to follow
-                ELB1_DataPacketFinal,           # 3: final data from ELB1
-                ELB1_Ping,                      # 3: ELB1 ping
-                    # ComsIdle now True
-                ELB1_DataPacketandReq,          # 5: Data from ELB with no ClearToSendData
-                ELB1_DataPacketFinal,           # 6: Final data from ELB1 with no ClearToSend
-                HUB2_to_ELB3_ClearToSendData,   # 7: Clear to send from another hub
-                ELB_Unrecognised,               # 8: Unrecognised command
-                ELB1_Ping,                      # 9: ELB1 ping
-                ELB1_DataToSendReq,             # 10: ELB1 requesting to send data.
-                    # ComsIdle now False
-                ELB2_Ping,                      # 11: ping from ELB2 after data to send req
-                ELB2_DataPacketandReq,          # 12: data packet from another ELB
-                HUB2_to_ELB3_ClearToSendData,   # 13: Cler to Send from another hub
-                ELB_Unrecognised,               # 14: Unrecognised command
-                ELB1_DataPacketFinal,           # 15: Final data packet from ELB1
-                    #ComsIdle now true
-                ELB1_Ping,                      #16: ELB1 ping
-                ELB2_Ping,                      # 17: ELB 2 ping
-                ELB2_DataToSendReq,             # 18: Start coms with ELB 2
-                ELB1_DataToSendReq,             # 19: ELB 1 tries to send data at teh same time
-                ELB1_Ping,                      # 20: ELB 1 pings hub
-                ELB2_DataPacketandReq,          # 21: ELB2 send data
-                ELB1_DataToSendReq,             # 22: ELB1 tries again
-                ELB1_DataPacketFinal,           # 23: ELB1 sends data
-                ELB2_DataPacketFinal            # 24: final data from ELB2
-            ]
+            b'0000!\x00\x11$\xb4U2\x00',    # string from ELB
+            ELB1_Ping,                      # 0: ELB1 ping
+            ELB1_DataToSendReq,             # 1: ELB1 requesting to send data
+            ELB1_DataPacketandReq,          # 2: Data from ELB. More to follow
+            ELB1_DataPacketFinal,           # 3: final data from ELB1
+            ELB1_Ping,                      # 3: ELB1 ping
+                # ComsIdle now True
+            ELB1_DataPacketandReq,          # 5: Data from ELB with no ClearToSendData
+            ELB1_DataPacketFinal,           # 6: Final data from ELB1 with no ClearToSend
+            HUB2_to_ELB3_ClearToSendData,   # 7: Clear to send from another hub
+            ELB_Unrecognised,               # 8: Unrecognised command
+            ELB1_Ping,                      # 9: ELB1 ping
+            ELB1_DataToSendReq,             # 10: ELB1 requesting to send data.
+                # ComsIdle now False
+            ELB2_Ping,                      # 11: ping from ELB2 after data to send req
+            ELB2_DataPacketandReq,          # 12: data packet from another ELB
+            HUB2_to_ELB3_ClearToSendData,   # 13: Cler to Send from another hub
+            ELB_Unrecognised,               # 14: Unrecognised command
+            ELB1_DataPacketFinal,           # 15: Final data packet from ELB1
+                #ComsIdle now true
+            ELB1_Ping,                      #16: ELB1 ping
+            ELB2_Ping,                      # 17: ELB 2 ping
+            ELB2_DataToSendReq,             # 18: Start coms with ELB 2
+            ELB1_DataToSendReq,             # 19: ELB 1 tries to send data at teh same time
+            ELB1_Ping,                      # 20: ELB 1 pings hub
+            ELB2_DataPacketandReq,          # 21: ELB2 send data
+            ELB1_DataToSendReq,             # 22: ELB1 tries again
+            ELB1_DataPacketFinal,           # 23: ELB1 sends data
+            ELB2_DataPacketFinal            # 24: final data from ELB2
+        ]
 
         reply = Simulation_Packets[sp]
+
+        # TODO need to put data validation here
 
     else:
         # Running in normal mode
@@ -182,7 +149,7 @@ def GetModuleData(sp, Simulate):
         # Packet = []
         reply = LoRaCommsReceiver.ReturnRadioData(sp)
 
-    logging.info(' ')  # force new lne
+    logging.info(' ') # force new lne
     logging.info("i :%s" % sp)
     logging.info("Received this data to process :%s" % reply)
 
@@ -320,68 +287,70 @@ def Main():
             Packet = GetModuleData(SerialPort,Simulate)
             # waits in Get data until we have now received a packet from the radio module and it has been checked for validity
 
-        print ("This data received :%s" % Packet)
-        if ValidatePacket(Packet):       # is this a valid packet
-            logging.info("This data is valid :%s" % Packet)
-            print ("This data is valid :%s" % Packet)   # print packet to window
-            Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte as byte String
-            '''
-            ComsIdle = True
-                Valid Commands =
+        Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte as byte String
+        # TODO: Need to decode the full message received so I know the ELB address and if the message is for me!
+
+
+        '''
+        ComsIdle = True
+            Valid Commands =
                         Ping and SendDataReq
-                Invalid Commnds =
+            Invalid Commnds =
                         ClearToSendData, DataPacketandReq, DataPacketFinal, Unrecognised
-            ComsIdle = False
-                Valid Commands =
+        ComsIdle = False
+            Valid Commands =
                         DataPacketandReq and DataPacketFinal
-                Invalid commands =
+            Invalid commands =
                         Ping, DataToSendReq, ClearToSendData, Unrecognised
                         DataPacketandReq from another ELB
                         DataPacketFinal from another ELB
-            '''
-            #TODO need to add timeouts for coms
-            if ComsIdle:  # not yet in communication with an ELB
-                if Command == Ping:
-                    RespondToPing(SerialPort, Packet, Simulate) # respond to a ping command
-                elif Command == DataToSendReq:
-                    ComsIdle = False                            # coms has started so no longer idle
-                    CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
-                    RespondDataToSendReq(SerialPort,Packet,Simulate)
-                    # this will send CleartoSendData.
-                elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
-                    # commands invalid at this point
-                    logging.info("ClearToSendData, DataPacketandReq or DataPacketFinal at wrong time :%s" % Packet)
+        '''
+        #TODO need to add timeouts for coms
+        if ComsIdle:  # not yet in communication with an ELB
+            if Command == Ping:
+                RespondToPing(SerialPort, Packet, Simulate) # respond to a ping command
+            elif Command == DataToSendReq:
+                ComsIdle = False                            # coms has started so no longer idle
+                CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
+                RespondDataToSendReq(SerialPort,Packet,Simulate)
+                # this will send CleartoSendData.
+            elif Command == DataPacketFinal and Packet[StartELBAddr:StartELBAddr+4] == b'\x00\x11$\xb4':
+                # fudge to receive data from trial ELB S/W
+                RespondDataPacketFinal (SerialPort, Packet, Simulate)
+                WriteLogFile(Packet)                            # write this packet to a log file
+            elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
+                # commands invalid at this point
+                logging.info("ClearToSendData, DataPacketandReq or DataPacketFinal at wrong time :%s" % Packet)
+            else:
+                UnrecognisedCommand(SerialPort, Packet, Simulate)
+                    # send Nack with unrecognised cmd
+        else:                                   # ComsIdle is true so talking to ELB
+            if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
+                    # coms has started and received data packet with more to follow
+                RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
+                WriteLogFile(Packet)            # write this packet to a log file
+            elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
+                    # coms has started and received final data packet
+                RespondDataPacketFinal(SerialPort,Packet,Simulate)
+                WriteLogFile(Packet)                            # write this packet to a log file
+                ComsIdle = True                                 # coms sequence comlete so reset coms idle
+                CurrentELB = ''                                 # clear current ELB
+            elif Command == DataPacketandReq and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
+                # coms has started and received data packet from wrong ELB
+                SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
+            elif Command == DataPacketFinal and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
+                # coms has started and received data packet from wrong ELB
+                SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
+            else:                               # handle invalid command
+                if Command == Ping:                               # received ping from another ELB while receiving data
+                    RespondToPing(SerialPort,Packet,Simulate)      # send Pi busy Nack
+                    # should be ack
+                elif Command == DataToSendReq or Command == ClearToSendData:
+                    logging.info("DataToSendReq or ClearToSendData when already in coms :%s" % Packet)
                 else:
                     UnrecognisedCommand(SerialPort, Packet, Simulate)
-                        # send Nack with unrecognised cmd
-            else:                                   # ComsIdle is true so talking to ELB
-                if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
-                        # coms has started and received data packet with more to follow
-                    RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
-                    WriteLogFile(Packet)            # write this packet to a log file
-                elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
-                        # coms has started and received final data packet
-                    RespondDataPacketFinal(SerialPort,Packet,Simulate)
-                    WriteLogFile(Packet)                            # write this packet to a log file
-                    ComsIdle = True                                 # coms sequence comlete so reset coms idle
-                    CurrentELB = ''                                 # clear current ELB
-                elif Command == DataPacketandReq and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
-                    # coms has started and received data packet from wrong ELB
-                    SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
-                elif Command == DataPacketFinal and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
-                    # coms has started and received data packet from wrong ELB
-                    SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
-                else:                               # handle invalid command
-                    if Command == Ping:                               # received ping from another ELB while receiving data
-                        RespondToPing(SerialPort,Packet,Simulate)      # send Ack to ping
-                    elif Command == DataToSendReq or Command == ClearToSendData:
-                        logging.info("DataToSendReq or ClearToSendData when already in coms :%s" % Packet)
-                    else:
-                        UnrecognisedCommand(SerialPort, Packet, Simulate)
-                        # send Nack with unrecognised cmd
-        else:
-            logging.info("This data is invalid :%s" % Packet)
-            print("This data is invalid :%s" % Packet)      # send message to execution window
+                    # send Nack with unrecognised cmd
+
 
 # Only call the independent routine if the module is being called directly, else it is handled by the calling program
 if __name__ == "__main__":
