@@ -19,6 +19,9 @@ if Simulate != True:
     import LoRaCommsReceiver
     import LogFileWriter
 
+# How long we wait for a data packet
+COMMS_TIMEOUT = 2
+
 # constants that will not change in program
 # command bytes that are used by LoRa module
 DataToSendReq = chr(0x34).encode('utf-8')
@@ -199,7 +202,7 @@ def WriteLogFile(Packet):
     ELBName = ''.join([hex(i) for i in Packet[StartELBAddr:StartELBAddr+4]])
         # takes 4 bytes of ELB addr and converts to a hex string, eg. 0x000x110x240xb4
     PayloadLength = Packet[StartPayloadLength]     # get payload length as int
-    DataToWrite = ''.join([hex(i) for i in Packet[StartPayload:StartPayload+PayloadLength]])
+    DataToWrite = Packet[StartPayload:StartPayload+PayloadLength]
     logging.debug("Sent this data to write to Log File:%s this many bytes:%s" % (DataToWrite,PayloadLength))
 
     if Simulate != True:
@@ -216,6 +219,7 @@ def GenerateAck(Packet):
     packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr+4]    # Sender address
     packet_to_send = packet_to_send +  ExecByte                     # Executive Byte
     packet_to_send = packet_to_send + ACK                     # Acknowledge
+    packet_to_send = packet_to_send + b'x00'					# add zero payload length
 
     return packet_to_send
 
@@ -307,6 +311,7 @@ def Main():
     # initialise variables
     ComsIdle = True  # set to false when an initial RequestToSendData has been received.
     CurrentELB = b''  # when coms has started this variable holds the ELB addr that we are talking to
+    TimeLastValidPacket = time.time()       # reset time of last valid packet
 
     if Simulate != True:
         # Open the serial port and configure the Radio Module
@@ -335,6 +340,7 @@ def Main():
         if ValidatePacket(Packet):       # is this a valid packet
             logging.info("This data is valid :%s" % Packet)
             print ("This data is valid :%s" % Packet)   # print packet to window
+            TimePacketReceived = time.time()        # The time the last valid packet was received
             Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte as byte String
             '''
             ComsIdle = True
@@ -350,7 +356,10 @@ def Main():
                         DataPacketandReq from another ELB
                         DataPacketFinal from another ELB
             '''
-            #TODO need to add timeouts for coms
+            if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
+                # this data packet was received outside the comms window
+                ComsIdle = True
+            
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
                     RespondToPing(SerialPort, Packet, Simulate) # respond to a ping command
@@ -358,6 +367,7 @@ def Main():
                     ComsIdle = False                            # coms has started so no longer idle
                     CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
                     RespondDataToSendReq(SerialPort,Packet,Simulate)
+                    TimeLastValidPacket = time.time()
                     # this will send CleartoSendData.
                 elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
                     # commands invalid at this point
@@ -369,6 +379,7 @@ def Main():
                 if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
                     RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
+                    TimeLastValidPacket = time.time()
                     WriteLogFile(Packet)            # write this packet to a log file
                 elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received final data packet
@@ -382,6 +393,7 @@ def Main():
                 elif Command == DataPacketFinal and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
                     # coms has started and received data packet from wrong ELB
                     SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
+
                 else:                               # handle invalid command
                     if Command == Ping:                               # received ping from another ELB while receiving data
                         RespondToPing(SerialPort,Packet,Simulate)      # send Ack to ping
