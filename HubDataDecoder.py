@@ -17,6 +17,7 @@ import time
 
 if Simulate != True:
     import LoRaCommsReceiver
+    import LogFileWriter
 
 # constants that will not change in program
 # command bytes that are used by LoRa module
@@ -157,18 +158,19 @@ def GetModuleData(sp, Simulate):
 
 
 def WriteLogFile(Packet):
-    # write log file.
-    # takes a packet and appends it to a log file. This is the output from the Hub Decoder
+    # Takes the given log file and passes it to the writing routine
 
-    FileTime = time.strftime("%y%m%d%H%M%S",time.localtime())
     ELBName = ''.join([hex(i) for i in Packet[StartELBAddr:StartELBAddr+4]])
         # takes 4 bytes of ELB addr and converts to a hex string, eg. 0x000x110x240xb4
-    LogFile = open("ELB" + ELBName + FileTime + ".txt", "w")
     PayloadLength = Packet[StartPayloadLength]     # get payload length as int
     DataToWrite = ''.join([hex(i) for i in Packet[StartPayload:StartPayload+PayloadLength]])
-    LogFile.write(DataToWrite)
-    logging.debug("Write to Log File:%s this many bytes:%s" % (LogFile,PayloadLength))
-    LogFile.close()
+    logging.debug("Sent this data to write to Log File:%s this many bytes:%s" % (DataToWrite,PayloadLength))
+
+    if Simulate != True:
+        LogFileWriter.LogFileCreation(ELBName, DataToWrite)
+    else:
+        print("\nData to be written:\n %s \n" % DataToWrite)
+    return
 
 def GenerateAck(Packet):
     # Function generates an Ack for response to a number of messages
