@@ -380,9 +380,10 @@ def ReturnRadioData(fd):
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
             received = GetRadioData(fd, received_len)
-            print("Data Received:%s" % received, flush=True)
+            print("[LCR] - Data Received:%s" % received, flush=True)
 
             data = received
+            print("[LCR] - Data being passed back to the main program: %s" % data, flush=True)
             logging.debug("Data being passed back to the main program: %s" % data)
 #        else:
 #            data = []

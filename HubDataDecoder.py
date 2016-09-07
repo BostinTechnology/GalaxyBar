@@ -53,7 +53,7 @@ StartPayload = 12  # poition of start of payload
 # TODO - check these pointers are true of ping, request to send and data packets
 ExecByte = "!".encode('utf-8')      # The executive by
 
-ZeroPayload = b'\x00'           # used to indicate there is zero payload
+ZeroPayload = chr(0x00).encode('utf-8')           # used to indicate there is zero payload
 
 # Initialise files
 
@@ -189,7 +189,7 @@ def GetModuleData(sp, Simulate):
         reply = LoRaCommsReceiver.ReturnRadioData(sp)
 
     logging.info(' ')  # force new lne
-    logging.info("i :%s" % sp)
+    print("[GMD] - Received this data to process :%s" % reply, flush=True)
     logging.info("Received this data to process :%s" % reply)
 
     return reply
@@ -207,6 +207,7 @@ def WriteLogFile(Packet):
 
     if Simulate != True:
         LogFileWriter.LogFileCreation(ELBName, DataToWrite)
+
     else:
         print("\nData to be written:\n %s \n" % DataToWrite)
     return
@@ -219,7 +220,7 @@ def GenerateAck(Packet):
     packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr+4]    # Sender address
     packet_to_send = packet_to_send +  ExecByte                     # Executive Byte
     packet_to_send = packet_to_send + ACK                     # Acknowledge
-    packet_to_send = packet_to_send + b'x00'					# add zero payload length
+    packet_to_send = packet_to_send + ZeroPayload                   # add zero payload length
 
     return packet_to_send
 
@@ -245,10 +246,10 @@ def RespondDataToSendReq(fd, Packet,Simulate):
     packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr+4]   # Sender address
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + ClearToSendData                       # Clear to Send data command
-    packet_to_send = packet_to_send + b'\x00'                               # add zero payload length
+    packet_to_send = packet_to_send + ZeroPayload                               # add zero payload length
 
     logging.info("ClearToSendData :%s" % packet_to_send)
-    print("Clear to Send :%s" % packet_to_send)      # send message to execution window
+    print("[HDC-Rto CTS] - Clear to Send :%s" % packet_to_send)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -323,6 +324,7 @@ def Main():
 
     while True:
         i=0
+        print("NEW LOOP IN MAIN", flush=True)
     #for i in range(25):
         '''
         The struture of the main loop is to loop forever getting data and then processing it.
@@ -339,7 +341,7 @@ def Main():
 
         if ValidatePacket(Packet):       # is this a valid packet
             logging.info("This data is valid :%s" % Packet)
-            print ("This data is valid :%s" % Packet)   # print packet to window
+            print ("[MAIN] - This data is valid")   # print packet to window
             TimePacketReceived = time.time()        # The time the last valid packet was received
             Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte as byte String
             '''
@@ -359,7 +361,7 @@ def Main():
             if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
                 # this data packet was received outside the comms window
                 ComsIdle = True
-            
+
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
                     RespondToPing(SerialPort, Packet, Simulate) # respond to a ping command
@@ -367,7 +369,7 @@ def Main():
                     ComsIdle = False                            # coms has started so no longer idle
                     CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
                     RespondDataToSendReq(SerialPort,Packet,Simulate)
-                    TimeLastValidPacket = time.time()
+                    TimeLastValidPacket = TimePacketReceived # time.time()
                     # this will send CleartoSendData.
                 elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
                     # commands invalid at this point
@@ -379,7 +381,7 @@ def Main():
                 if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
                     RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
-                    TimeLastValidPacket = time.time()
+                    TimeLastValidPacket = TimePacketReceived # time.time()
                     WriteLogFile(Packet)            # write this packet to a log file
                 elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received final data packet
