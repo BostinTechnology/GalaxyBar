@@ -220,7 +220,7 @@ def GenerateAck(Packet):
     packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr+4]    # Sender address
     packet_to_send = packet_to_send +  ExecByte                     # Executive Byte
     packet_to_send = packet_to_send + ACK                     # Acknowledge
-    packet_to_send = packet_to_send + ZeroPayload	# add zero payload length
+    packet_to_send = packet_to_send + ZeroPayload   # add zero payload length
 
     return packet_to_send
 
@@ -233,6 +233,7 @@ def RespondToPing(fd, Packet, Simulate):
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
     # Now need to wait for the answer or timeout.
+
     return
 
 
@@ -360,7 +361,7 @@ def Main():
             if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
                 # this data packet was received outside the comms window
                 ComsIdle = True
-            
+
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
                     RespondToPing(SerialPort, Packet, Simulate) # respond to a ping command

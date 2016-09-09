@@ -9,6 +9,7 @@ It is intended to be used as part of the LoRa Monitor, but it can be run indepen
 import logging
 import math
 import time
+from uuid import getnode
 
 #BUG: Tap ID is not defined, set to a default value of 1
 
@@ -38,11 +39,27 @@ def byte_to_bcd_old (byte):
     return bcd
 
 def byte_to_bcd(byte):
-    # Taking the given byte as an int, returnthe bcd equivalent
-    return int(format(byte,'x'))
+    # Taking the given byte as an int, return the bcd equivalent
+    if (byte & 0xf0) >> 4 > 9 or (byte & 0x0f) > 9:
+        logging.warning("Byte to BCD Conversion encountered a non BCD value, set to 99")
+        bcd = 99
+    else:
+        bcd = int(format(byte,'x'))
+    return bcd
 
+def GetMACAddress():
+    # Read the MAC address for the ethernet card and return it as a int
+    try:
+        sys = open('/sys/class/net/eth0/address').read()
+    except:
+        sys = '00:00:00:00:00:00'
+        logging.warning("Reading of the MAC address from system file failed")
+    logging.debug("MAC Address captured (all zero's is a failure):%s" % sys)
+    mac = sys.replace(':','')
 
-def GenerateLogData(data_packet):
+    return mac[0:12]
+
+def GenerateLogData(tap_id, data_packet):
     # Given the binary string of data, return the data to be written to the log file
     # This function assumes data passed in has been validated
 
@@ -130,21 +147,10 @@ def GenerateLogData(data_packet):
     else:
         flow_rate=0
 
-    data = (TAP_ID,log_error, ss,mm,hh,dd,MM,YY, uid_hex,uc_int,sc_int,ec_int,fc_int,flow_rate)
-    logging.debug("Tap ID:%d" % TAP_ID)
-    logging.debug("Log error:%d" % log_error)
-    logging.debug("Seconds:%d" % ss)
-    logging.debug("Minutes:%d" % mm)
-    logging.debug("Hours:%d" % hh)
-    logging.debug("Days:%d" % dd)
-    logging.debug("Months:%d" % MM)
-    logging.debug("Years:%d" % YY)
-    logging.debug("Tag ID:%s" % uid_hex)
-    logging.debug("Usage Count:%d" % uc_int)
-    logging.debug("Start Credit:%d" % sc_int)
-    logging.debug("End Credit:%d" % ec_int)
-    logging.debug("Flow Count:%d" % fc_int)
-    logging.debug("Flow Rate:%d" % flow_rate)
+    mac_addr = GetMACAddress()
+
+    data = (tap_id,log_error, ss,mm,hh,dd,MM,YY, uid_hex,uc_int,sc_int,ec_int,fc_int,flow_rate, mac_addr)
+
     return{'success': True, 'data':data}
 
 
@@ -159,14 +165,14 @@ def CheckPacket(data_packet):
     logging.debug("Data Packet ok to Use")
     return True
 
-def WriteLogFile(ELB, data_to_write):
+def WriteLogFile(elb_name, data_to_write):
     # write log file.
     # takes a packet and appends it to a log file. This is the output from the Hub Decoder
 
 #BUG: This needs to be in a try / except loop
 
     FileTime = time.strftime("%y%m%d%H%M%S",time.localtime())
-    LogFile = open("ELB" + ELB + FileTime + ".txt", "w")
+    LogFile = open("ELB" + str(elb_name) + FileTime + ".txt", "w")
     LogFile.write(data_to_write)
     logging.debug("Written data to log file!: %s" % data_to_write)
     LogFile.close()
@@ -201,19 +207,31 @@ def GenerateSampleData():
 def GenerateSampleELBName():
     # Creates the same ELB name for testing and returns it
 
-    sample_elbname = '0x000x110x220x33'
-    logging.info("Same ELB Name:%s" % sample_elbname)
+    sample_elbname = b'1234'
+    logging.info("Sample ELB Name:%s" % sample_elbname)
     return sample_elbname
 
-def LogFileCreation(elb, payload):
+def ConvertELBName(elb_name):
+    # Take the given EBL address as a binary string and return a string
+    try:
+        tap_id = int(elb_name,16)
+    except:
+        tap_id = TAP_ID
+        logging.warning("Unable to convert ELB Name, suing default")
+    return tap_id
+
+def LogFileCreation(elb_bytes, payload):
     # this function is called from the main program to write data to the log file
 
     if CheckPacket(payload):
-        logdata = GenerateLogData(payload)
-        logdata = ConvertToString(logdata)
-        WriteLogFile(elb, logdata)
+        elb = ConvertELBName(elb_bytes)
+        logdata = GenerateLogData(elb, payload)
+        if logdata['success']:
+            logdata = ConvertToString(logdata)
+            WriteLogFile(elb, logdata)
 
     return
+
 
 def main():
 
@@ -225,13 +243,14 @@ def main():
                         format='%(asctime)s:%(levelname)s:%(message)s')
 
     sample = GenerateSampleData()
-    elbname = GenerateSampleELBName()
+    elb_bytes = GenerateSampleELBName()
     if CheckPacket(sample):
-        logdata = GenerateLogData(sample)
+        elb = ConvertELBName(elb_bytes)
+        logdata = GenerateLogData(elb, sample)
         if logdata['success']:
             #logdatacsv = ConvertToCSV(logdata['data'])
             data = ConvertToString(logdata['data'])
-            WriteLogFile(elbname, data)
+            WriteLogFile(elb, data)
 
     return
 

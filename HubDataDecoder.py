@@ -199,8 +199,10 @@ def GetModuleData(sp, Simulate):
 def WriteLogFile(Packet):
     # Takes the given log file and passes it to the writing routine
 
-    ELBName = ''.join([hex(i) for i in Packet[StartELBAddr:StartELBAddr+4]])
+#    ELBName = ''.join([hex(i) for i in Packet[StartELBAddr:StartELBAddr+4]])
         # takes 4 bytes of ELB addr and converts to a hex string, eg. 0x000x110x240xb4
+    ELBName = Packet[StartELBAddr:StartELBAddr+4]
+        # Pass the ELB name into the logwriter
     PayloadLength = Packet[StartPayloadLength]     # get payload length as int
     DataToWrite = Packet[StartPayload:StartPayload+PayloadLength]
     logging.debug("Sent this data to write to Log File:%s this many bytes:%s" % (DataToWrite,PayloadLength))
