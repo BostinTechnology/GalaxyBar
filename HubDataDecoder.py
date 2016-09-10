@@ -205,7 +205,7 @@ def WriteLogFile(Packet):
         # Pass the ELB name into the logwriter
     PayloadLength = Packet[StartPayloadLength]     # get payload length as int
     DataToWrite = Packet[StartPayload:StartPayload+PayloadLength]
-    logging.debug("Sent this data to write to Log File:%s this many bytes:%s" % (DataToWrite,PayloadLength))
+    logging.debug("Write from ELB:%s, this length %s this data:%s" % (ELBName, PayloadLength, DataToWrite))
 
     if Simulate != True:
         LogFileWriter.LogFileCreation(ELBName, DataToWrite)

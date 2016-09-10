@@ -64,34 +64,36 @@ def GenerateLogData(tap_id, data_packet):
     # This function assumes data passed in has been validated
 
     # Split each byte of the packet into the various bits.
+
+    # The first byte is the response code so it is ignored
     try:
-        EE=data_packet[0]
-        secs = data_packet[1]
-        mins = data_packet[2]
-        hours = data_packet[3]
-        day = data_packet[4]
-        month = data_packet[5]
-        year = data_packet[6]
-        uid1 = data_packet[7]
-        uid2 = data_packet[8]
-        uid3 = data_packet[9]
-        uid4 = data_packet[10]
-        uc1= data_packet[11]
-        uc2= data_packet[12]
-        uc3= data_packet[13]
-        uc4= data_packet[14]
-        sc1 = data_packet[15]
-        sc2 = data_packet[16]
-        sc3 = data_packet[17]
-        sc4 = data_packet[18]
-        ec1 = data_packet[19]
-        ec2 = data_packet[20]
-        ec3 = data_packet[21]
-        ec4 = data_packet[22]
-        fc1 = data_packet[23]
-        fc2 = data_packet[24]
-        ft1 = data_packet[25]
-        ft2 = data_packet[26]
+        EE=data_packet[1]
+        secs = data_packet[2] & 0x7F        # MSBit is new battery indicator, so ignored
+        mins = data_packet[3]
+        hours = data_packet[4]
+        day = data_packet[5]
+        month = data_packet[6]
+        year = data_packet[7]
+        uid1 = data_packet[8]
+        uid2 = data_packet[9]
+        uid3 = data_packet[10]
+        uid4 = data_packet[11]
+        uc1= data_packet[12]
+        uc2= data_packet[13]
+        uc3= data_packet[14]
+        uc4= data_packet[15]
+        sc1 = data_packet[16]
+        sc2 = data_packet[17]
+        sc3 = data_packet[18]
+        sc4 = data_packet[19]
+        ec1 = data_packet[20]
+        ec2 = data_packet[21]
+        ec3 = data_packet[22]
+        ec4 = data_packet[23]
+        fc1 = data_packet[24]
+        fc2 = data_packet[25]
+        ft1 = data_packet[26]
+        ft2 = data_packet[27]
     except:
         logging.Wwarning("Splitting of data into 27 bytes failed")
         return {'success':False, 'data':[]}
@@ -214,10 +216,10 @@ def GenerateSampleELBName():
 def ConvertELBName(elb_name):
     # Take the given EBL address as a binary string and return a string
     try:
-        tap_id = int(elb_name,16)
+        tap_id = int.from_bytes(elb_name, byteorder='big')
     except:
         tap_id = TAP_ID
-        logging.warning("Unable to convert ELB Name, suing default")
+        logging.warning("Unable to convert ELB Name, using default")
     return tap_id
 
 def LogFileCreation(elb_bytes, payload):
@@ -227,7 +229,7 @@ def LogFileCreation(elb_bytes, payload):
         elb = ConvertELBName(elb_bytes)
         logdata = GenerateLogData(elb, payload)
         if logdata['success']:
-            logdata = ConvertToString(logdata)
+            logdata = ConvertToString(logdata['data'])
             WriteLogFile(elb, logdata)
 
     return
