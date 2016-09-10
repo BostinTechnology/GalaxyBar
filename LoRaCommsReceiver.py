@@ -362,7 +362,6 @@ def ReadRadioData(fd):
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
             received = GetRadioData(fd, received_len)
-            print("Data Received:%s" % received)
         else:
             print(".", end="", flush=True)
     return
@@ -375,7 +374,7 @@ def ReturnRadioData(fd):
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
             received = GetRadioData(fd, received_len)
-            print("[LCR] - Data Received:%s" % received, flush=True)
+            #print("[LCR] - Data Received:%s" % received, flush=True)
 
             data = received
             #print("[LCR] - Comms Messsage being passed back to the main program: %s" % data, flush=True)
@@ -410,7 +409,7 @@ def ReturnRadioDataTimed(fd, waittime):
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
             received = GetRadioDataBinary(fd, received_len)
-            print("Data Received:%s" % received)
+            #print("Data Received:%s" % received)
 
             logging.debug("[LCR]: Data being passed back to the main program: %s" % data)
         if time.time() > timeout:

@@ -57,6 +57,22 @@ ZeroPayload = chr(0x00).encode('utf-8')           # used to indicate there is ze
 
 # Initialise files
 
+def DisplayMessage(Packet, message_type):
+    # Takes the given packet of data splits it onto the screen / log file
+    # message_type is the type of message
+    src = Packet[StartHubAddr:StartHubAddr+4]
+    dst = Packet[StartELBAddr:StartELBAddr+4]
+    cmd = chr(Packet[StartCommand]).encode('utf-8')
+    lgth = Packet[StartPayloadLength]
+    payload = Packet[StartPayload:]
+    print("Message %s" % message_type)
+    logging.info("Message %s" % message_type)
+    print("SRC:%s DST:%s CMD:%s LEN:%s PAY:%s\n" % (src, dst, cmd, lgth, payload))
+    logging.info("SRC:%s DST:%s CMD:%s LEN:%s PAY:%s" % (src, dst, cmd, lgth, payload))
+
+    return
+
+
 def ValidatePayload (Packet):
     # checks payload of the packet and looks for CRC
     # assumesthat only a packet with daat is sent to this routine
@@ -92,7 +108,7 @@ def ValidatePacket (Packet):
                     # no payload so only addr descripters and messag elength can be used
                     ValidPacket = True
     logging.info("[HDD] - Packet of data has been validated :%s" % Packet)
-    print ("[HDD] - The packet of data has been validated")   # print packet to window
+    #print ("[HDD] - The packet of data has been validated")   # print packet to window
     return ValidPacket
 
 def GetModuleData(sp, Simulate):
@@ -191,7 +207,7 @@ def GetModuleData(sp, Simulate):
         reply = LoRaCommsReceiver.ReturnRadioData(sp)
 
     logging.info(' ')  # force new lne
-    print("[HDD] - Comms Message received to process :%s" % reply, flush=True)
+    #print("[HDD] - Comms Message received to process :%s" % reply, flush=True)
     logging.info("[HDD] - Comms Message received to process :%s" % reply)
 
     return reply
@@ -232,14 +248,34 @@ def GenerateAck(Packet):
 def RespondToPing(fd, Packet,Simulate):
 
     message = GenerateAck(Packet)
-    logging.info("[HDD] - Responding to a PING - Ack Message :%s" % message)
-    print("[HDD] - Send ACK :%s" % message)      # send message to execution window
+    logging.info("[HDD] - Sending a {Ping Ack} Message :%s" % message)
+    print("[HDD] - Sending an {ACK} :%s" % message)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
     # Now need to wait for the answer or timeout.
 
     return
 
+def RespondDataPacketandReq(fd, Packet, Simulate):
+    # data packet received and further data is on its way
+
+    message = GenerateAck(Packet)
+    #logging.info("[HDD] - Sending a {DataPacketandReq} response:%s" % message)
+    #print("[HDD] - Sending a {Data Packet + Req} :%s" % message)      # send message to execution window
+    DisplayMessage(message, "SEND: Data Packet + Req Acknowledge")
+    if Simulate != True:
+        LoRaCommsReceiver.RadioDataTransmission(fd, message)
+
+
+def RespondDataPacketFinal(fd, Packet, Simulate):
+    # data packet received and no more to come
+
+    message = GenerateAck(Packet)
+    #logging.info("[HDD] - Sending a {DataPacketFinal} response :%s" % message)
+    #print("[HDD] - Sending a {Data Packet Final} :%s" % message)      # send message to execution window
+    DisplayMessage(message, "SEND: Data Packet Final Acknowledge")
+    if Simulate != True:
+        LoRaCommsReceiver.RadioDataTransmission(fd, message)
 
 def RespondDataToSendReq(fd, Packet,Simulate):
     # responds to the Data to Send Request
@@ -252,36 +288,13 @@ def RespondDataToSendReq(fd, Packet,Simulate):
     packet_to_send = packet_to_send + ClearToSendData                       # Clear to Send data command
     packet_to_send = packet_to_send + ZeroPayload                               # add zero payload length
 
-    logging.info("[HDD] - ClearToSendData :%s" % packet_to_send)
-    print("[HDD] - Clear to Send :%s" % packet_to_send)      # send message to execution window
+    DisplayMessage(packet_to_send, "SEND: Clear to Send Data")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
-
-
-def RespondDataPacketandReq(fd, Packet, Simulate):
-    # data packet received and further data is on its way
-
-    message = GenerateAck(Packet)
-    logging.info("[HDD] - DataPacketandReq :%s" % message)
-    print("[HDD] - Data. More to follow :%s" % message)      # send message to execution window
-    if Simulate != True:
-        LoRaCommsReceiver.RadioDataTransmission(fd, message)
-
-
-def RespondDataPacketFinal(fd, Packet, Simulate):
-    # data packet received and no more to come
-
-    message = GenerateAck(Packet)
-    logging.info("[HDD] - Received Final Packet :%s" % message)
-    print("[HDD] - Final data :%s" % message)      # send message to execution window
-    if Simulate != True:
-        LoRaCommsReceiver.RadioDataTransmission(fd, message)
-
 
 def UnrecognisedCommand(fd,Packet,Simulate):
     # send relevant Nack.
 
-    print ("[HDD] - Unrecognised Command")
     # Function generates an Ack for response to anumber of messages
     packet_to_send = b''
     packet_to_send = packet_to_send + Packet[StartELBAddr:StartELBAddr + 4] # Receiver address
@@ -290,8 +303,10 @@ def UnrecognisedCommand(fd,Packet,Simulate):
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + NackCmdRecog                          # Nack with command unrecognised
     packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
-    logging.info("[HDD] - Nack Cmd not Recognised Message :%s" % packet_to_send)
-    print("[HDD] - Unrecognised Command :%s" % packet_to_send)      # send message to execution window
+
+    #logging.info("[HDD] - Sending a {Nack Cmd not Recognised} Message :%s" % packet_to_send)
+    #print("[HDD] - Sending a {Nack Cmd not Recognised} Message :%s" % packet_to_send)      # send message to execution window
+    DisplayMessage(packet_to_send, "SEND: NACK CMD Not Recognised")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -306,8 +321,10 @@ def SendPiBusyNack(fd,Packet,Simulate):
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + NackNotReadyforData                   # Nack with command unrecognised
     packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
-    logging.info("[HDD] - Nack Not Ready for Data :%s" % packet_to_send)
-    print('[HDD] - Pi busy Nack :%s' % packet_to_send)      # send message to execution window
+
+    #logging.info("[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s" % packet_to_send)
+    #print('[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s' % packet_to_send)      # send message to execution window
+    DisplayMessage(packet_to_send, "SEND: NACK Not Ready For Data")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -328,7 +345,7 @@ def Main():
 
     while True:
         i=0
-        print("NEW LOOP IN MAIN", flush=True)
+        #print("NEW LOOP IN MAIN", flush=True)
     #for i in range(25):
         '''
         The struture of the main loop is to loop forever getting data and then processing it.
@@ -366,44 +383,54 @@ def Main():
 
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
+                    DisplayMessage(Packet, "RECV: Ping")
                     GenerateAck(SerialPort, Packet, Simulate) # respond to a ping command
                 elif Command == DataToSendReq:
                     ComsIdle = False                            # coms has started so no longer idle
+                    DisplayMessage(Packet, "RECV: Data To Send Request")
                     CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
                     RespondDataToSendReq(SerialPort,Packet,Simulate)
                     TimeLastValidPacket = TimePacketReceived # time.time()
                     # this will send CleartoSendData.
                 elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
                     # commands invalid at this point
+                    DisplayMessage(Packet, "RECV: Message Sequence incorrect")
                     logging.info("[HDD] - ClearToSendData, DataPacketandReq or DataPacketFinal at wrong time :%s" % Packet)
                 else:
+                    DisplayMessage(Packet, "RECV: Unrecognised Command")
                     UnrecognisedCommand(SerialPort, Packet, Simulate)
                         # send Nack with unrecognised cmd
             else:                                   # ComsIdle is true so talking to ELB
                 if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
+                    DisplayMessage(Packet, "RECV: Data Packet and Request")
                     RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
                     TimeLastValidPacket = TimePacketReceived # time.time()
                     WriteLogFile(Packet)            # write this packet to a log file
                 elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
-                        # coms has started and received final data packet
+                    # Comms has started and received final data packet
+                    DisplayMessage(Packet, "RECV: Data Packet Final")
                     RespondDataPacketFinal(SerialPort,Packet,Simulate)
                     WriteLogFile(Packet)                            # write this packet to a log file
                     ComsIdle = True                                 # coms sequence comlete so reset coms idle
                     CurrentELB = ''                                 # clear current ELB
                 elif Command == DataPacketandReq and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
                     # coms has started and received data packet from wrong ELB
+                    DisplayMessage(Packet, "RECV: Data Packet request when Pi Busy with another ELB")
                     SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
                 elif Command == DataPacketFinal and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
                     # coms has started and received data packet from wrong ELB
+                    DisplayMessage(Packet, "RECV: Data Packet Final when Pi Busy with another ELB")
                     SendPiBusyNack(SerialPort, Packet, Simulate)  # send Pi busy Nack
 
                 else:                               # handle invalid command
                     if Command == Ping:                               # received ping from another ELB while receiving data
+                        DisplayMessage(Packet, "RECV: Ping")
                         GenerateAck(SerialPort,Packet,Simulate)      # send Ack to ping
                     elif Command == DataToSendReq or Command == ClearToSendData:
                         logging.info("[HDD] - DataToSendReq or ClearToSendData when already in coms :%s" % Packet)
                     else:
+                        DisplayMessage(Packet, "RECV: Unrecognised Command")
                         UnrecognisedCommand(SerialPort, Packet, Simulate)
                         # send Nack with unrecognised cmd
         else:
