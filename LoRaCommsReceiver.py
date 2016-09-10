@@ -4,7 +4,6 @@ This program is used to listen to the LoRa transmissions
 
 It is intended to be used as part of the LoRa Monitor, but it can be run independently.
 
-V0_2 : Comms improved by reducing time delays in the code
 """
 
 import serial
@@ -53,9 +52,9 @@ def SetupUART():
 
     if ser.isOpen():
         # if serial comms are setup and the channel is opened
-        logging.info ("PI setup complete on channel %d as : %s" % (ser.fd, ser.getSettingsDict))
+        logging.info ("[LCR]: PI UART setup complete on channel %d as : %s" % (ser.fd, ser.getSettingsDict))
     else:
-        logging.critical("Unable to Setup communications")
+        logging.critical("[LCR]: Unable to Setup communications")
         sys.exit()
 
     return ser
@@ -65,7 +64,7 @@ def SetupGPIO():
     GPIO.setmode(GPIO.BCM)
     time.sleep(0.2)
     GPIO.setup(INPUT_PIN, GPIO.IN)
-    logging.debug("GPIO Setup Complete")
+    logging.debug("[LCR]: GPIO Setup Complete")
     return
 
 
@@ -82,10 +81,9 @@ def WriteData(fd,message):
     send = message + '\r\n'
     try:
         ans = fd.write(send.encode('utf-8'))
-        logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
+        logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (send, ans))
     except Exception as e:
-        logging.warning("Message >%s< sent as >%a< FAILED" % (message, send))
-        logging.error("Failed Response: %s" % e)
+        logging.warning("[LCR]: Message >%s< sent as >%a< FAILED" % (message, send))
         ans = 0
     return ans
 
@@ -96,10 +94,9 @@ def WriteDataBinary(fd,message):
     send = message + b'\r\n'
     try:
         ans = fd.write(send)
-        logging.info("Message >%s< sent as >%a< and got this reply:%s" % (message, send, ans))
+        logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (send, ans))
     except Exception as e:
-        logging.warning("Message >%s< sent as >%a< FAILED" % (message, send))
-        logging.error("Failed Response: %s" % e)
+        logging.warning("[LCR]: Message >%s< sent as >%a< FAILED" % (message, send))
         ans = 0
     return ans
 
@@ -116,7 +113,7 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     try:
         reply = fd.readall()
     except:
-        logging.warning("Reading of data on the serial port FAILED")
+        logging.warning("[LCR]: Reading of data on the serial port FAILED")
         reply = b''
 
     # Debug testing
@@ -124,8 +121,7 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     #reply = b'1000!0000!'      #Short response
 
 
-    logging.debug("Data Read back from the serial port :%s" % reply)
-    logging.debug("Length being extracted :%s" % length)
+    logging.debug("[LCR]: Data read back from the serial port :%s" % reply)
 
     # The command below removes the characters from around the message, and I only need to remove the one at each end
     reply = reply.rstrip(b'>')
@@ -133,16 +129,16 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
 
     if len(reply) < 1:
         # Data received from the LoRa module is empty, return failure
-        logging.warning("No reply from the LoRa module, waiting before retrying")
+        logging.warning("[LCR]: No reply from the LoRa module, waiting before retrying")
         time.sleep(INTERDELAY)
         return {'success':success, 'reply':ans}
     elif len(reply) < length:
         # The data returned is shorter than expected, return failed
-        logging.warning("Reply shorter than expected from the LoRa module")
+        logging.warning("[LCR]: Reply shorter than expected from the LoRa module")
         return {'success':success, 'reply':ans}
     elif len(reply) < min(MIN_LENGTH, length):
         # The data returned is shorter than the minimum length or the length required (whichever is the shorter, return failed
-        logging.warning("Reply shorter than minimum allowed from the LoRa module")
+        logging.warning("[LCR]: Reply shorter than minimum allowed from the LoRa module")
         return {'success':success, 'reply':ans}
 
 
@@ -151,22 +147,21 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     if length < 0:
         # No length given, assume overall length less 4
         length = len(reply) - 4
-        logging.debug("No length given, splitting on last 4 being status")
+        logging.debug("[LCR]: Response is split based on the last 4 bytes being the status")
 
     ans[0] = reply[0:length]
     ans[1] = reply[len(reply) - len(pos_reply):]
-    logging.debug("Reply Split using length into :%s" % ans)
+    logging.debug("[LCR]: Split the response and got data:%s and reply:%s" % (ans[0], ans[1]))
 
-    logging.debug("Read the data and got data:%s and reply:%s" % (ans[0], ans[1]))
     if ans[1] == pos_reply.encode('utf-8'):
-        logging.info("Positive response received  from the LoRa module: %s" % ans[1])
+        logging.info("[LCR]: Positive response received from the LoRa module: %s" % ans[1])
         success = True
     else:
-        logging.warning("Negative response received from the LoRa module: %s" % ans[1])
+        logging.warning("[LCR]: Negative response received from the LoRa module: %s" % ans[1])
         ans=[]
         success = False
 
-    logging.debug("Data of length %s read from the Serial port: %a" % (length, ans))
+    logging.info("[LCR} - Data of length %s read from the Serial port: %a" % (length, ans))
     return {'success':success, 'reply':ans}
 
 
@@ -184,13 +179,13 @@ def ReadDataOLD(fd, length=-1, pos_reply='OK00'):
     try:
         reply = fd.readall()
     except:
-        logging.warning("Reading of data on the serial port FAILED")
+        logging.warning("[LCR]: Reading of data on the serial port FAILED")
         reply = b''
 
     #reply =b''
 
-    logging.debug("Data Read back from the serial port :%s" % reply)
-    logging.debug("Length being extracted :%s" % length)
+    logging.debug("[LCR]: Data Read back from the serial port :%s" % reply)
+    logging.debug("[LCR]: Length being extracted :%s" % length)
 
     # The command below removes the characters from around the message, and I only need to remove the one at each end
     reply = reply.rstrip(b'>')
@@ -198,16 +193,16 @@ def ReadDataOLD(fd, length=-1, pos_reply='OK00'):
 
     if len(reply) < 1:
         # Data received from the LoRa module is empty, return failure
-        logging.warning("No reply from the LoRa module")
+        logging.warning("[LCR]: No reply from the LoRa module")
         time.sleep(INTERDELAY)
         return {'success':success, 'reply':""}
     elif len(reply) < length:
         # The data returned is shorter than expected, return failed
-        logging.warning("Reply shorter than expected from the LoRa module")
+        logging.warning("[LCR]: Reply shorter than expected from the LoRa module")
         return {'success':success, 'reply':""}
     elif len(reply) < MIN_LENGTH:
         # The data returned is shorter than expected, return failed
-        logging.warning("Reply shorter than minimum allowed from the LoRa module")
+        logging.warning("[LCR]: Reply shorter than minimum allowed from the LoRa module")
         return {'success':success, 'reply':""}
 
 
@@ -217,28 +212,28 @@ def ReadDataOLD(fd, length=-1, pos_reply='OK00'):
         # Not given a length, so split on the control codes
         if reply.find(b'\r\n') > 0:
             ans = reply.split(b'\r\n')
-            logging.debug("Reply Split using .split(b'\\r\\n') into :%s" % ans)
+            logging.debug("[LCR]: Reply Split using .split(b'\\r\\n') into :%s" % ans)
         else:
             ans[0] = b''
             ans[1] = reply
-            logging.debug("Reply Split manually into :%s" % ans)
+            logging.debug("[LCR]: Reply Split manually into :%s" % ans)
     else:
         # Spit on the length variable (Use -1 as it is positions 0 to ...)
         ans = [b'',b'']
         ans[0] = reply[0:length]
         ans[1] = reply[len(reply) - len(pos_reply):]
-        logging.debug("Reply Split using length into :%s" % ans)
+        logging.debug("[LCR]: Reply Split using length into :%s" % ans)
 
-    logging.debug("Read the data and got data:%s and reply:%s" % (ans[0], ans[1]))
+    logging.debug("[LCR]: Read the data and got data:%s and reply:%s" % (ans[0], ans[1]))
     if ans[1] == pos_reply.encode('utf-8'):
-        logging.info("Positive response received  from the LoRa module: %s" % ans[1])
+        logging.info("[LCR]: Positive response received  from the LoRa module: %s" % ans[1])
         success = True
     else:
-        logging.warning("Negative response received from the LoRa module: %s" % ans[1])
+        logging.warning("[LCR]: Negative response received from the LoRa module: %s" % ans[1])
         ans=[]
         success = False
 
-    logging.debug("Data of length %s read from the Serial port: %a" % (length, ans))
+    logging.debug("[LCR]: Data of length %s read from the Serial port: %a" % (length, ans))
     return {'success':success, 'reply':ans}
 
 
@@ -255,13 +250,13 @@ def SendConfigCommand(fd, command):
         # No need to check the reply as it has already been validated
         ReadData(fd)
     else:
-        logging.warning("Failed to Send Config Command %s" % command)
+        logging.warning("[LCR]: Failed to Send Config Command %s" % command)
 
     return
 
 def SetupLoRa(fd):
     # send the right commands to setup the LoRa module
-    logging.info("Setting up the LoRA module with the various commands")
+    logging.info("[LCR]: Setting up the LoRA module with the various commands")
 
     # This one is removed as it keeps failing and I'm not sure we need it
     SendConfigCommand(fd, b"AT!!")
@@ -291,7 +286,7 @@ def SendRadioData(fd, message):
     length = len(message) + 1
     if length > 255:
         # Length is greater than 255, abort.
-        logging.critical("Radio Message length is greater than 255 limit, aborting: %s" % message)
+        logging.critical("[LCR]: Radio Message length is greater than 255 limit, aborting: %s" % message)
         ExitProgram()
 
 #TODO: May need to add in a success response so I can determine if the data has been sent.
@@ -315,28 +310,28 @@ def SendRadioData(fd, message):
 
             ReadData(fd)
         else:
-            logging.warning("Sending of the Radio data message >%s< FAILED" % reply)
+            logging.warning("[LCR]: Sending of the Radio data message >%s< FAILED" % reply)
 
     else:
-        logging.warning("Sending of the Radio data length message >%s< FAILED" % send)
-    logging.info("Radio Message >%s< successfully sent" % message)
+        logging.warning("[LCR]: Sending of the Radio data length message >%s< FAILED" % send)
+    logging.info("[LCR]: Radio Message >%s< successfully sent at time: %s" % (message, time.strftime("%d-%m-%y %H:%M:%S")))
     return
 
 def WaitForDataAlertviaGPIO():
     # Routine monitors the GPIO pin and waits for the line to go high indicating a packet.
+    logging.debug("[LCR]: Waiting for data pin to go high")
+    logging.info(" ")       # Add blank line for readability of the log file
 
     status = 0
     while(status!=1):
         status = GPIO.input(INPUT_PIN)
-
+    logging.debug("[LCR]: Data Pin gone high at time :%s" % time.strftime("%d-%m-%y %H:%M:%S"))
     return
 
 def RadioDataAvailable(fd):
     # checks to see if there is radio data available to be read using AT+r / checkr.
     # returns zero if no data
-    logging.debug("Waiting for data pin to go high")
     WaitForDataAlertviaGPIO()
-    logging.debug("Data Pin gone high")
     data_length = 0
     reply = WriteDataBinary(fd, b'AT+r')
     if reply > 0:
@@ -344,7 +339,7 @@ def RadioDataAvailable(fd):
         ans = ReadData(fd, 2)
         if ans['success'] == True:
             data_length = int(ans['reply'][0], 16)
-        logging.info("Check for Radio Data (AT+r) returned %d bytes" % data_length)
+        logging.info("[LCR]: Check for Radio Data (AT+r) returned %d bytes" % data_length)
     return data_length
 
 def GetRadioData(fd, length=-1):
@@ -354,7 +349,7 @@ def GetRadioData(fd, length=-1):
     if reply > 0:
         message = ReadData(fd, length)
         # Don't need to check for a successful reply as it will just pass empty data back
-        logging.info("Radio Data (AT+A) returned >%s<" % message['reply'][0])
+        logging.info("[LCR]: Radio Data (AT+A) returned >%s<" % message['reply'][0])
     return message['reply'][0]
 
 def ReadRadioData(fd):
@@ -383,10 +378,9 @@ def ReturnRadioData(fd):
             print("[LCR] - Data Received:%s" % received, flush=True)
 
             data = received
-            print("[LCR] - Data being passed back to the main program: %s" % data, flush=True)
-            logging.debug("Data being passed back to the main program: %s" % data)
-#        else:
-#            data = []
+            #print("[LCR] - Comms Messsage being passed back to the main program: %s" % data, flush=True)
+            logging.debug("[LCR]: Comms Message being passed back to the HDD program: %s" % data)
+
     return data
 
 def RadioDataTransmission(fd, message):
@@ -398,7 +392,7 @@ def RadioDataTransmission(fd, message):
 #   NOTE1: Removed as data passed in is to be a string, not a list
 #    message = message.join(dataaslist)
 
-    logging.debug("Data being passed into SendRadioData is:%s" % message)
+    logging.debug("[LCR]: Data being passed into SendRadioData is:%s" % message)
     SendRadioData(fd, message)
     return
 
@@ -418,19 +412,22 @@ def ReturnRadioDataTimed(fd, waittime):
             received = GetRadioDataBinary(fd, received_len)
             print("Data Received:%s" % received)
 
-            logging.debug("Data being passed back to the main program: %s" % data)
+            logging.debug("[LCR]: Data being passed back to the main program: %s" % data)
         if time.time() > timeout:
             data = ''
-            logging.debug("No data received within %s seconds, returning empty string" % waittime)
+            logging.debug("[LCR]: No data received within %s seconds, returning empty string" % waittime)
             break
     return data
 
-def main():
+
+# Only call the independent routine if the module is being called directly, else it is handled by the calling program
+if __name__ == "__main__":
     """
     This is the main entry point for the program when it is being run independently.
 
     """
-    logging.basicConfig(filename="LoRaCommsReceiver.txt", filemode="w", level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
+    logging.basicConfig(filename="LoRaCommsReceiver.txt", filemode="w",
+        level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
     print("Bostin Technology\n")
     print("Please choose functionality")
@@ -465,11 +462,4 @@ def main():
         print("Unknown Option")
 
 
-
-
-
-# Only call the independent routine if the module is being called directly, else it is handled by the calling program
-if __name__ == "__main__":
-
-    main()
 

@@ -6,7 +6,7 @@ Now uses logging. To add logging type
 logging.level(message)
 where level is either debug, info, warning, error, critical message is the text to log - can add variables into these messages
 e.g.
-logging.debug("Recevied this packet to decode:%s" % reply) replaces the %s with the value in reply as a string
+logging.debug("Received this packet to decode:%s" % reply) replaces the %s with the value in reply as a string
 
 31st Aug - Changed the data packet to be a string rather than a list.
 '''
@@ -68,6 +68,7 @@ def ValidatePayload (Packet):
     for i in range(PayloadLength):                  # check each byte in the payload
         Checksum = Checksum ^ int(Packet[StartPayload + i])
 
+    logging.debug("[HDD] - Validating the payload is returning :%s" % Checksum ==0)
     return Checksum == 0        # checsum vald if equal to 0
 
 def ValidatePacket (Packet):
@@ -78,7 +79,7 @@ def ValidatePacket (Packet):
 
     ValidPacket = False         # assume packet is invalid
     if chr(Packet[StartHubAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartHubAddr+4]).encode('utf-8') == b'>':
-            # packet has valid 1st address descripters so continue
+        # packet has valid 1st address descripters so continue
         if chr(Packet[StartELBAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartELBAddr+4]).encode('utf-8') == b'>':
             # 2nd addr descripter valid so continue
             if len(Packet) >= 12:                       # packet is long enough so continue
@@ -90,7 +91,8 @@ def ValidatePacket (Packet):
                             chr(Packet[StartCommand]).encode('utf-8') == DataToSendReq:
                     # no payload so only addr descripters and messag elength can be used
                     ValidPacket = True
-
+    logging.info("[HDD] - Packet of data has been validated :%s" % Packet)
+    print ("[HDD] - The packet of data has been validated")   # print packet to window
     return ValidPacket
 
 def GetModuleData(sp, Simulate):
@@ -189,8 +191,8 @@ def GetModuleData(sp, Simulate):
         reply = LoRaCommsReceiver.ReturnRadioData(sp)
 
     logging.info(' ')  # force new lne
-    print("[GMD] - Received this data to process :%s" % reply, flush=True)
-    logging.info("Received this data to process :%s" % reply)
+    print("[HDD] - Comms Message received to process :%s" % reply, flush=True)
+    logging.info("[HDD] - Comms Message received to process :%s" % reply)
 
     return reply
     # return the data from the get data function
@@ -205,13 +207,13 @@ def WriteLogFile(Packet):
         # Pass the ELB name into the logwriter
     PayloadLength = Packet[StartPayloadLength]     # get payload length as int
     DataToWrite = Packet[StartPayload:StartPayload+PayloadLength]
-    logging.debug("Write from ELB:%s, this length %s this data:%s" % (ELBName, PayloadLength, DataToWrite))
+    logging.debug("[HDD] - Write from ELB:%s, this length %s this data:%s" % (ELBName, PayloadLength, DataToWrite))
 
     if Simulate != True:
         LogFileWriter.LogFileCreation(ELBName, DataToWrite)
 
     else:
-        print("\nData to be written:\n %s \n" % DataToWrite)
+        print("\n[HDD] - Data to be written:\n %s \n" % DataToWrite)
     return
 
 def GenerateAck(Packet):
@@ -226,12 +228,12 @@ def GenerateAck(Packet):
 
     return packet_to_send
 
-def RespondToPing(fd, Packet, Simulate):
-    # responds to the ping command.
+
+def RespondToPing(fd, Packet,Simulate):
 
     message = GenerateAck(Packet)
-    logging.info("Responding to a PING - Ack Message :%s" % message)
-    print("Send ACK :%s" % message)      # send message to execution window
+    logging.info("[HDD] - Responding to a PING - Ack Message :%s" % message)
+    print("[HDD] - Send ACK :%s" % message)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
     # Now need to wait for the answer or timeout.
@@ -250,8 +252,8 @@ def RespondDataToSendReq(fd, Packet,Simulate):
     packet_to_send = packet_to_send + ClearToSendData                       # Clear to Send data command
     packet_to_send = packet_to_send + ZeroPayload                               # add zero payload length
 
-    logging.info("ClearToSendData :%s" % packet_to_send)
-    print("[HDC-Rto CTS] - Clear to Send :%s" % packet_to_send)      # send message to execution window
+    logging.info("[HDD] - ClearToSendData :%s" % packet_to_send)
+    print("[HDD] - Clear to Send :%s" % packet_to_send)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -260,8 +262,8 @@ def RespondDataPacketandReq(fd, Packet, Simulate):
     # data packet received and further data is on its way
 
     message = GenerateAck(Packet)
-    logging.info("DataPacketandReq :%s" % message)
-    print("Data. More to follow :%s" % message)      # send message to execution window
+    logging.info("[HDD] - DataPacketandReq :%s" % message)
+    print("[HDD] - Data. More to follow :%s" % message)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
 
@@ -270,8 +272,8 @@ def RespondDataPacketFinal(fd, Packet, Simulate):
     # data packet received and no more to come
 
     message = GenerateAck(Packet)
-    logging.info("Received Final Packet :%s" % message)
-    print("Final data :%s" % message)      # send message to execution window
+    logging.info("[HDD] - Received Final Packet :%s" % message)
+    print("[HDD] - Final data :%s" % message)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
 
@@ -279,7 +281,7 @@ def RespondDataPacketFinal(fd, Packet, Simulate):
 def UnrecognisedCommand(fd,Packet,Simulate):
     # send relevant Nack.
 
-    print ("Unrecognised Command")
+    print ("[HDD] - Unrecognised Command")
     # Function generates an Ack for response to anumber of messages
     packet_to_send = b''
     packet_to_send = packet_to_send + Packet[StartELBAddr:StartELBAddr + 4] # Receiver address
@@ -288,8 +290,8 @@ def UnrecognisedCommand(fd,Packet,Simulate):
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + NackCmdRecog                          # Nack with command unrecognised
     packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
-    logging.info("Nack Cmd not Recognised Message :%s" % packet_to_send)
-    print("Unrecognised Command :%s" % packet_to_send)      # send message to execution window
+    logging.info("[HDD] - Nack Cmd not Recognised Message :%s" % packet_to_send)
+    print("[HDD] - Unrecognised Command :%s" % packet_to_send)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -304,8 +306,8 @@ def SendPiBusyNack(fd,Packet,Simulate):
     packet_to_send = packet_to_send + ExecByte                              # Executive Byte
     packet_to_send = packet_to_send + NackNotReadyforData                   # Nack with command unrecognised
     packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
-    logging.info("Nack Not Ready for Data :%s" % packet_to_send)
-    print('Pi busy Nack :%s' % packet_to_send)      # send message to execution window
+    logging.info("[HDD] - Nack Not Ready for Data :%s" % packet_to_send)
+    print('[HDD] - Pi busy Nack :%s' % packet_to_send)      # send message to execution window
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
@@ -342,8 +344,6 @@ def Main():
             # waits in Get data until we have now received a packet from the radio module and it has been checked for validity
 
         if ValidatePacket(Packet):       # is this a valid packet
-            logging.info("This data is valid :%s" % Packet)
-            print ("[MAIN] - This data is valid")   # print packet to window
             TimePacketReceived = time.time()        # The time the last valid packet was received
             Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte as byte String
             '''
@@ -366,7 +366,7 @@ def Main():
 
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
-                    RespondToPing(SerialPort, Packet, Simulate) # respond to a ping command
+                    GenerateAck(SerialPort, Packet, Simulate) # respond to a ping command
                 elif Command == DataToSendReq:
                     ComsIdle = False                            # coms has started so no longer idle
                     CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
@@ -375,7 +375,7 @@ def Main():
                     # this will send CleartoSendData.
                 elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
                     # commands invalid at this point
-                    logging.info("ClearToSendData, DataPacketandReq or DataPacketFinal at wrong time :%s" % Packet)
+                    logging.info("[HDD] - ClearToSendData, DataPacketandReq or DataPacketFinal at wrong time :%s" % Packet)
                 else:
                     UnrecognisedCommand(SerialPort, Packet, Simulate)
                         # send Nack with unrecognised cmd
@@ -400,15 +400,15 @@ def Main():
 
                 else:                               # handle invalid command
                     if Command == Ping:                               # received ping from another ELB while receiving data
-                        RespondToPing(SerialPort,Packet,Simulate)      # send Ack to ping
+                        GenerateAck(SerialPort,Packet,Simulate)      # send Ack to ping
                     elif Command == DataToSendReq or Command == ClearToSendData:
-                        logging.info("DataToSendReq or ClearToSendData when already in coms :%s" % Packet)
+                        logging.info("[HDD] - DataToSendReq or ClearToSendData when already in coms :%s" % Packet)
                     else:
                         UnrecognisedCommand(SerialPort, Packet, Simulate)
                         # send Nack with unrecognised cmd
         else:
-            logging.info("This data is invalid :%s" % Packet)
-            print("This data is invalid :%s" % Packet)      # send message to execution window
+            logging.info("[HDD] - This data is invalid :%s" % Packet)
+            print("[HDD] - This data is invalid :%s" % Packet)      # send message to execution window
 
 # Only call the independent routine if the module is being called directly, else it is handled by the calling program
 if __name__ == "__main__":
@@ -428,7 +428,7 @@ if __name__ == "__main__":
     WorkingMode = parser.parse_args()
 
     logging.info(
-        "Starting main program with parsed arguments simulate:%s & eld:%s" % (WorkingMode.simulate, WorkingMode.elb))
+        "[HDD] - Starting main program with parsed arguments simulate:%s & eld:%s" % (WorkingMode.simulate, WorkingMode.elb))
     # Call the main function to run
 
     Main()

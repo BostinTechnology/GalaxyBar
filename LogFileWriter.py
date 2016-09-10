@@ -41,7 +41,7 @@ def byte_to_bcd_old (byte):
 def byte_to_bcd(byte):
     # Taking the given byte as an int, return the bcd equivalent
     if (byte & 0xf0) >> 4 > 9 or (byte & 0x0f) > 9:
-        logging.warning("Byte to BCD Conversion encountered a non BCD value, set to 99")
+        logging.warning("[LFR] - Byte to BCD Conversion encountered a non BCD value %s, set to 99" % byte)
         bcd = 99
     else:
         bcd = int(format(byte,'x'))
@@ -53,8 +53,8 @@ def GetMACAddress():
         sys = open('/sys/class/net/eth0/address').read()
     except:
         sys = '00:00:00:00:00:00'
-        logging.warning("Reading of the MAC address from system file failed")
-    logging.debug("MAC Address captured (all zero's is a failure):%s" % sys)
+        logging.warning("[LFR] - Reading of the MAC address from system file failed")
+    logging.debug("[LFR] - MAC Address captured (all zero's is a failure):%s" % sys)
     mac = sys.replace(':','')
 
     return mac[0:12]
@@ -95,7 +95,7 @@ def GenerateLogData(tap_id, data_packet):
         ft1 = data_packet[26]
         ft2 = data_packet[27]
     except:
-        logging.Wwarning("Splitting of data into 27 bytes failed")
+        logging.Wwarning("[LFR] - Splitting of data into 27 bytes failed")
         return {'success':False, 'data':[]}
 
 
@@ -162,22 +162,23 @@ def CheckPacket(data_packet):
     success = False
 
     if len(data_packet) < 27:
-        logging.WARNING("data packet too short, logging aborted with packet: %s" % data_packet)
+        logging.WARNING("[LFR] - data packet too short, logging aborted with packet: %s" % data_packet)
 
-    logging.debug("Data Packet ok to Use")
+    logging.debug("[LFR] - Data Packet ok to Use")
     return True
 
 def WriteLogFile(elb_name, data_to_write):
     # write log file.
     # takes a packet and appends it to a log file. This is the output from the Hub Decoder
 
-#BUG: This needs to be in a try / except loop
-
-    FileTime = time.strftime("%y%m%d%H%M%S",time.localtime())
-    LogFile = open("ELB" + str(elb_name) + FileTime + ".txt", "w")
-    LogFile.write(data_to_write)
-    logging.debug("Written data to log file!: %s" % data_to_write)
-    LogFile.close()
+    try:
+        FileTime = time.strftime("%y%m%d%H%M%S",time.localtime())
+        LogFile = open("ELB" + str(elb_name) + FileTime + ".txt", "w")
+        LogFile.write(data_to_write)
+        LogFile.close()
+    except:
+        # File writing failed
+       logging.warning("[LFR] - Failed to write data to the log file!: %s")
 
     return
 
@@ -196,21 +197,21 @@ def ConvertToCSV(payload):
         output_data = output_data + str(i) + ","
     #output_data.rstrip(',')
     output_data = output_data.strip(',')
-    logging.debug("String version of the payload: %s" % output_data)
+    logging.debug("[LFR] - String version of the payload: %s" % output_data)
     return output_data
 
 def GenerateSampleData():
     # Creates same data and returns it
 
     sample_data = b'123456789012345678901234567'
-    logging.info("Sample Data Packet:%s" % sample_data)
+    logging.info("[LFR] - Sample Data Packet:%s" % sample_data)
     return sample_data
 
 def GenerateSampleELBName():
     # Creates the same ELB name for testing and returns it
 
     sample_elbname = b'1234'
-    logging.info("Sample ELB Name:%s" % sample_elbname)
+    logging.info("[LFR] - Sample ELB Name:%s" % sample_elbname)
     return sample_elbname
 
 def ConvertELBName(elb_name):
@@ -219,7 +220,7 @@ def ConvertELBName(elb_name):
         tap_id = int.from_bytes(elb_name, byteorder='big')
     except:
         tap_id = TAP_ID
-        logging.warning("Unable to convert ELB Name, using default")
+        logging.warning("[LFR] - Unable to convert ELB Name, using default")
     return tap_id
 
 def LogFileCreation(elb_bytes, payload):
