@@ -75,11 +75,16 @@ def DisplayMessage(Packet, message_type):
 
 def ValidatePayload (Packet):
     # checks payload of the packet and looks for CRC
-    # assumesthat only a packet with daat is sent to this routine
-
+    # assumes that only a packet with data is sent to this routine
+    # checks if the first
     PayloadValid = False                                # assume payload is not valid
     PayloadLength = int(Packet[StartPayloadLength])     # get payload length
     Payload = Packet[StartPayload:StartPayload + PayloadLength]        # extract payload
+
+    if Payload[1:9] == b'\xff\xff\xff\xff\xff\xff\xff\xff':
+        # First few bytes are all 0xFF, so invalid data
+        logging.warning("[HDD] - Invalid Payload, all FF's"
+        return False
     Checksum = 0                                  # zero checksum
     for i in range(PayloadLength):                  # check each byte in the payload
         Checksum = Checksum ^ int(Packet[StartPayload + i])
