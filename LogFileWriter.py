@@ -163,9 +163,19 @@ def CheckPacket(data_packet):
 
     if len(data_packet) < 27:
         logging.WARNING("[LFR] - data packet too short, logging aborted with packet: %s" % data_packet)
+        return False
+    elif data_packet[1:9] == b'\xff\xff\xff\xff\xff\xff\xff\xff':
+        # First few bytes are all 0xFF, so invalid data
+        logging.warning("[LFR] - Invalid Payload, all FF's")
+        return False
+
+    # Validate the Checksum
+    Checksum = 0                                  # zero checksum
+    for i in data_packet:                  # check each byte in the payload
+        Checksum = Checksum ^ int(i)
 
     logging.debug("[LFR] - Data Packet ok to Use")
-    return True
+    return (Checksum == 0)
 
 def WriteLogFile(elb_name, data_to_write):
     # write log file.
@@ -237,8 +247,6 @@ def LogFileCreation(elb_bytes, payload):
 
 
 def main():
-
-
     # Need to be given the ELB Name and the payload
 
 

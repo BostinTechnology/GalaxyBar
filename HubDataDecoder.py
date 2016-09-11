@@ -72,8 +72,10 @@ def DisplayMessage(Packet, message_type):
 
     return
 
-
 def ValidatePayload (Packet):
+    #
+    # NOT USED - MOVED TO LogFileWriter
+    #
     # checks payload of the packet and looks for CRC
     # assumes that only a packet with data is sent to this routine
     # checks if the first
@@ -81,10 +83,6 @@ def ValidatePayload (Packet):
     PayloadLength = int(Packet[StartPayloadLength])     # get payload length
     Payload = Packet[StartPayload:StartPayload + PayloadLength]        # extract payload
 
-    if Payload[1:9] == b'\xff\xff\xff\xff\xff\xff\xff\xff':
-        # First few bytes are all 0xFF, so invalid data
-        logging.warning("[HDD] - Invalid Payload, all FF's")
-        return False
     Checksum = 0                                  # zero checksum
     for i in range(PayloadLength):                  # check each byte in the payload
         Checksum = Checksum ^ int(Packet[StartPayload + i])
@@ -107,7 +105,8 @@ def ValidatePacket (Packet):
                 if chr(Packet[StartCommand]).encode('utf-8') == DataPacketandReq or \
                         chr(Packet[StartCommand]).encode('utf-8') == DataPacketFinal:
                             # now check payload
-                   ValidPacket = ValidatePayload(Packet)
+                   #ValidPacket = ValidatePayload(Packet)
+                   ValidPacket = True           # Validating of the payload moved to LogFileWriter
                 elif chr(Packet[StartCommand]).encode('utf-8') == Ping or \
                             chr(Packet[StartCommand]).encode('utf-8') == DataToSendReq:
                     # no payload so only addr descripters and messag elength can be used
