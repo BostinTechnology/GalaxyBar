@@ -83,7 +83,7 @@ def ValidatePayload (Packet):
 
     if Payload[1:9] == b'\xff\xff\xff\xff\xff\xff\xff\xff':
         # First few bytes are all 0xFF, so invalid data
-        logging.warning("[HDD] - Invalid Payload, all FF's"
+        logging.warning("[HDD] - Invalid Payload, all FF's")
         return False
     Checksum = 0                                  # zero checksum
     for i in range(PayloadLength):                  # check each byte in the payload
