@@ -91,7 +91,8 @@ def WriteDataBinary(fd,message):
     # This routine will take the given data and write it to the serial port
     # returns the data length or 0 indicating fail
     # add the control characters
-    send = message + b'\r\n'
+    #send = message + b'\r\n'
+    send = message + b'\r'      #removed \n
     try:
         ans = fd.write(send)
         logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (send, ans))
@@ -302,7 +303,14 @@ def SendRadioData(fd, message):
 
         time.sleep(SRDELAY)
 
-        reply = WriteDataBinary(fd, message)
+        #reply = WriteDataBinary(fd, message)
+        try:
+            reply = fd.write(send)
+            logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (send, reply))
+        except Exception as e:
+            logging.warning("[LCR]: Message >%s< sent as >%a< FAILED" % (message, send))
+            reply = 0
+
         if reply > 0:
             # No need to check response, only looking for positive reply
             time.sleep(SRDELAY)
