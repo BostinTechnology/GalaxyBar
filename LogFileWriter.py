@@ -30,6 +30,8 @@ POLLING_RATE = 2
 #        return(0)
 FLOW_CONVERSION = 600
 
+MACADDRESS = '000000000000'
+
 def byte_to_bcd_old (byte):
     # Taking the given byte, return the binary coded decimal version
     i=int.from_bytes(byte,"little")
@@ -49,15 +51,17 @@ def byte_to_bcd(byte):
 
 def GetMACAddress():
     # Read the MAC address for the ethernet card and return it as a int
-    try:
-        sys = open('/sys/class/net/eth0/address').read()
-    except:
-        sys = '00:00:00:00:00:00'
-        logging.warning("[LFR] - Reading of the MAC address from system file failed")
-    logging.debug("[LFR] - MAC Address captured (all zero's is a failure):%s" % sys)
-    mac = sys.replace(':','')
+    if MACADRESS = '000000000000'
+        try:
+            sys = open('/sys/class/net/eth0/address').read()
+        except:
+            sys = '00:00:00:00:00:00'
+            logging.warning("[LFR] - Reading of the MAC address from system file failed")
+        logging.debug("[LFR] - MAC Address captured (all zero's is a failure):%s" % sys)
+        mac = sys.replace(':','')
+        MACADDRESS = mac[0:12]
 
-    return mac[0:12]
+    return MACADDRESS
 
 def GenerateLogData(tap_id, data_packet):
     # Given the binary string of data, return the data to be written to the log file
@@ -95,7 +99,7 @@ def GenerateLogData(tap_id, data_packet):
         ft1 = data_packet[26]
         ft2 = data_packet[27]
     except:
-        logging.Wwarning("[LFR] - Splitting of data into 27 bytes failed")
+        logging.warning("[LFR] - Splitting of data into 27 bytes failed")
         return {'success':False, 'data':[]}
 
 

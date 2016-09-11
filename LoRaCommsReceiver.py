@@ -306,7 +306,7 @@ def SendRadioData(fd, message):
         if reply > 0:
             # No need to check response, only looking for positive reply
             time.sleep(SRDELAY)
-            time.sleep(SRDELAY)
+            #time.sleep(SRDELAY)
 
             ReadData(fd)
         else:

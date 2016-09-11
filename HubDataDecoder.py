@@ -383,6 +383,7 @@ def Main():
             '''
             if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
                 # this data packet was received outside the comms window
+                DisplayMessage(Packet, "RECV: Packet received outside COMMS_TIMEOUT window")
                 ComsIdle = True
 
             if ComsIdle:  # not yet in communication with an ELB
