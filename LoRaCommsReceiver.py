@@ -18,8 +18,6 @@ import RPi.GPIO as GPIO
 #       Also appears the same happens when we get a negative LoRa code, eg EREF
 #BUG: The data received still has a \r in it, which may be affecting it
 
-#TODO: Need to check for negative LoRa codes, like EREF etc.
-
 # The delay between send and receive
 SRDELAY = 0.1
 
@@ -40,7 +38,7 @@ def SetupUART():
     -Checks all is ok and returns the object
     """
 
-#TODO: Need to cater for Pi 3 as it uses /dev/serial0
+    #TODO: Need to cater for Pi 3 as it uses /dev/serial0
 
     ser = serial.Serial('/dev/ttyAMA0', baudrate=57600, parity=serial.PARITY_NONE,
                             stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=0.1)
@@ -130,7 +128,7 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     if len(reply) < 1:
         # Data received from the LoRa module is empty, return failure
         logging.warning("[LCR]: No reply from the LoRa module, waiting before retrying")
-        time.sleep(INTERDELAY)
+        time.sleep(FAILDELAY)
         return {'success':success, 'reply':ans}
     elif len(reply) < length:
         # The data returned is shorter than expected, return failed
@@ -194,7 +192,7 @@ def ReadDataOLD(fd, length=-1, pos_reply='OK00'):
     if len(reply) < 1:
         # Data received from the LoRa module is empty, return failure
         logging.warning("[LCR]: No reply from the LoRa module")
-        time.sleep(INTERDELAY)
+        time.sleep(FAILDELAY)
         return {'success':success, 'reply':""}
     elif len(reply) < length:
         # The data returned is shorter than expected, return failed
