@@ -91,8 +91,8 @@ def WriteDataBinary(fd,message):
     # This routine will take the given data and write it to the serial port
     # returns the data length or 0 indicating fail
     # add the control characters
-    #send = message + b'\r\n'
-    send = message + b'\r'      #removed \n
+    send = message + b'\r\n'
+    #send = message + b'\r'      #removed \n
     try:
         ans = fd.write(send)
         logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (send, ans))
@@ -284,7 +284,7 @@ def SendRadioData(fd, message):
     # Takes the given data and sends it over the radio network
 
     # First determine the size of the data, adding 1 for the control character at the end
-    length = len(message) + 1
+    length = len(message) #+ 1          # removed extra 1 as no control characters needed at end of the data
     if length > 255:
         # Length is greater than 255, abort.
         logging.critical("[LCR]: Radio Message length is greater than 255 limit, aborting: %s" % message)
@@ -303,10 +303,11 @@ def SendRadioData(fd, message):
 
         time.sleep(SRDELAY)
 
-        #reply = WriteDataBinary(fd, message)
+        #reply = WriteDataBinary(fd, message)       # removed as it adds a \r\n at the end
+
         try:
-            reply = fd.write(send)
-            logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (send, reply))
+            reply = fd.write(message)
+            logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (message, reply))
         except Exception as e:
             logging.warning("[LCR]: Message >%s< sent as >%a< FAILED" % (message, send))
             reply = 0
