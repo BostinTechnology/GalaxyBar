@@ -30,6 +30,7 @@ POLLING_RATE = 2
 #        return(0)
 FLOW_CONVERSION = 600
 
+#global MACADDRESS
 MACADDRESS = '000000000000'
 
 def byte_to_bcd_old (byte):
@@ -51,6 +52,7 @@ def byte_to_bcd(byte):
 
 def GetMACAddress():
     # Read the MAC address for the ethernet card and return it as a int
+    MACADDRESS = '000000000000'
     if MACADDRESS == '000000000000':
         try:
             sys = open('/sys/class/net/eth0/address').read()
