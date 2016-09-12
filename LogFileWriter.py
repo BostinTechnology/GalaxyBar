@@ -51,7 +51,7 @@ def byte_to_bcd(byte):
 
 def GetMACAddress():
     # Read the MAC address for the ethernet card and return it as a int
-    if MACADRESS == '000000000000'
+    if MACADRESS == '000000000000':
         try:
             sys = open('/sys/class/net/eth0/address').read()
         except:
