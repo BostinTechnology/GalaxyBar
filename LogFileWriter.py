@@ -52,6 +52,8 @@ def byte_to_bcd(byte):
 
 def GetMACAddress():
     # Read the MAC address for the ethernet card and return it as a int
+
+#BUG: MACADDRESS is not been seen as global, but local.
     MACADDRESS = '000000000000'
     if MACADDRESS == '000000000000':
         try:

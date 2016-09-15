@@ -6,7 +6,7 @@ Only change values in the User Configuration Section
 '''
 
 import logging
-import time
+import datetime
 
 
 '''
@@ -33,11 +33,14 @@ DEBUG_LEVEL = logging.warning
 # Outside of these times, all messagesd except PING are ignored
 # 00:00:00 --- START_COMMS_TIME ======== STOP_COMMS_TIME ------------------------------------------- 23:59:59
 # Values to be in the format HH:MM:SS, leading zero's are rerquired
+#
+#   START & STOP times must NOT cross midnight else defaults of 1am till 5am will be used.
+#
 
-START_COMMS_TIME = '08:00:00'
-STOP_COMMS_TIME = '22:00:00'
+START_TIME = '08:00:00'
+STOP_TIME = '22:00:00'
 
-print("Start:%s" % START_COMMS_TIME)
+print("Comms Time Window From:%s To:%s" % (START_TIME, STOP_TIME))
 
 '''
   --------------------------------------------
@@ -84,18 +87,37 @@ This section validates the data entered by the user and sets defaults if it is i
 def ValidateTime(given):
     # Validate the give time to the defined format
     try:
-        time.strptime(given, "%H:%M:%S")
-        return True
+        datetime.datetime.strptime(given, "%H:%M:%S")
+        return
     except:
         return False
 
-if ValidateTime(START_COMMS_TIME) == False:
-    print("Time in Configuration File - ConfigurationParameters - is invalid, default being used")
-    START_COMMS_TIME = '00:30:00'
+#Validate the time given above
+# Check for
+#   valid times
+#   Stop being after start
 
-if ValidateTime(STOP_COMMS_TIME) == False:
-    print("Time in Configuration File - ConfigurationParameters - is invalid, default being used")
-    STOP_COMMS_TIME = '06:00:00'
+if ValidateTime(START_TIME):
+    START_COMMS_TIME = datetime.datetime.strptime(START_TIME, "%H:%M:%S")
+    print("Start OK")
+else:
+    print("Start Time in Configuration File - ConfigurationParameters - is invalid, default being used")
+    START_COMMS_TIME = datetime.datetime.strptime('01:00:00', "%H:%M:%S")
+
+if ValidateTime(STOP_TIME) == False:
+    STOP_COMMS_TIME = datetime.datetime.strptime(STOP_TIME, "%H:%M:%S")
+    print("Stop OK")
+else:
+    print("Stop Time in Configuration File - ConfigurationParameters - is invalid, default being used")
+    STOP_COMMS_TIME = datetime.datetime.strptime('05:00:00', "%H:%M:%S")
+
+if STOP_COMMS_TIME - START_COMMS_TIME < 0:
+    print("Time in Configuration File - ConfigurationParameters - Stop Time is after start time, default being used")
+    START_COMMS_TIME = datetime.datetime.strptime('01:00:00', "%H:%M:%S")
+    STOP_COMMS_TIME = datetime.datetime.strptime('05:00:00', "%H:%M:%S")
+else:
+    print("Stop after start")
+
 
 # Check Debug level
 dbg = 0
