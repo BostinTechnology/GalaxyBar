@@ -390,7 +390,7 @@ def Main():
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
                     DisplayMessage(Packet, "RECV: Ping")
-                    GenerateAck(Packet) # respond to a ping command
+                    RespondToPing(fSerialPort,Packet,Simulate) # respond to a ping command
                 elif Command == DataToSendReq:
                     ComsIdle = False                            # coms has started so no longer idle
                     DisplayMessage(Packet, "RECV: Data To Send Request")
