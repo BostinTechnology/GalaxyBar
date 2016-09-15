@@ -67,8 +67,8 @@ def DisplayMessage(Packet, message_type):
     payload = Packet[StartPayload:]
     print("Message %s" % message_type)
     logging.info("Message %s" % message_type)
-    print("SRC:%s DST:%s CMD:%s LEN:%s PAY:%s\n" % (src, dst, cmd, lgth, payload))
-    logging.info("SRC:%s DST:%s CMD:%s LEN:%s PAY:%s" % (src, dst, cmd, lgth, payload))
+    print("DST:%s SRC:%s CMD:%s LEN:%s PAY:%s\n" % (src, dst, cmd, lgth, payload))
+    logging.info("DST:%s SRC:%s CMD:%s LEN:%s PAY:%s" % (src, dst, cmd, lgth, payload))
 
     return
 
@@ -252,8 +252,9 @@ def GenerateAck(Packet):
 def RespondToPing(fd, Packet,Simulate):
 
     message = GenerateAck(Packet)
-    logging.info("[HDD] - Sending a {Ping Ack} Message :%s" % message)
-    print("[HDD] - Sending an {ACK} :%s" % message)      # send message to execution window
+    #logging.info("[HDD] - Sending a {Ping Ack} Message :%s" % message)
+    #print("[HDD] - Sending an {ACK} :%s" % message)      # send message to execution window
+    DisplayMessage(message, "SEND: Ping Acknowledge")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
     # Now need to wait for the answer or timeout.
@@ -390,7 +391,7 @@ def Main():
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
                     DisplayMessage(Packet, "RECV: Ping")
-                    RespondToPing(fSerialPort,Packet,Simulate) # respond to a ping command
+                    RespondToPing(SerialPort,Packet,Simulate) # respond to a ping command
                 elif Command == DataToSendReq:
                     ComsIdle = False                            # coms has started so no longer idle
                     DisplayMessage(Packet, "RECV: Data To Send Request")
