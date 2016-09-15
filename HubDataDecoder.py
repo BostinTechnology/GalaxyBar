@@ -381,15 +381,16 @@ def Main():
                         DataPacketandReq from another ELB
                         DataPacketFinal from another ELB
             '''
-            if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
-                # this data packet was received outside the comms window
-                DisplayMessage(Packet, "RECV: Packet received outside COMMS_TIMEOUT window")
-                ComsIdle = True
+            # Commented out as reporting error when not in comms!
+            #if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
+            #    # this data packet was received outside the comms window
+            #    DisplayMessage(Packet, "RECV: Packet received outside COMMS_TIMEOUT window")
+            #    ComsIdle = True
 
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
                     DisplayMessage(Packet, "RECV: Ping")
-                    GenerateAck(SerialPort, Packet, Simulate) # respond to a ping command
+                    GenerateAck(Packet) # respond to a ping command
                 elif Command == DataToSendReq:
                     ComsIdle = False                            # coms has started so no longer idle
                     DisplayMessage(Packet, "RECV: Data To Send Request")
@@ -406,7 +407,11 @@ def Main():
                     UnrecognisedCommand(SerialPort, Packet, Simulate)
                         # send Nack with unrecognised cmd
             else:                                   # ComsIdle is true so talking to ELB
-                if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
+                if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
+                    # this data packet was received outside the comms window
+                    DisplayMessage(Packet, "RECV: Packet received outside COMMS_TIMEOUT window")
+                    ComsIdle = True
+                elif Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
                     DisplayMessage(Packet, "RECV: Data Packet and Request")
                     RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet

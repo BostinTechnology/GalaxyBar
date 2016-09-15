@@ -19,10 +19,12 @@ import RPi.GPIO as GPIO
 #BUG: The data received still has a \r in it, which may be affecting it
 
 # The delay between send and receive
-SRDELAY = 0.1
+SRDELAY = 0.01
 
 # The delay between receiving one message and sending the next
-INTERDELAY = 0.2
+INTERDELAY = 0.02
+
+FAILDELAY = 0.03
 
 # The connected GPIO pin
 INPUT_PIN = 17

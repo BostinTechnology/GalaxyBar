@@ -104,6 +104,7 @@ try:
 except:
     dbg = 0
 
+#BUG: dbg iois beign set to a function, not the value of the logging level"!
 if dbg < 1:
     DEBUG_LEVEL = logging.warning
 
