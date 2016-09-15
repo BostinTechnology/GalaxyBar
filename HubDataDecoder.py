@@ -382,6 +382,12 @@ def Main():
                         DataPacketandReq from another ELB
                         DataPacketFinal from another ELB
             '''
+
+            if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
+                # this data packet was received outside the comms window
+                DisplayMessage(Packet, "RECV: Packet received outside COMMS_TIMEOUT window")
+                ComsIdle = True
+
             if ComsIdle:  # not yet in communication with an ELB
                 if Command == Ping:
                     DisplayMessage(Packet, "RECV: Ping")
@@ -405,26 +411,17 @@ def Main():
                 if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
                     DisplayMessage(Packet, "RECV: Data Packet and Request")
-                    if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
-                        # this data packet was received outside the comms window
-                        DisplayMessage(Packet, "RECV: Packet received outside COMMS_TIMEOUT window")
-                        ComsIdle = True
-                    else:
-                        RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
-                        TimeLastValidPacket = TimePacketReceived # time.time()
-                        WriteLogFile(Packet)            # write this packet to a log file
+                    # take out
+                    RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
+                    TimeLastValidPacket = TimePacketReceived # time.time()
+                    WriteLogFile(Packet)            # write this packet to a log file
                 elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                     # Comms has started and received final data packet
                     DisplayMessage(Packet, "RECV: Data Packet Final")
-                    if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
-                        # this data packet was received outside the comms window
-                        DisplayMessage(Packet, "RECV: Packet received outside COMMS_TIMEOUT window")
-                        ComsIdle = True
-                    else:
-                        RespondDataPacketFinal(SerialPort,Packet,Simulate)
-                        WriteLogFile(Packet)                            # write this packet to a log file
-                        ComsIdle = True                                 # coms sequence comlete so reset coms idle
-                        CurrentELB = ''                                 # clear current ELB
+                    RespondDataPacketFinal(SerialPort,Packet,Simulate)
+                    WriteLogFile(Packet)                            # write this packet to a log file
+                    ComsIdle = True                                 # coms sequence comlete so reset coms idle
+                    CurrentELB = ''                                 # clear current ELB
                 elif Command == DataPacketandReq and CurrentELB != Packet[StartELBAddr:StartELBAddr+4]:
                     # coms has started and received data packet from wrong ELB
                     DisplayMessage(Packet, "RECV: Data Packet request when Pi Busy with another ELB")
@@ -437,7 +434,7 @@ def Main():
                 else:                               # handle invalid command
                     if Command == Ping:                               # received ping from another ELB while receiving data
                         DisplayMessage(Packet, "RECV: Ping")
-                        GenerateAck(SerialPort,Packet,Simulate)      # send Ack to ping
+                        RespondToPing(SerialPort,Packet,Simulate)      # send Ack to ping
                     elif Command == DataToSendReq or Command == ClearToSendData:
                         logging.info("[HDD] - DataToSendReq or ClearToSendData when already in coms :%s" % Packet)
                     else:
