@@ -20,7 +20,7 @@ if Simulate != True:
     import LogFileWriter
 
 # How long we wait for a data packet
-COMMS_TIMEOUT = 5
+COMMS_TIMEOUT = 2
 
 # constants that will not change in program
 # command bytes that are used by LoRa module
@@ -227,7 +227,7 @@ def WriteLogFile(Packet):
         # Pass the ELB name into the logwriter
     PayloadLength = Packet[StartPayloadLength]     # get payload length as int
     DataToWrite = Packet[StartPayload:StartPayload+PayloadLength]
-    logging.debug("[HDD] - Write from ELB:%s, this length %s this data:%s" % (ELBName, PayloadLength, DataToWrite))
+    logging.debug("[HDD] - Data to write from ELB:%s, this length %s this data:%s" % (ELBName, PayloadLength, DataToWrite))
 
     if Simulate != True:
         LogFileWriter.LogFileCreation(ELBName, DataToWrite)
@@ -333,12 +333,30 @@ def SendPiBusyNack(fd,Packet,Simulate):
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
 
+def RespondErrorInPayload(fd,Packet,Simulate):
+    # The payload received is not valid, so reject it
+    packet_to_send = b''
+    packet_to_send = packet_to_send + Packet[StartELBAddr:StartELBAddr + 4] # Receiver address
+    packet_to_send = packet_to_send + ExecByte                              # Executive Byte
+    packet_to_send = packet_to_send + Packet[StartHubAddr:StartHubAddr + 4] # Sender address
+    packet_to_send = packet_to_send + ExecByte                              # Executive Byte
+    packet_to_send = packet_to_send + NackPayload                           # Nack with Error In Payload
+    packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
+
+    #logging.info("[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s" % packet_to_send)
+    #print('[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s' % packet_to_send)      # send message to execution window
+    DisplayMessage(packet_to_send, "SEND: NACK Error In Payload")
+    if Simulate != True:
+        LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
+
+
 
 def Main():
     # initialise variables
     ComsIdle = True  # set to false when an initial RequestToSendData has been received.
     CurrentELB = b''  # when coms has started this variable holds the ELB addr that we are talking to
     TimeLastValidPacket = time.time()       # reset time of last valid packet
+    PreviousPacket = b'empty'       # Set to a default value that is never expected to be received.
 
     if Simulate != True:
         # Open the serial port and configure the Radio Module
@@ -410,15 +428,27 @@ def Main():
             else:                                   # ComsIdle is true so talking to ELB
                 if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
-                    DisplayMessage(Packet, "RECV: Data Packet and Request")
-                    # take out
-                    RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
-                    TimeLastValidPacket = TimePacketReceived # time.time()
-                    WriteLogFile(Packet)            # write this packet to a log file
+                    if (Packet == PreviousPacket) and (Packet[StartPayload+1:StartPayload+7] != b'\xff\xff\xff\xff\xff\xff'):
+                        # Check for duplicated packet but not full of FF's
+                        # The ff's was added to deal with data recevied from the EWC being resent as the hub rejecting it
+                        # as duplicate. data contaiing ff's is now passed through and ignored by the data file writer.
+                        DisplayMessage(Packet, "RECV: Duplicate Packet Seen")
+                        RespondErrorInPayload(SerialPort,Packet,Simulate)
+                    else:
+                        PreviousPacket = Packet
+                        DisplayMessage(Packet, "RECV: Data Packet and Request")
+                        # take out
+                        RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
+                        TimeLastValidPacket = TimePacketReceived # time.time()
+                        WriteLogFile(Packet)            # write this packet to a log file
                 elif Command == DataPacketFinal and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                     # Comms has started and received final data packet
                     DisplayMessage(Packet, "RECV: Data Packet Final")
                     RespondDataPacketFinal(SerialPort,Packet,Simulate)
+                    if Packet == PreviousPacket:        # Check for duplicated packet
+                        DisplayMessage(Packet, "RECV: Duplicate Packet Seen")
+                    else:
+                        PreviousPacket = Packet
                     WriteLogFile(Packet)                            # write this packet to a log file
                     ComsIdle = True                                 # coms sequence comlete so reset coms idle
                     CurrentELB = ''                                 # clear current ELB

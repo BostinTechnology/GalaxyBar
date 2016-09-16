@@ -111,7 +111,7 @@ else:
     print("Stop Time in Configuration File - ConfigurationParameters - is invalid, default being used")
     STOP_COMMS_TIME = datetime.datetime.strptime('05:00:00', "%H:%M:%S")
 
-if STOP_COMMS_TIME - START_COMMS_TIME < 0:
+if (STOP_COMMS_TIME - START_COMMS_TIME).total_seconds() < 0:
     print("Time in Configuration File - ConfigurationParameters - Stop Time is after start time, default being used")
     START_COMMS_TIME = datetime.datetime.strptime('01:00:00', "%H:%M:%S")
     STOP_COMMS_TIME = datetime.datetime.strptime('05:00:00', "%H:%M:%S")

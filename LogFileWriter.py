@@ -9,6 +9,7 @@ It is intended to be used as part of the LoRa Monitor, but it can be run indepen
 import logging
 import math
 import time
+import datetime
 from uuid import getnode
 
 #BUG: Tap ID is not defined, set to a default value of 1
@@ -190,10 +191,13 @@ def WriteLogFile(elb_name, data_to_write):
     # takes a packet and appends it to a log file. This is the output from the Hub Decoder
 
     try:
-        FileTime = time.strftime("%y%m%d%H%M%S",time.localtime())
-        LogFile = open("ELB" + str(elb_name) + FileTime + ".txt", "w")
+        #FileTime = time.strftime("%y%m%d%H%M%S",time.localtime())       # Won't allow microseconds
+        # Needed to add microseconds to ensure unique filenames
+        FileTime = datetime.datetime.now().strftime("%y%m%d%H%M%S-%f")
+        LogFile = open("DataFiles/ELB" + str(elb_name) + FileTime + ".txt", "w")
         LogFile.write(data_to_write)
         LogFile.close()
+        logging.debug("[LFR] - Data File Written ELB%s%s" % (elb_name, FileTime))
     except:
         # File writing failed
        logging.warning("[LFR] - Failed to write data to the log file!: %s")
