@@ -1,6 +1,0 @@
-2016-09-09 20:29:23,445:INFO:Sample Data Packet:b'123456789012345678901234567'
-2016-09-09 20:29:23,446:INFO:Sample ELB Name:b'1234'
-2016-09-09 20:29:23,446:DEBUG:Data Packet ok to Use
-2016-09-09 20:29:23,448:DEBUG:MAC Address captured (all zero's is a failure):b8:27:eb:ff:28:0e
-
-2016-09-09 20:29:23,449:DEBUG:Written data to log file!: 4660, 49, 32, 33, 34, 35, 36, 37, '38393031', 842216501, 909588537, 808530483, 13365, 22, 'b827ebff280e'
