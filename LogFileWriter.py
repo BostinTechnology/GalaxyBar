@@ -12,6 +12,8 @@ import time
 import datetime
 from uuid import getnode
 
+from Settings import *
+
 #BUG: Tap ID is not defined, set to a default value of 1
 
 TAP_ID = 1

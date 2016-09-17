@@ -14,10 +14,14 @@ import sys
 import random
 import RPi.GPIO as GPIO
 
+from Settings import *
+
 #BUG: Even though ReadData failed, the sending program still printed the data string on screen
 #       Also appears the same happens when we get a negative LoRa code, eg EREF
 #BUG: The data received still has a \r in it, which may be affecting it
 
+'''
+These bits have been moved into a settings file
 # The delay between send and receive
 SRDELAY = 0.01
 
@@ -31,6 +35,7 @@ INPUT_PIN = 17
 
 # The minimum length of a valid packet
 MIN_LENGTH = 11
+'''
 
 def SetupUART():
     """

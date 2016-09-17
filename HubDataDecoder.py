@@ -18,9 +18,13 @@ import time
 if Simulate != True:
     import LoRaCommsReceiver
     import LogFileWriter
+    from Settings import *
 
+'''
+This bit has been moved into a seperate comms routine
 # How long we wait for a data packet
 COMMS_TIMEOUT = 2
+'''
 
 # constants that will not change in program
 # command bytes that are used by LoRa module
@@ -414,8 +418,21 @@ def Main():
                     ComsIdle = False                            # coms has started so no longer idle
                     DisplayMessage(Packet, "RECV: Data To Send Request")
                     CurrentELB = Packet[StartELBAddr:StartELBAddr+4]
-                    RespondDataToSendReq(SerialPort,Packet,Simulate)
-                    TimeLastValidPacket = TimePacketReceived # time.time()
+                    if USE_TIME:
+                        # The Settings.py program has this value set, so only send comms within a timed window
+                        # Find the current time, setting the date to a default rather than current so it is ignored
+                        just_now = datetime.datetime.now().replace(year=1900, month=1, day=1)
+                        if just_now > START_COMMS_TIME and just_now < STOP_COMMS_TIME:
+                            RespondDataToSendReq(SerialPort,Packet,Simulate)
+                            TimeLastValidPacket = TimePacketReceived
+                        else:
+                            # We need to respond with a negative and send a Pi Busy NACK
+                            ComsIdle = True
+                            DisplayMessage(Packet,"RECV: Message Outside Comms Window")
+                            SendPiBusyNack(SerialPort,Packet,Simulate)
+                    else:
+                        RespondDataToSendReq(SerialPort,Packet,Simulate)
+                        TimeLastValidPacket = TimePacketReceived # time.time()
                     # this will send CleartoSendData.
                 elif Command == ClearToSendData or Command == DataPacketandReq or Command == DataPacketFinal:
                     # commands invalid at this point
@@ -428,12 +445,14 @@ def Main():
             else:                                   # ComsIdle is true so talking to ELB
                 if Command == DataPacketandReq and CurrentELB == Packet[StartELBAddr:StartELBAddr+4]:
                         # coms has started and received data packet with more to follow
-                    if (Packet == PreviousPacket) and (Packet[StartPayload+1:StartPayload+7] != b'\xff\xff\xff\xff\xff\xff'):
+                    if (Packet == PreviousPacket): #and (Packet[StartPayload+1:StartPayload+7] != b'\xff\xff\xff\xff\xff\xff'):
                         # Check for duplicated packet but not full of FF's
                         # The ff's was added to deal with data recevied from the EWC being resent as the hub rejecting it
                         # as duplicate. data contaiing ff's is now passed through and ignored by the data file writer.
                         DisplayMessage(Packet, "RECV: Duplicate Packet Seen")
-                        RespondErrorInPayload(SerialPort,Packet,Simulate)
+                        RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
+                        TimeLastValidPacket = TimePacketReceived # time.time()
+                        #RespondErrorInPayload(SerialPort,Packet,Simulate)
                     else:
                         PreviousPacket = Packet
                         DisplayMessage(Packet, "RECV: Data Packet and Request")
@@ -477,7 +496,7 @@ def Main():
 
 # Only call the independent routine if the module is being called directly, else it is handled by the calling program
 if __name__ == "__main__":
-    logging.basicConfig(filename="HubDecoder.txt", filemode="w", level=logging.DEBUG,
+    logging.basicConfig(filename="HubDecoder.txt", filemode="w", level=LG_LVL,
                         format='%(asctime)s:%(levelname)s:%(message)s')
     # BUG logging is not defined if not on Pi
     # Define the optional arguments to enable it to work in different modes
