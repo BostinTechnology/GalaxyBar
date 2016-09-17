@@ -1,14 +1,6 @@
-''' Hub Data Decoder
-Started 21.8.16
-Reads a LoRa data packet and decodes it.
+'''
+Hub Data Decoder
 
-Now uses logging. To add logging type
-logging.level(message)
-where level is either debug, info, warning, error, critical message is the text to log - can add variables into these messages
-e.g.
-logging.debug("Received this packet to decode:%s" % reply) replaces the %s with the value in reply as a string
-
-31st Aug - Changed the data packet to be a string rather than a list.
 '''
 Simulate = False  # set this to false if using the radio module
 import argparse
@@ -41,7 +33,6 @@ NackAddrError = chr(0x60).encode('utf-8')       # address error - ascii '
 NackMsgLen = chr(0x61).encode('utf-8')          # message length inconsisten - ascii a
 NackPayload = chr(0x70).encode('utf-8')         # payload crc error- ascii p
 NackCmdRecog = chr(0x7A).encode('utf-8')        # command not recognised - ascii €
-    # should be 0x80 but logging doesn't seem to handle above 0x7F
 NackCmdSync = chr(0x7B).encode('utf-8')         # command out of protocol sync
 NackNotReadyforData = chr(0x7C).encode('utf-8') # not ready for data ascii ,
 
@@ -109,14 +100,13 @@ def ValidatePacket (Packet):
                 if chr(Packet[StartCommand]).encode('utf-8') == DataPacketandReq or \
                         chr(Packet[StartCommand]).encode('utf-8') == DataPacketFinal:
                             # now check payload
-                   #ValidPacket = ValidatePayload(Packet)
+                   #ValidPacket = ValidatePayload(Packet) # Moved to log file writer
                    ValidPacket = True           # Validating of the payload moved to LogFileWriter
                 elif chr(Packet[StartCommand]).encode('utf-8') == Ping or \
                             chr(Packet[StartCommand]).encode('utf-8') == DataToSendReq:
                     # no payload so only addr descripters and messag elength can be used
                     ValidPacket = True
     logging.info("[HDD] - Packet of data has been validated :%s" % Packet)
-    #print ("[HDD] - The packet of data has been validated")   # print packet to window
     return ValidPacket
 
 def GetModuleData(sp, Simulate):
@@ -215,18 +205,13 @@ def GetModuleData(sp, Simulate):
         reply = LoRaCommsReceiver.ReturnRadioData(sp)
 
     logging.info(' ')  # force new lne
-    #print("[HDD] - Comms Message received to process :%s" % reply, flush=True)
     logging.info("[HDD] - Comms Message received to process :%s" % reply)
 
     return reply
-    # return the data from the get data function
-
 
 def WriteLogFile(Packet):
     # Takes the given log file and passes it to the writing routine
 
-#    ELBName = ''.join([hex(i) for i in Packet[StartELBAddr:StartELBAddr+4]])
-        # takes 4 bytes of ELB addr and converts to a hex string, eg. 0x000x110x240xb4
     ELBName = Packet[StartELBAddr:StartELBAddr+4]
         # Pass the ELB name into the logwriter
     PayloadLength = Packet[StartPayloadLength]     # get payload length as int
@@ -256,21 +241,15 @@ def GenerateAck(Packet):
 def RespondToPing(fd, Packet,Simulate):
 
     message = GenerateAck(Packet)
-    #logging.info("[HDD] - Sending a {Ping Ack} Message :%s" % message)
-    #print("[HDD] - Sending an {ACK} :%s" % message)      # send message to execution window
     DisplayMessage(message, "SEND: Ping Acknowledge")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
-    # Now need to wait for the answer or timeout.
-
     return
 
 def RespondDataPacketandReq(fd, Packet, Simulate):
     # data packet received and further data is on its way
 
     message = GenerateAck(Packet)
-    #logging.info("[HDD] - Sending a {DataPacketandReq} response:%s" % message)
-    #print("[HDD] - Sending a {Data Packet + Req} :%s" % message)      # send message to execution window
     DisplayMessage(message, "SEND: Data Packet + Req Acknowledge")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
@@ -280,8 +259,6 @@ def RespondDataPacketFinal(fd, Packet, Simulate):
     # data packet received and no more to come
 
     message = GenerateAck(Packet)
-    #logging.info("[HDD] - Sending a {DataPacketFinal} response :%s" % message)
-    #print("[HDD] - Sending a {Data Packet Final} :%s" % message)      # send message to execution window
     DisplayMessage(message, "SEND: Data Packet Final Acknowledge")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, message)
@@ -313,8 +290,6 @@ def UnrecognisedCommand(fd,Packet,Simulate):
     packet_to_send = packet_to_send + NackCmdRecog                          # Nack with command unrecognised
     packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
 
-    #logging.info("[HDD] - Sending a {Nack Cmd not Recognised} Message :%s" % packet_to_send)
-    #print("[HDD] - Sending a {Nack Cmd not Recognised} Message :%s" % packet_to_send)      # send message to execution window
     DisplayMessage(packet_to_send, "SEND: NACK CMD Not Recognised")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
@@ -331,8 +306,6 @@ def SendPiBusyNack(fd,Packet,Simulate):
     packet_to_send = packet_to_send + NackNotReadyforData                   # Nack with command unrecognised
     packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
 
-    #logging.info("[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s" % packet_to_send)
-    #print('[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s' % packet_to_send)      # send message to execution window
     DisplayMessage(packet_to_send, "SEND: NACK Not Ready For Data")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
@@ -347,13 +320,9 @@ def RespondErrorInPayload(fd,Packet,Simulate):
     packet_to_send = packet_to_send + NackPayload                           # Nack with Error In Payload
     packet_to_send = packet_to_send + ZeroPayload                           # add zero payload length
 
-    #logging.info("[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s" % packet_to_send)
-    #print('[HDD] - Sending a Pi Busy {Nack Not Ready for Data} :%s' % packet_to_send)      # send message to execution window
     DisplayMessage(packet_to_send, "SEND: NACK Error In Payload")
     if Simulate != True:
         LoRaCommsReceiver.RadioDataTransmission(fd, packet_to_send)
-
-
 
 def Main():
     # initialise variables
@@ -390,20 +359,6 @@ def Main():
         if ValidatePacket(Packet):       # is this a valid packet
             TimePacketReceived = time.time()        # The time the last valid packet was received
             Command = chr(Packet[StartCommand]).encode('utf-8')          # extract command byte as byte String
-            '''
-            ComsIdle = True
-                Valid Commands =
-                        Ping and SendDataReq
-                Invalid Commnds =
-                        ClearToSendData, DataPacketandReq, DataPacketFinal, Unrecognised
-            ComsIdle = False
-                Valid Commands =
-                        DataPacketandReq and DataPacketFinal
-                Invalid commands =
-                        Ping, DataToSendReq, ClearToSendData, Unrecognised
-                        DataPacketandReq from another ELB
-                        DataPacketFinal from another ELB
-            '''
 
             if (TimePacketReceived - TimeLastValidPacket) > COMMS_TIMEOUT:
                 # this data packet was received outside the comms window
@@ -452,7 +407,6 @@ def Main():
                         DisplayMessage(Packet, "RECV: Duplicate Packet Seen")
                         RespondDataPacketandReq(SerialPort,Packet,Simulate)     # send ack packet
                         TimeLastValidPacket = TimePacketReceived # time.time()
-                        #RespondErrorInPayload(SerialPort,Packet,Simulate)
                     else:
                         PreviousPacket = Packet
                         DisplayMessage(Packet, "RECV: Data Packet and Request")
@@ -494,25 +448,11 @@ def Main():
             logging.info("[HDD] - This data is invalid :%s" % Packet)
             print("[HDD] - This data is invalid :%s" % Packet)      # send message to execution window
 
+
 # Only call the independent routine if the module is being called directly, else it is handled by the calling program
 if __name__ == "__main__":
     logging.basicConfig(filename="HubDecoder.txt", filemode="w", level=LG_LVL,
                         format='%(asctime)s:%(levelname)s:%(message)s')
-    # BUG logging is not defined if not on Pi
-    # Define the optional arguments to enable it to work in different modes
-    # To use this:-
-    # if WorkingMode.simulate == True:    if the code is to be run in simulation mode only
-    # or
-    # if WorkingMode.simulate != True:    if the code is to be run in normal mode only
 
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("-t", "--simulate", help="Run the program in simulate mode", action='store_true')
-    parser.add_argument("-e", "--elb", help="Run program as a ELB, hub is default", action='store_true')
-    WorkingMode = parser.parse_args()
-
-    logging.info(
-        "[HDD] - Starting main program with parsed arguments simulate:%s & eld:%s" % (WorkingMode.simulate, WorkingMode.elb))
-    # Call the main function to run
 
     Main()

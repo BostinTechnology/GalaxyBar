@@ -8,6 +8,20 @@ Only change values in the User Configuration Section
 import logging
 import datetime
 
+print("\n\n")
+print("     ========================================================================")
+print("     |                                                                       |")
+print("     |                   B O S T I N   T E C H N O L O G Y                   |")
+print("     |                                                                       |")
+print("     |                         in conjuntion with                            |")
+print("     |                                                                       |")
+print("     |           A F R I C I A N   W A T E R   E N T E R P R I S E S         |")
+print("     |                                                                       |")
+print("     |                                                                       |")
+print("     ========================================================================")
+print ("\n\n\n\n")
+print("This program is copywrite of CognIot, a trading name of Bostin Technology\n\n")
+
 
 '''
   --------------------------------------------
@@ -37,12 +51,21 @@ LOGGING_LEVEL = "CRITICAL"
 #   START & STOP times must NOT cross midnight else defaults of 1am till 5am will be used.
 #
 
-START_TIME = '18:30:00'
-STOP_TIME = '19:05:00'
+START_TIME = '01:00:00'
+STOP_TIME = '05:00:00'
 
 # Set this to True or False to determine if the time parameters above are to be used.
 USE_TIME = True
 #USE_TIME = False
+
+# Information that is related to the EWC
+# These values are used in the calculations for the data file
+
+TAP_ID = 1
+
+POLLING_RATE = 2
+
+FLOW_CONVERSION = 600
 
 
 
@@ -86,6 +109,17 @@ MIN_LENGTH = 11
 # This is measured in seconds
 COMMS_TIMEOUT = 2
 
+#Read and set the MAC address for use by the LogFileWriter
+
+try:
+    sys = open('/sys/class/net/eth0/address').read()
+except:
+    sys = '00:00:00:00:00:00'
+    logging.warning("[LFR] - Reading of the MAC address from system file failed")
+logging.debug("[LFR] - MAC Address captured (all zero's is a failure):%s" % sys)
+mac = sys.replace(':','')
+MACADDRESS = mac[0:12]
+
 
 
 '''
@@ -114,18 +148,18 @@ if ValidateTime(START_TIME):
     START_COMMS_TIME = datetime.datetime.strptime(START_TIME, "%H:%M:%S")
     #print("Start OK")
 else:
-    print("Start Time in Configuration File - ConfigurationParameters - is invalid, default being used")
+    print("Start Time in Configuration File - Settings.py - is invalid, default being used")
     START_COMMS_TIME = datetime.datetime.strptime('01:00:00', "%H:%M:%S")
 
 if ValidateTime(STOP_TIME):
     STOP_COMMS_TIME = datetime.datetime.strptime(STOP_TIME, "%H:%M:%S")
     #print("Stop OK")
 else:
-    print("Stop Time in Configuration File - ConfigurationParameters - is invalid, default being used")
+    print("Stop Time in Configuration File - Settings.py - is invalid, default being used")
     STOP_COMMS_TIME = datetime.datetime.strptime('05:00:00', "%H:%M:%S")
 
 if (STOP_COMMS_TIME - START_COMMS_TIME).total_seconds() < 0:
-    print("Time in Configuration File - ConfigurationParameters - Stop Time is after start time, default being used")
+    print("Time in Configuration File - Settings.py - Stop Time is after start time, default being used")
     START_COMMS_TIME = datetime.datetime.strptime('01:00:00', "%H:%M:%S")
     STOP_COMMS_TIME = datetime.datetime.strptime('05:00:00', "%H:%M:%S")
 
@@ -145,14 +179,3 @@ else:
     LG_LVL = logging.critical
 
 
-
-
-
-# Only used to validate this program
-if __name__ == "__main__":
-    """
-    This is the main entry point for the program when it is being run independently.
-
-    """
-
-#    CheckEntries()

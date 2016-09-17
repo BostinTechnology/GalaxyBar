@@ -16,10 +16,6 @@ import RPi.GPIO as GPIO
 
 from Settings import *
 
-#BUG: Even though ReadData failed, the sending program still printed the data string on screen
-#       Also appears the same happens when we get a negative LoRa code, eg EREF
-#BUG: The data received still has a \r in it, which may be affecting it
-
 '''
 These bits have been moved into a settings file
 # The delay between send and receive
@@ -44,8 +40,6 @@ def SetupUART():
     -Opens the serial port
     -Checks all is ok and returns the object
     """
-
-    #TODO: Need to cater for Pi 3 as it uses /dev/serial0
 
     ser = serial.Serial('/dev/ttyAMA0', baudrate=57600, parity=serial.PARITY_NONE,
                             stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=0.1)
@@ -121,11 +115,6 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
         logging.warning("[LCR]: Reading of data on the serial port FAILED")
         reply = b''
 
-    # Debug testing
-    #reply =b''                 #Empty response
-    #reply = b'1000!0000!'      #Short response
-
-
     logging.debug("[LCR]: Data read back from the serial port :%s" % reply)
 
     # The command below removes the characters from around the message, and I only need to remove the one at each end
@@ -187,8 +176,6 @@ def ReadDataOLD(fd, length=-1, pos_reply='OK00'):
         logging.warning("[LCR]: Reading of data on the serial port FAILED")
         reply = b''
 
-    #reply =b''
-
     logging.debug("[LCR]: Data Read back from the serial port :%s" % reply)
     logging.debug("[LCR]: Length being extracted :%s" % length)
 
@@ -242,10 +229,6 @@ def ReadDataOLD(fd, length=-1, pos_reply='OK00'):
     return {'success':success, 'reply':ans}
 
 
-
-
-
-
 def SendConfigCommand(fd, command):
     # This function sends data and gets the reply for the various configuration commands.
 
@@ -293,8 +276,6 @@ def SendRadioData(fd, message):
         # Length is greater than 255, abort.
         logging.critical("[LCR]: Radio Message length is greater than 255 limit, aborting: %s" % message)
         ExitProgram()
-
-#TODO: May need to add in a success response so I can determine if the data has been sent.
 
     send = 'AT+X ' + format(length, '02X')
     send = send.encode('utf-8')
@@ -361,8 +342,6 @@ def ReadRadioData(fd):
     # Routine to read and return data from the LoRa unit.
     # Currently sits in a loop waiting to read data
 
-#TODO: Modify routine to have a form of exit
-
     while(True):
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
@@ -378,23 +357,14 @@ def ReturnRadioData(fd):
     while received_len < 1:
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
-            received = GetRadioData(fd, received_len)
-            #print("[LCR] - Data Received:%s" % received, flush=True)
-
-            data = received
-            #print("[LCR] - Comms Messsage being passed back to the main program: %s" % data, flush=True)
+            data = GetRadioData(fd, received_len)
             logging.debug("[LCR]: Comms Message being passed back to the HDD program: %s" % data)
-
     return data
 
 def RadioDataTransmission(fd, message):
     # This function takes the given data and changes the format to match required
     # Then gets it sent and returns the response
     # Only called by an external program
-    #message = ""
-
-#   NOTE1: Removed as data passed in is to be a string, not a list
-#    message = message.join(dataaslist)
 
     logging.debug("[LCR]: Data being passed into SendRadioData is:%s" % message)
     SendRadioData(fd, message)
@@ -405,16 +375,12 @@ def ReturnRadioDataTimed(fd, waittime):
     # It is to be called by the external program.
     # It will wait for data packet for the supplied time, then return empty if there is nothing
     # Waittime is to be provided in seconds
-
-# TODO: Add a check around the waittime
-
     timeout = time.time() + waittime
     received_len = 0
     while received_len < 1:
         received_len = RadioDataAvailable(fd)
         if received_len > 0:
             received = GetRadioDataBinary(fd, received_len)
-            #print("Data Received:%s" % received)
 
             logging.debug("[LCR]: Data being passed back to the main program: %s" % data)
         if time.time() > timeout:

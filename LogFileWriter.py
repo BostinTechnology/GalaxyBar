@@ -14,28 +14,21 @@ from uuid import getnode
 
 from Settings import *
 
-#BUG: Tap ID is not defined, set to a default value of 1
-
+'''
+These values are now help in the Settings file
+#TAP_IP Should come fro the EWC, but can't at present sop set to a default value
 TAP_ID = 1
 
-#BUG Polling rate is held within the EEPROM, not accessible to this function at this time!
-
-#   in eWATERTap return(int.from_bytes(read_EEPROM_byte(19),'little'))
+#Polling Rate should come from the EWC, but can't at present
 POLLING_RATE = 2
 
-#BUG Flow conversion is held within the EEPROM, not accessible to this function
-#    d1 = read_EEPROM_byte(21)
-#    if d1 != -1:
-#        d2 = read_EEPROM_byte(22)
-#        D=int.from_bytes(d1,'little')*256+int.from_bytes(d2,'little')
-#        return(D)
-#    else:
-#        return(0)
+# Flow conversion should come from the EWC, but can't at present
 FLOW_CONVERSION = 600
+
 
 #global MACADDRESS
 MACADDRESS = '000000000000'
-
+'''
 def byte_to_bcd_old (byte):
     # Taking the given byte, return the binary coded decimal version
     i=int.from_bytes(byte,"little")
@@ -52,23 +45,6 @@ def byte_to_bcd(byte):
     else:
         bcd = int(format(byte,'x'))
     return bcd
-
-def GetMACAddress():
-    # Read the MAC address for the ethernet card and return it as a int
-
-#BUG: MACADDRESS is not been seen as global, but local.
-    MACADDRESS = '000000000000'
-    if MACADDRESS == '000000000000':
-        try:
-            sys = open('/sys/class/net/eth0/address').read()
-        except:
-            sys = '00:00:00:00:00:00'
-            logging.warning("[LFR] - Reading of the MAC address from system file failed")
-        logging.debug("[LFR] - MAC Address captured (all zero's is a failure):%s" % sys)
-        mac = sys.replace(':','')
-        MACADDRESS = mac[0:12]
-
-    return MACADDRESS
 
 def GenerateLogData(tap_id, data_packet):
     # Given the binary string of data, return the data to be written to the log file
@@ -147,12 +123,11 @@ def GenerateLogData(tap_id, data_packet):
     #Convert to correct Flow rate
     flow_rate=0
 
-#BUG: Polling rate is held within the eeprom, not able to access it at the moment
+    #Note Polling rate is held within the eeprom, not able to access it at the moment
     pr = POLLING_RATE
-    # pr=polling_rate()         #Polling Rate is not defined, reda out of EEPRON somewhere
     pr=math.pow(2,(pr/16))/256
 
-#BUG: Flow Conversion is calculated from values is held within the eeprom, not able to access it at the moment
+    #Note Flow Conversion is calculated from values is held within the eeprom, not able to access it at the moment
     vc=FLOW_CONVERSION
 
     if ft_int and pr and vc:
@@ -160,7 +135,7 @@ def GenerateLogData(tap_id, data_packet):
     else:
         flow_rate=0
 
-    mac_addr = GetMACAddress()
+    mac_addr = MACADDRESS
 
     data = (tap_id,log_error, ss,mm,hh,dd,MM,YY, uid_hex,uc_int,sc_int,ec_int,fc_int,flow_rate, mac_addr)
 
@@ -261,8 +236,6 @@ def LogFileCreation(elb_bytes, payload):
 
 
 def main():
-    # Need to be given the ELB Name and the payload
-
 
     logging.basicConfig(filename="LogFileWriter.txt", filemode="w", level=logging.DEBUG,
                         format='%(asctime)s:%(levelname)s:%(message)s')
