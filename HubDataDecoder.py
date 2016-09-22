@@ -453,6 +453,10 @@ def Main():
 if __name__ == "__main__":
     logging.basicConfig(filename="HubDecoder.txt", filemode="w", level=LG_LVL,
                         format='%(asctime)s:%(levelname)s:%(message)s')
+    testfile = open("DataFiles/TestFile.txt", "w")
+    testfile.write("Data written to the file")
+    testfile.close()
+
 
 
     Main()

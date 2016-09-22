@@ -63,6 +63,7 @@ def SetupGPIO():
     GPIO.setmode(GPIO.BCM)
     time.sleep(0.2)
     GPIO.setup(INPUT_PIN, GPIO.IN)
+    GPIO.setup(LED_PIN, GPIO.OUT)
     logging.debug("[LCR]: GPIO Setup Complete")
     return
 
@@ -72,6 +73,29 @@ def ExitProgram(sport):
     GPIO.cleanup()
     sport.close()
     sys.exit()
+
+def LEDControl(state, timeout=0):
+    # Control the LED
+    # state can be either 1 for ON or 0 for OFF
+    if state !=0 and state != 1:
+        # If state is not the expected input state, set to default of zero
+        state = 0
+    starttime = time.time()
+    GPIO.output(LED_PIN, state)
+    while (starttime + timeout) > time.time():
+        time.sleep(0.001)
+    return
+
+def LEDFastFlash(flashtime):
+    # Flash the LED for the period flashtime (in seconds)
+    startflash = time.time()
+    while (startflash + flashtime) > time.time():
+        LEDControl(1, 0.05)
+        LEDControl(0, 0.05)
+    LEDControl(0)
+    return
+
+
 
 def WriteData(fd,message):
     # This routine will take the given data and write it to the serial port
@@ -96,6 +120,7 @@ def WriteDataBinary(fd,message):
         logging.info("[LCR]: Message >%s< written to LoRa module with response :%s" % (send, ans))
     except Exception as e:
         logging.warning("[LCR]: Message >%s< sent as >%a< FAILED" % (message, send))
+        LEDFastFlash(0.25)
         ans = 0
     return ans
 
@@ -114,6 +139,7 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
     except:
         logging.warning("[LCR]: Reading of data on the serial port FAILED")
         reply = b''
+        LEDFastFlash(0.25)
 
     logging.debug("[LCR]: Data read back from the serial port :%s" % reply)
 
@@ -242,11 +268,28 @@ def SendConfigCommand(fd, command):
 
     return
 
+def LoRaModuleWakeup(fd):
+    # This function sends data and gets the reply for the various configuration commands.
+    command =b'\n'
+    working = False
+    starttime = time.time()
+    while (starttime + COMMS_TIMEOUT > time.time()) and working == False:
+        ans = WriteDataBinary(fd, command)
+        if ans >0:
+            time.sleep(SRDELAY)
+            # No need to check the reply as it has already been validated
+            reply = ReadData(fd)
+            working = reply['success']
+        else:
+            logging.warning("[LCR]: Failed to Send Config Command %s" % command)
+
+    return
+
 def SetupLoRa(fd):
     # send the right commands to setup the LoRa module
     logging.info("[LCR]: Setting up the LoRA module with the various commands")
+    LoRaModuleWakeup(fd)
 
-    # This one is removed as it keeps failing and I'm not sure we need it
     SendConfigCommand(fd, b"AT!!")
     time.sleep(INTERDELAY)
     time.sleep(INTERDELAY)
@@ -277,6 +320,7 @@ def SendRadioData(fd, message):
         logging.critical("[LCR]: Radio Message length is greater than 255 limit, aborting: %s" % message)
         ExitProgram()
 
+    LEDControl(1)
     send = 'AT+X ' + format(length, '02X')
     send = send.encode('utf-8')
     reply = WriteDataBinary(fd, send)
@@ -300,6 +344,8 @@ def SendRadioData(fd, message):
 
     else:
         logging.warning("[LCR]: Sending of the Radio data length message >%s< FAILED" % send)
+        LEDFastFlash(0.5)
+    LEDControl(0)
     logging.info("[LCR]: Radio Message >%s< successfully sent at time: %s" % (message, time.strftime("%d-%m-%y %H:%M:%S")))
     return
 
@@ -316,8 +362,9 @@ def WaitForDataAlertviaGPIO():
 
 def RadioDataAvailable(fd):
     # checks to see if there is radio data available to be read using AT+r / checkr.
-    # returns zero if no data
+    # returns zero if no data, flashesd the LED whilst receiving data
     WaitForDataAlertviaGPIO()
+    LEDControl(1)
     data_length = 0
     reply = WriteDataBinary(fd, b'AT+r')
     if reply > 0:
@@ -326,6 +373,7 @@ def RadioDataAvailable(fd):
         if ans['success'] == True:
             data_length = int(ans['reply'][0], 16)
         logging.info("[LCR]: Check for Radio Data (AT+r) returned %d bytes" % data_length)
+    LEDControl(0)
     return data_length
 
 def GetRadioData(fd, length=-1):
@@ -359,6 +407,7 @@ def ReturnRadioData(fd):
         if received_len > 0:
             data = GetRadioData(fd, received_len)
             logging.debug("[LCR]: Comms Message being passed back to the HDD program: %s" % data)
+            LEDControl(0)
     return data
 
 def RadioDataTransmission(fd, message):
@@ -400,36 +449,46 @@ if __name__ == "__main__":
         level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
     print("Bostin Technology\n")
-    print("Please choose functionality")
+    print("Please choose functionality (e to exit)")
     print(" - (S)ending")
     print(" - (R)eceiving")
+    print(" - (L)ED Control")
 
-    choice = input ("Select Menu Option:")
-
-    SetupGPIO()
     sp = SetupUART()
-    SetupLoRa(sp)
+    SetupGPIO()
+    while (True):
+        choice = input ("Select Menu Option:")
+        if choice.upper() == "S":
+            SetupLoRa(sp)
+            print("Sending Messages")
+            while(True):
+                length_to_send = random.randint(5,36)
+                data_to_send = ""
+                data_to_send = ''.join(random.choice('0123456789ABCDEF') for i in range(length_to_send))
+                print("Data To Send:%s" % data_to_send)
+                SendRadioData(sp, data_to_send)
 
-    if choice.upper() == "S":
-        print("Sending Messages")
-        while(True):
-            length_to_send = random.randint(5,36)
-            data_to_send = ""
-            data_to_send = ''.join(random.choice('0123456789ABCDEF') for i in range(length_to_send))
-            print("Data To Send:%s" % data_to_send)
-            SendRadioData(sp, data_to_send)
+                print(".", end="", flush=True)
+                time.sleep(INTERDELAY)
+        elif choice.upper() == "R":
+            sp = SetupUART()
+            SetupLoRa(sp)
+            print("Receiving Messages")
+            while(True):
+                ReadRadioData(sp)
 
-            print(".", end="", flush=True)
-            time.sleep(INTERDELAY)
-    elif choice.upper() == "R":
-        print("Receiving Messages")
-        while(True):
-            ReadRadioData(sp)
-
-            print(".", end="", flush=True)
-            #time.sleep(INTERDELAY)
-    else:
-        print("Unknown Option")
-
+                print(".", end="", flush=True)
+                #time.sleep(INTERDELAY)
+        elif choice.upper() == "L":
+            # Test the LED software
+            LEDControl(1)
+      #      LEDControl(0)
+            time.sleep(0.5)
+            LEDFastFlash(1)
+        elif choice.upper() == "E":
+            break
+        else:
+            print("Unknown Option")
+    ExitProgram(sp)
 
 

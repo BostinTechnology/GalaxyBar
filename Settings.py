@@ -36,11 +36,11 @@ These values are tunable by the user
 # Possible levels are below, the uncomment one is in use
 
 
-LOGGING_LEVEL = "CRITICAL"
+#LOGGING_LEVEL = "CRITICAL"
 #LOGGING_LEVEL = "ERROR"
 #LOGGING_LEVEL = "WARNING"
 #LOGGING_LEVEL = "INFO"
-#LOGGING_LEVEL = "DEBUG"
+LOGGING_LEVEL = "DEBUG"
 
 
 # Time window parameters
@@ -102,6 +102,9 @@ FAILDELAY = 0.03
 # The connected GPIO pin to indicate when the LoRa module has data to read
 INPUT_PIN = 17
 
+# The pin which has the LED connected
+LED_PIN = 23
+
 # The minimum length of a valid packet to be received from the LoRa module
 MIN_LENGTH = 11
 
@@ -115,8 +118,9 @@ try:
     sys = open('/sys/class/net/eth0/address').read()
 except:
     sys = '00:00:00:00:00:00'
-    logging.warning("[LFR] - Reading of the MAC address from system file failed")
-logging.debug("[LFR] - MAC Address captured (all zero's is a failure):%s" % sys)
+    print("Unable to Read MAC Address, using default of 00:00:00:00:00:00")
+#    logging.warning("[LFR] - Reading of the MAC address from system file failed")
+#logging.debug("[LFR] - MAC Address captured (all zero's is a failure):%s" % sys)
 mac = sys.replace(':','')
 MACADDRESS = mac[0:12]
 
@@ -174,7 +178,7 @@ print("Comms Time Window From:%s To:%s" % (START_TIME, STOP_TIME))
 
 logging_levels = {50:"CRITICAL", 40:"ERROR", 30:"WARNING", 20:"INFO", 10:"DEBUG"}
 if LG_LVL in logging_levels:
-    print("Loggin Level in use: %s" % logging_levels[LG_LVL])
+    print("Logging Level in use: %s" % logging_levels[LG_LVL])
 else:
     LG_LVL = logging.critical
 
