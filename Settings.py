@@ -36,11 +36,11 @@ These values are tunable by the user
 # Possible levels are below, the uncomment one is in use
 
 
-#LOGGING_LEVEL = "CRITICAL"
+LOGGING_LEVEL = "CRITICAL"
 #LOGGING_LEVEL = "ERROR"
 #LOGGING_LEVEL = "WARNING"
 #LOGGING_LEVEL = "INFO"
-LOGGING_LEVEL = "DEBUG"
+#LOGGING_LEVEL = "DEBUG"
 
 
 # Time window parameters
