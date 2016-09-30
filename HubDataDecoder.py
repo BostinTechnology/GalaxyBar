@@ -85,7 +85,7 @@ def ValidatePayload (Packet):
     logging.debug("[HDD] - Validating the payload is returning :%s" % Checksum ==0)
     return Checksum == 0        # checsum vald if equal to 0
 
-def ValidatePacket (Packet):
+def ValidatePacketOld (Packet):
     # routine to validate a packet that has been received
     # checks for 5th and 10th bytes to be '!' or '>'
     # checks length to ba ta least 12 bytes
@@ -97,6 +97,30 @@ def ValidatePacket (Packet):
         if chr(Packet[StartELBAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartELBAddr+4]).encode('utf-8') == b'>':
             # 2nd addr descripter valid so continue
             if len(Packet) >= 12:                       # packet is long enough so continue
+                if chr(Packet[StartCommand]).encode('utf-8') == DataPacketandReq or \
+                        chr(Packet[StartCommand]).encode('utf-8') == DataPacketFinal:
+                            # now check payload
+                   #ValidPacket = ValidatePayload(Packet) # Moved to log file writer
+                   ValidPacket = True           # Validating of the payload moved to LogFileWriter
+                elif chr(Packet[StartCommand]).encode('utf-8') == Ping or \
+                            chr(Packet[StartCommand]).encode('utf-8') == DataToSendReq:
+                    # no payload so only addr descripters and messag elength can be used
+                    ValidPacket = True
+    logging.info("[HDD] - Packet of data has been validated :%s" % Packet)
+    return ValidPacket
+
+def ValidatePacket (Packet):
+    # routine to validate a packet that has been received
+    # checks for 5th and 10th bytes to be '!' or '>'
+    # checks length to ba ta least 12 bytes
+    # for if command is DataPacketandReq or DataPacketFinal then it can perform a CRC on the payload
+
+    ValidPacket = False         # assume packet is invalid
+    if len(Packet) >= 12:                       # packet is long enough so continue
+        if chr(Packet[StartHubAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartHubAddr+4]).encode('utf-8') == b'>':
+            # packet has valid 1st address descripters so continue
+            if chr(Packet[StartELBAddr+4]).encode('utf-8') == b'!' or chr(Packet[StartELBAddr+4]).encode('utf-8') == b'>':
+                # 2nd addr descripter valid so continue
                 if chr(Packet[StartCommand]).encode('utf-8') == DataPacketandReq or \
                         chr(Packet[StartCommand]).encode('utf-8') == DataPacketFinal:
                             # now check payload
@@ -453,9 +477,6 @@ def Main():
 if __name__ == "__main__":
     logging.basicConfig(filename="HubDecoder.txt", filemode="w", level=LG_LVL,
                         format='%(asctime)s:%(levelname)s:%(message)s')
-    testfile = open("DataFiles/TestFile.txt", "w")
-    testfile.write("Data written to the file")
-    testfile.close()
 
 
 

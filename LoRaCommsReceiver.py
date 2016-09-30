@@ -60,6 +60,7 @@ def SetupUART():
 
 def SetupGPIO():
     # Setup the GPIO for the reading of the incoming data
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     time.sleep(0.2)
     GPIO.setup(INPUT_PIN, GPIO.IN)
@@ -124,7 +125,7 @@ def WriteDataBinary(fd,message):
         ans = 0
     return ans
 
-def ReadData(fd, length=-1, pos_reply='OK00'):
+def ReadData(fd, length=MIN_LENGTH, pos_reply='OK00'):
     # Read the data from the serial port of known length
     # If length is not known, assume all data
     # returns a list containing 2 entries
@@ -156,10 +157,11 @@ def ReadData(fd, length=-1, pos_reply='OK00'):
         # The data returned is shorter than expected, return failed
         logging.warning("[LCR]: Reply shorter than expected from the LoRa module")
         return {'success':success, 'reply':ans}
-    elif len(reply) < min(MIN_LENGTH, length):
-        # The data returned is shorter than the minimum length or the length required (whichever is the shorter, return failed
-        logging.warning("[LCR]: Reply shorter than minimum allowed from the LoRa module")
-        return {'success':success, 'reply':ans}
+#    elif len(reply) < min(MIN_LENGTH, length):
+#    elif len(reply) < MIN_LENGTH and length != -1:
+#        # The data returned is shorter than the minimum length or the length required (whichever is the shorter, return failed
+#        logging.warning("[LCR]: Reply shorter than minimum allowed from the LoRa module")
+#        return {'success':success, 'reply':ans}
 
 
     # Populate the first part of the data (ans) with the data
@@ -368,7 +370,7 @@ def RadioDataAvailable(fd):
     data_length = 0
     reply = WriteDataBinary(fd, b'AT+r')
     if reply > 0:
-        # Request for data length written successfully
+        # Request for data length written successfully, reply is $
         ans = ReadData(fd, 2)
         if ans['success'] == True:
             data_length = int(ans['reply'][0], 16)

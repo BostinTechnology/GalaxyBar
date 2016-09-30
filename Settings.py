@@ -40,7 +40,7 @@ LOGGING_LEVEL = "CRITICAL"
 #LOGGING_LEVEL = "ERROR"
 #LOGGING_LEVEL = "WARNING"
 #LOGGING_LEVEL = "INFO"
-#LOGGING_LEVEL = "DEBUG"
+LOGGING_LEVEL = "DEBUG"
 
 
 # Time window parameters
@@ -55,8 +55,8 @@ START_TIME = '01:00:00'
 STOP_TIME = '05:00:00'
 
 # Set this to True or False to determine if the time parameters above are to be used.
-USE_TIME = True
-#USE_TIME = False
+#USE_TIME = True
+USE_TIME = False
 
 # Information that is related to the EWC
 # These values are used in the calculations for the data file
@@ -106,7 +106,7 @@ INPUT_PIN = 17
 LED_PIN = 23
 
 # The minimum length of a valid packet to be received from the LoRa module
-MIN_LENGTH = 11
+MIN_LENGTH = 9
 
 # During processing of LoRa messages, there is a timeout to determine if the message is old
 # This is measured in seconds
